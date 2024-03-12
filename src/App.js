@@ -1,6 +1,6 @@
 import "./App.css";
 import Dashboard from "./Dashboard/Dashboard";
-import Login from "./Login/login";
+import Login from "./Login/Login";
 import "bootstrap/dist/css/bootstrap.min.css"
 import UserRegistration from "./UserRegistration/UserRegistration";
 import { Route, Routes, Navigate } from "react-router-dom";

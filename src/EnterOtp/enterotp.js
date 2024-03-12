@@ -1,6 +1,6 @@
 import { useEffect,useState, React, CSSProperties } from 'react'
 import { useFormik } from "formik";
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 
 import { Button } from "react-bootstrap";
 import { loginAuth } from "./LoginAuth.js";
@@ -12,14 +12,19 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { useParams, Link,useNavigate } from "react-router-dom";
+
+//Loader
+import LoaderOverlay from '../Loader/LoaderOverlay.js';
+
+
 const initialValues = {
     email: "",
 };
-const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-};
+// const override: CSSProperties = {
+//     display: "block",
+//     margin: "0 auto",
+//     borderColor: "red",
+// };
 
 
 
@@ -105,6 +110,7 @@ const code = otp.toString();
 
     return (
         <div>
+            <LoaderOverlay loading={loading}/>
             <section
                 class="p-5 w-100"
                 style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
@@ -144,14 +150,14 @@ const code = otp.toString();
                                                         </small>
                                                     ) : null}
                                                 </div>
-                                                <ClipLoader
+                                                {/* <ClipLoader
                                                         color={color}
                                                         loading={loading}
                                                         cssOverride={override}
                                                         size={100}
                                                         aria-label="Loading Spinner"
                                                         data-testid="loader"
-                                                    />
+                                                    /> */}
                                                 
                                         
                                             </div>
@@ -195,7 +201,7 @@ const code = otp.toString();
                                                 </DialogTitle>
                                                 <DialogContent>
                                                     <DialogContentText id="alert-dialog-description">
-                                                        Email Verified Successfully
+                                                        Email Verified Successfully!
                                                     </DialogContentText>
                                                 </DialogContent>
                                                 <DialogActions>
