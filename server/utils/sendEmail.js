@@ -21,21 +21,8 @@ module.exports = async (email, subject, text) => {
 		await transporter.sendMail({
 			from: 'apoorv.info@gmail.com',
 			to: email,
-			subject: "Account Verification - SEMAMART",
-			text: 
-			`Dear User,
-
-			Thank you for choosing SEMMART! We're thrilled to have you on board. To ensure the security of your account, we require a quick verification step.
-			
-			Please use the following One-Time Passcode (OTP) to complete your registration:
-			
-			OTP: ${text}
-			
-			Welcome to SEMAMART!
-			
-			Best regards,
-			SEMAMART Team
-			`,
+			subject: "SEMAMART EMAIL VERIFICATION",
+			text: "Please Enter This OTP on SEMAMART " + text,
 		
 		});
 		console.log("email sent successfully");

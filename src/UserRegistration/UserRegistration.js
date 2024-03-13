@@ -1,8 +1,10 @@
 import { registrationSchema } from "./UserSchema";
 import Axios from "axios"
 import { useState, React, CSSProperties } from 'react'
-// import ClipLoader from "react-spinners/ClipLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 import { useFormik } from "formik";
+import { MenuItem } from "@mui/material";
+
 //import "./HospitalRegistration.css";
 import { Button } from "react-bootstrap";
 import { useNavigate, } from "react-router-dom";
@@ -11,15 +13,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Select, FormControl, InputLabel,FormHelperText } from "@mui/material";
 
-//Loader
-import LoaderOverlay from '../Loader/LoaderOverlay.js';
 
-// const override: CSSProperties = {
-//     display: "block",
-//     margin: "0 auto",
-//     // borderColor: "black",
-// };
+
+const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+};
 
 
 
@@ -45,6 +47,7 @@ const initialValues = {
 
 const UserRegistration = () => {
     const [open, setOpen] = useState(false);
+    const [registeras, setRegisteras] = useState(null);
 
     let [loading, setLoading] = useState(false);
     let [color, setColor] = useState("#ffffff");
@@ -59,6 +62,9 @@ const UserRegistration = () => {
     const navigateToVerify = () => {
         navigate('/verify');
     }
+    const selectionChangeHandler = (event) => {
+        setRegisteras(event.target.value);
+      };
     const {
         values,
         errors,
@@ -145,7 +151,6 @@ const UserRegistration = () => {
 
     return (
         <div>
-            <LoaderOverlay loading={loading}/>
             <section
                 class="p-5 w-100"
                 style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
@@ -369,26 +374,27 @@ const UserRegistration = () => {
                                                 </div>
                                             </div>
                                             <div className="row mt-3">
-                                                <div className="col text-left">
-                                                    <label htmlFor="first" className="form-label">
-                                                        Register As*
-                                                    </label>
-                                                    <input
-                                                        id="registeras"
-                                                        name="registeras"
-                                                        className="form-control"
-                                                        value={values.registeras}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        type="text"
-                                                    />
+                                                
+                                                <InputLabel  id="demo-simple-select-label">Register As*</InputLabel>
+                                                    <Select
+                                                         sx={{ backgroundColor:"#FFFF" , height:"100%"   }}
+                                                        labelId="demo-simple-select-label"
+                                                        id="product-type"
+                                                        value={registeras}
+                                                        label="Product Type"
+                                                        onChange={selectionChangeHandler}
+                                                    >
+                                                        <MenuItem value={"Hod"}>Head of Hospital</MenuItem>
+                                                        <MenuItem value={"Im"}>Inventory Manager</MenuItem>
+                                                        
+                                                    </Select>
                                                     {errors.registeras && touched.registeras ? (
                                                         <small className="text-danger mt-1">
                                                             {errors.registeras}
                                                         </small>
                                                     ) : null}
                                                 </div>
-                                            </div>
+                                           
                                             <div className="row mt-3">
                                                 <div className="col text-left">
                                                     <label htmlFor="first" className="form-label">
@@ -409,14 +415,14 @@ const UserRegistration = () => {
                                                         </small>
                                                     ) : null}
                                                 </div>
-                                                {/* <ClipLoader
+                                                <ClipLoader
                                                         color={color}
                                                         loading={loading}
                                                         cssOverride={override}
                                                         size={100}
                                                         aria-label="Loading Spinner"
                                                         data-testid="loader"
-                                                    /> */}
+                                                    />
                                             </div>
                                             
                                             <div className="row mt-3">
@@ -463,10 +469,12 @@ const UserRegistration = () => {
                                                     {"OTP Sent Successfully"}
                                                 </DialogTitle>
                                                 <DialogContent>
-                                                    <DialogContentText id="alert-dialog-description">
-                                                        Please Check Your Inbox
-                                                    </DialogContentText>
-                                                </DialogContent>
+                                                <DialogContentText id="alert-dialog-description">
+                                                    Thank you for choosing Semamart. The OTP has been sent to email you entered.
+                                                     OTP is valid for  Do not share this code with others, including Semamart
+                                                    employees.
+                                                </DialogContentText>
+                                            </DialogContent>
                                                 <DialogActions>
                                                     <Button onClick={handleClose}>Ok</Button>
                                                     <Button onClick={navigateToVerify} autoFocus>
