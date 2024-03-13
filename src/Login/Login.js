@@ -1,5 +1,5 @@
 import { useState, React, CSSProperties } from 'react'
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 import { useFormik } from "formik";
 //import "./HospitalRegistration.css";
 import { Button } from "react-bootstrap";
@@ -12,17 +12,17 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-};
+//Loader
+import LoaderOverlay from '../Loader/LoaderOverlay.js';
+
+// const override: CSSProperties = {
+//     display: "block",
+//     margin: "0 auto",
+//     borderColor: "red",
+// };
 const initialValues = {
     email: "",
     password: "",
-
-
-
 };
 
 
@@ -90,6 +90,7 @@ const Login = () => {
     return (
         <div className='sweet-loading'>
             <div>
+                <LoaderOverlay loading={loading}/>
                 <section
                     class="p-5 w-100"
                     style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
@@ -149,14 +150,14 @@ const Login = () => {
                                                             </small>
                                                         ) : null}
                                                     </div>
-                                                    <ClipLoader
-                                                        color={color}
-                                                        loading={loading}
-                                                        cssOverride={override}
-                                                        size={100}
-                                                        aria-label="Loading Spinner"
-                                                        data-testid="loader"
-                                                    />
+                                                    // <ClipLoader
+                                                    //     color={color}
+                                                    //     loading={loading}
+                                                    //     cssOverride={override}
+                                                    //     size={100}
+                                                    //     aria-label="Loading Spinner"
+                                                    //     data-testid="loader"
+                                                    // />
                                                 </div>
 
 
