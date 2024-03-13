@@ -12,15 +12,14 @@ import {DatePicker} from '@mui/x-date-pickers'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
+//Loader
+import LoaderOverlay from '../Loader/LoaderOverlay.js';
 
-const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-};
-
-
-
+// const override: CSSProperties = {
+//     display: "block",
+//     margin: "0 auto",
+//     borderColor: "red",
+// };
 
 const initialValues = {
     productid: "",
@@ -29,10 +28,6 @@ const initialValues = {
     totalquantity: "",
     doe: "",
     dom: "",
-    
-
-
-
 };
 
 
@@ -202,6 +197,7 @@ const StockEntry = () => {
 
     return (
         <div>
+            <LoaderOverlay loading={loading}/>
             <section
                 class="p-5 w-100"
                 style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
