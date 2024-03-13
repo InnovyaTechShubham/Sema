@@ -25,7 +25,6 @@ import LoaderOverlay from '../Loader/LoaderOverlay.js';
 //     borderColor: "red",
 // };
 
-
 const initialValues = {
     hospitalname: "",
     billingname: "",
@@ -336,14 +335,14 @@ const HospitalRegistration = () => {
                                                         </small>
                                                     ) : null}
                                                 </div>
-                                                {/* <ClipLoader
-                                                        color={color}
-                                                        loading={loading}
-                                                        cssOverride={override}
-                                                        size={100}
-                                                        aria-label="Loading Spinner"
-                                                        data-testid="loader"
-                                                    /> */}
+                                                // <ClipLoader
+                                                //         color={color}
+                                                //         loading={loading}
+                                                //         cssOverride={override}
+                                                //         size={100}
+                                                //         aria-label="Loading Spinner"
+                                                //         data-testid="loader"
+                                                //     />
                                             </div>
                                             <div className="row mt-3">
                                                 <div className="col text-center actionButtons">
