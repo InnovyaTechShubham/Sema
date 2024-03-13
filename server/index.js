@@ -19,8 +19,9 @@ mongoose.set('strictQuery', true);
 
 
 // connect to mongo 
-mongoose.connect("mongodb+srv://apoorvinfo:Apj171096@cluster0.af4k34f.mongodb.net/?retryWrites=true&w=majority"
-    , {
+// mongoose.connect("mongodb+srv://apoorvinfo:Apj171096@cluster0.af4k34f.mongodb.net/?retryWrites=true&w=majority"
+mongoose.connect("mongodb+srv://mumukshsrivastava:$Paavni14$@cluster.mongodb.net/databaseName?retryWrites=true&w=majority"    
+, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 })
