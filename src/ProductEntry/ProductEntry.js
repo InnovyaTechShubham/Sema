@@ -9,12 +9,14 @@ import Box from '@mui/material/Box';
 import { Select, FormControl, InputLabel,FormHelperText } from "@mui/material";
 import { MenuItem } from "@mui/material";
 
+//Loader
+import LoaderOverlay from '../Loader/LoaderOverlay.js';
 
-const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-};
+// const override: CSSProperties = {
+//     display: "block",
+//     margin: "0 auto",
+//     borderColor: "red",
+// };
 
 
 
@@ -225,6 +227,7 @@ const ProductEntry = () => {
 
     return (
         <div>
+            <LoaderOverlay loading={loading}/>
             <section
                 class="p-5 w-100"
                 style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
