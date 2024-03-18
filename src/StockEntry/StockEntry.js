@@ -11,6 +11,7 @@ import { Select, FormControl, InputLabel,FormHelperText } from "@mui/material";
 import {DatePicker} from '@mui/x-date-pickers'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import addImage from '../assets/add-image.png';
 
 //Loader
 import LoaderOverlay from '../Loader/LoaderOverlay.js';
@@ -332,32 +333,27 @@ const StockEntry = () => {
                                         <br />
                                        
 
-                                        <div class="row  ">
-                                            
+                                        <div className="row">
                                             <img
-                                                src="https://www.shutterstock.com/image-vector/camera-plus-line-icon-add-260nw-1589203135.jpg"
-                                                height={300}
+                                                src={addImage}
+                                                height={350}
+                                                style={{ width: 'auto', marginLeft: '100px' }}
                                                 alt=""
                                             />
                                         </div>
                                         <br />
-
-
-                                        <div class="row align-items-right">
-                                        
-                                            <div class="col">
-                                            
+                                        <div className="row align-items-right">
+                                            <div className="col">
                                                 <Button
                                                     variant="text"
                                                     size="large"
-                                                    
+                                                    style={{ backgroundColor: '#0000FF', color: 'white', marginLeft: '155px' }}
                                                 >
                                                     Add Product Image
                                                 </Button>
-
                                             </div>
-
                                         </div>
+
 
 
                                     </div>
@@ -452,17 +448,20 @@ const StockEntry = () => {
                                             </div>
                                             <br/>
                                             <br/>
-                                            <div class="row justify-content-around">
-                                                
-                                                <div class="col-3">
-                                                <Button variant='outlined' onClick= {resetForm} size='large' >Clear</Button>
+                                            <div style={{ marginTop: '20px' }}>
+                                                <div class="row justify-content-around">
+                                                    
+                                                    <div class="col-3
+                                                    ">
+                                                    <Button variant='outlined' onClick= {resetForm} size='large' >Clear</Button>
+                                                    </div>
+                                                    <br/>
+                                                    <br/>
+                                                    <div class="col-3">
+                                                    <Button variant='contained' onClick= {handleSubmit} size='large'>Submit</Button>
+                                                    </div>
                                                 </div>
-                                                <br/>
-                                                <br/>
-                                                <div class="col-3">
-                                                <Button variant='contained' onClick= {handleSubmit} size='large'>Submit</Button>
-                                                </div>
-                                            </div>
+                                            </div>    
                                             
 
                                         

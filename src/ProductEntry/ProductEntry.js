@@ -1,6 +1,6 @@
 import { ProductSchema } from "./ProductEntrySchema";
 import Axios from "axios"
-import { useState, React, CSSProperties } from 'react'
+import { useState, React, CSSProperties, useRef } from 'react'
 import { useFormik } from "formik";
 import "./ProductEntry.css";
 import { Button } from "react-bootstrap";
@@ -8,6 +8,7 @@ import { useNavigate, } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { Select, FormControl, InputLabel,FormHelperText } from "@mui/material";
 import { MenuItem } from "@mui/material";
+import addImage from '../assets/add-image.png';
 
 //Loader
 import LoaderOverlay from '../Loader/LoaderOverlay.js';
@@ -48,6 +49,13 @@ const ProductEntry = () => {
     let [emergency, setEmergency] = useState("")
     let [manufacturer, setManufacturer] = useState("")
 
+    //state variable to store the selected file
+    const [selectedFile, setSelectedFile] = useState(null);
+    const fileInputRef = useRef(null);
+
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+      };
 
     const selectionChangeHandler = (event) => {
         setProductType(event.target.value);
@@ -421,28 +429,32 @@ const ProductEntry = () => {
                                         <div class="row w-100 ">
 
                                             <img
-                                                src="https://www.shutterstock.com/image-vector/camera-plus-line-icon-add-260nw-1589203135.jpg"
+                                                src={addImage}
                                                 height={400}
-                                                
                                                 alt=""
+                                                style={{ marginLeft: '10px' }}
                                             />
+
                                         </div>
                                         <br />
 
 
-                                        <div class="row w-100">
-
-                                           
-
-                                        <Button
-                                                        variant="primary"
-                                                        size="lg"
-                                                        //onClick={handleSubmit}
-                                                    >
-                                                       Add Product Image
-                                                    </Button>
-                                            
-
+                                        <div className="row w-100">
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleFileChange}
+                                                style={{ display: 'none' }}
+                                                id="file-input"
+                                                ref={fileInputRef}
+                                            />
+                                            <Button
+                                                variant="primary"
+                                                size="lg"
+                                                onClick={() => fileInputRef.current.click()}
+                                            >
+                                                Add Product Image
+                                            </Button>
                                         </div>
 
 

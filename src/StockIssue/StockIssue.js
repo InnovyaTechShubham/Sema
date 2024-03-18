@@ -8,6 +8,8 @@ import { useNavigate, } from "react-router-dom";
 import Box from '@mui/material/Box';
 import axios from 'axios'
 import { Select , FormControl,InputLabel} from "@mui/material";
+import addImage from '../assets/add-image.png';
+
 
 
 
@@ -351,16 +353,14 @@ const StockIssue = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="col">
+                                                <div className="col" >
                                                     <div class="col md-5 ">
-
-
-
                                                         <div class="row  mt-3">
 
                                                             <img
-                                                           src="https://www.shutterstock.com/image-vector/camera-plus-line-icon-add-260nw-1589203135.jpg"
+                                                                src={addImage}
                                                                 height={150}
+                                                                style={{ width: 'auto', marginLeft: '100px' }}
                                                                 alt=""
                                                             />
                                                         </div>
@@ -374,7 +374,7 @@ const StockIssue = () => {
                                                                 <Button
                                                                     variant="text"
                                                                     size="large"
-                                                                   
+                                                                    style={{ backgroundColor: '#0000FF', color: 'white', marginTop: '-30px',marginLeft: '110px' }}
                                                                 >
                                                                     Add +
                                                                 </Button>

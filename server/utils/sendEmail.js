@@ -11,7 +11,7 @@ module.exports = async (email, subject, text) => {
 			debug:true,
 			auth: {
 				user: 'apoorv.info@gmail.com',
-				pass: 'rlcweoamswlvqzat',
+				pass: 'kodjxbpggzfawyto',
 			},
 			tls:{
 				rejectUnauthorized:true

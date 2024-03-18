@@ -90,7 +90,7 @@ const UserRegistration = () => {
                 "district": values.district,
                 "state": values.state,
                 "hospitalname": values.hospitalname,
-                "registeras":values.registeras,
+                "registeras":registeras,
                 "verified":false,
                
             };
@@ -414,14 +414,14 @@ const UserRegistration = () => {
                                                         </small>
                                                     ) : null}
                                                 </div>
-                                                // <ClipLoader
+                                                {/* // <ClipLoader
                                                 //         color={color}
                                                 //         loading={loading}
                                                 //         cssOverride={override}
                                                 //         size={100}
                                                 //         aria-label="Loading Spinner"
                                                 //         data-testid="loader"
-                                                //     />
+                                                //     /> */}
                                             </div>
                                             
                                             <div className="row mt-3">

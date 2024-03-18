@@ -3,7 +3,7 @@ import * as Yup from "yup";
 export const registrationSchema = Yup.object({
   email: Yup.string().email().required("Email id is required"),
   hospitalname: Yup.string().min(6).max(20).required("Hospital Name is required"),
-  registeras: Yup.string().min(6).max(20).required("Please Select Register Type"),
+  // registeras: Yup.string().min(6).max(20).required("Please Select Register Type"),
   address: Yup.string().min(6).required("Please enter Hospital address"),
   firstname: Yup.string().min(6).required("Please enter your First Name"),
   lastname: Yup.string().min(6).required("Please enter your Last NAme"),
