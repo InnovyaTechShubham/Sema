@@ -8,8 +8,7 @@ import { useNavigate, } from "react-router-dom";
 import Box from '@mui/material/Box';
 import axios from 'axios'
 import { Select , FormControl,InputLabel} from "@mui/material";
-import addImage from '../assets/add-image.png';
-
+import LoaderOverlay from '../Loader/LoaderOverlay.js';
 
 
 
@@ -40,23 +39,25 @@ const StockIssue = () => {
     const [manufacturer,setManufacturer] = useState(null)
     const [upc,setUpc] = useState(null)
     const [id,setId] = useState(null)
-    const [department,setDepartment] = useState(null)
+    const [department,setDepartment] = useState([])
+    
 
     let [name, setName] = useState("")
+    let [dep,setDep] = useState("")
 
     const getprod = async () => {
         try {
             
             const url = `http://localhost:4000/products`;
             const { data } = await axios.get(url);
-           
+          
              const prodnamesarray = new Array(data.document.length)
              //const cat = new Array(data.document.length)
              //const type = new Array(data.document.length)
              const manu = new Array(data.document.length)
              const upc = new Array(data.document.length)
              const id = new Array(data.document.length)
-
+                    
             
             for (let i = 0; i < data.document.length; i++) {
                 prodnamesarray[i] = data.document[i].name;
@@ -94,6 +95,28 @@ const StockIssue = () => {
 
     getprod();
 
+    
+    const getdep = async () => {
+        try {
+            
+            const url = `http://localhost:4000/departments`;
+            const { data } = await axios.get(url);
+            let l = JSON.parse(data.document[0].department).length;
+            const deplist = new Array(l)
+            for(let i = 0;i<l;i++)
+            {
+                deplist[i] = JSON.parse(data.document[0].department)[i];
+            }
+            setDepartment(deplist)
+        } catch (error) {
+            console.log(error);
+        }
+       
+    };
+
+    getdep();
+
+
 
 
 
@@ -130,7 +153,7 @@ const StockIssue = () => {
             const stock = {
                 "firstname": values.firstname,
                 "lastname": values.lastname,
-                "department": department,
+                "department": dep,
                 "productid": id,
                 "quantityissued": values.quantityissued,
                 
@@ -208,7 +231,7 @@ const StockIssue = () => {
                                         <p class="text-left h3 mb-3 mt-4">Issued To:</p>
                                         <form onSubmit={handleSubmit}>
                                             <div className="row">
-                                                <div className="col text-left">
+                                                <div className="col">
                                                     <label htmlFor="first" className="form-label">
                                                         First Name*
                                                     </label>
@@ -226,7 +249,7 @@ const StockIssue = () => {
                                                         </small>
                                                     ) : null}
                                                 </div>
-                                                <div className="col text-left">
+                                                <div className="col">
                                                     <label htmlFor="first" className="form-label">
                                                         Last Name*
                                                     </label>
@@ -246,24 +269,32 @@ const StockIssue = () => {
                                                     ) : null}
                                                 </div>
 
-                                                <div className="col text-left">
-                                                    
-                                                        <InputLabel id="demo-simple-select-label">Department</InputLabel>
-                                                        <Select
-                                                         sx={{ backgroundColor:"#FFFF", height:"60%" ,width:150  }}
-                                                            labelId="demo-simple-select-label"
-                                                            id="department"
-                                                            value={department}
-                                                            label="Department"
-                                                            onChange={e=> setDepartment(e.target.value)}
-                                                        >
-                                                            <MenuItem value={" Orthopedic"}>Orthopedic</MenuItem>
-                                                            <MenuItem value={"Gynaecology"}>Gynaecology</MenuItem>
-                                                            <MenuItem value={"Neurology"}>Neurology</MenuItem>
-                                                        </Select>
+                                                <div className="col">
+                                                <div className="row">  
+                                                <InputLabel  id="demo-simple-select-label">Department*</InputLabel>
+                                                    <Select
+                                                         sx={{ backgroundColor:"#FFFF" , height:"50%"   }}
+                                                        labelId="demo-simple-select-label"
+                                                        id="department"
+                                                        value={dep}
+                                                        label="Department"
+                                                        onChange={e => setDep(e.target.value)}
+
+                                                >
+                                                    {department.map((value, key) => (
+                                                        <MenuItem
+                                                            key={key}
+                                                            value={value}>
+                                                            {value}
+                                                        </MenuItem>
+                                                    ))}
+
+                                                </Select>
                                                     
                                                 </div>
                                             </div>
+                                            </div>
+
 
 
                                             <div className="row">
@@ -353,31 +384,20 @@ const StockIssue = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="col" >
+                                                <br/>
+                                                <div className="col">
+                                                    <br/>
                                                     <div class="col md-5 ">
-                                                        <div class="row  mt-3">
 
-                                                            <img
-                                                                src={addImage}
-                                                                height={150}
-                                                                style={{ width: 'auto', marginLeft: '100px' }}
-                                                                alt=""
-                                                            />
-                                                        </div>
-                                                        <br />
+
+
+                                                       
 
 
                                                         <div class="row align-items-right">
 
-                                                            <div class="col">
+                                                            <div class="row">
 
-                                                                <Button
-                                                                    variant="text"
-                                                                    size="large"
-                                                                    style={{ backgroundColor: '#0000FF', color: 'white', marginTop: '-30px',marginLeft: '110px' }}
-                                                                >
-                                                                    Add +
-                                                                </Button>
 
                                                             </div>
 
@@ -396,7 +416,7 @@ const StockIssue = () => {
                                                 <br/>
                                                 <br/>
                                                 <div class="col-3">
-                                                <Button variant='contained' size='large' onClick= {handleSubmit}>Submit</Button>
+                                                <Button variant='contained' size='large' onClick= {handleSubmit}>Issue Stock</Button>
                                                 </div>
                                             </div>
 

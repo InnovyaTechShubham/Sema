@@ -1,6 +1,6 @@
 import { ProductSchema } from "./ProductEntrySchema";
 import Axios from "axios"
-import { useState, React, CSSProperties, useRef } from 'react'
+import { useState, React, CSSProperties } from 'react'
 import { useFormik } from "formik";
 import "./ProductEntry.css";
 import { Button } from "react-bootstrap";
@@ -8,16 +8,11 @@ import { useNavigate, } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { Select, FormControl, InputLabel,FormHelperText } from "@mui/material";
 import { MenuItem } from "@mui/material";
-import addImage from '../assets/add-image.png';
-
-//Loader
 import LoaderOverlay from '../Loader/LoaderOverlay.js';
 
-// const override: CSSProperties = {
-//     display: "block",
-//     margin: "0 auto",
-//     borderColor: "red",
-// };
+
+
+
 
 
 
@@ -39,23 +34,13 @@ const initialValues = {
 
 
 const ProductEntry = () => {
-    const [open, setOpen] = useState(false);
 
     let [loading, setLoading] = useState(false);
-    let [color, setColor] = useState("#ffffff");
     let [producttype, setProductType] = useState("")
     let [category, setCategory] = useState("")
     let [subcategory, setSubCategory] = useState("")
     let [emergency, setEmergency] = useState("")
-    let [manufacturer, setManufacturer] = useState("")
 
-    //state variable to store the selected file
-    const [selectedFile, setSelectedFile] = useState(null);
-    const fileInputRef = useRef(null);
-
-    const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
-      };
 
     const selectionChangeHandler = (event) => {
         setProductType(event.target.value);
@@ -66,9 +51,7 @@ const ProductEntry = () => {
     const selectionChangeHandler3 = (event) => {
         setEmergency(event.target.value);
     };
-    const selectionChangeHandler4 = (event) => {
-        setManufacturer(event.target.value);
-    };
+    
     const selectionChangeHandler5 = (event) => {
         setSubCategory(event.target.value);
     };
@@ -142,13 +125,7 @@ const ProductEntry = () => {
         { value: "Radiation Therapy Equipment", label: "Radiation Therapy Equipment" }]
 
       };
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+  
     const navigate = useNavigate();
     const navigateToVerify = () => {
         navigate('/');
@@ -186,48 +163,21 @@ const ProductEntry = () => {
                 const loadUsers = async () => {
                     setLoading(true);
                     const response = await Axios.post("http://localhost:4000/postproducts", product);
-                    //let userData = (await response).data.token;
-                    //let id = (await response).data.id;
-                   // console.log(userData);
-                    //localStorage.setItem("token", userData)
-                    //localStorage.setItem("id", id)
+                    window.location = '/productentry'
                     alert("Product Registered Successfully")
+                    setLoading(false);
+
                     
                     
                 };
                 loadUsers();
 
-                /*try {
-                    return await Axios.get('http://localhost:4000/api/users').then(content => content.data);
-                  } catch (error) {
-                    throw {
-                      code: error.code,
-                      message: error.message,
-                      responseStatus: error.response?.status,
-                      url
-                    };
-                  }*/
-                /*Axios.post('http://localhost:4000/api/users',post).then(response => {
-                    localStorage.setItem("token", response.message);
-                    console.log(response.message)
-                  });*/
-
-
-
-                // const { user: res } =  Axios.post(url, post);
-                // localStorage.setItem("token", response.message);
-                //console.show(response.message)
-                // window.location = "/login";
-                //return <HospitalRegistration/>
-                /* ReactDOM.render(
-                     <Router>
-                       <Login />
-                     </Router>,
-                     document.getElementById('root')
-                   );*/
+             
             } catch (error) {
                 alert("Error Registering/Product Already Exist")
                 console.error("Error creating Product:", error);
+                setLoading(false);
+
             }
             action.resetForm();
         },
@@ -235,7 +185,7 @@ const ProductEntry = () => {
 
     return (
         <div>
-            <LoaderOverlay loading={loading}/>
+             <LoaderOverlay loading={loading}/>
             <section
                 class="p-5 w-100"
                 style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
@@ -255,7 +205,7 @@ const ProductEntry = () => {
                                                 
                                                     <InputLabel  id="demo-simple-select-label">Product Type*</InputLabel>
                                                     <Select
-                                                         sx={{ backgroundColor:"#FFFF" , height:"80%"   }}
+                                                         sx={{ backgroundColor:"#FFFF" , height:"50%"   }}
                                                         labelId="demo-simple-select-label"
                                                         id="product-type"
                                                         value={producttype}
@@ -278,7 +228,7 @@ const ProductEntry = () => {
                                                
                                                     <InputLabel id="demo-simple-select-label">Category*</InputLabel>
                                                     <Select
-                                                     sx={{ backgroundColor:"#FFFF", height:"80%"   }}
+                                                     sx={{ backgroundColor:"#FFFF", height:"50%"   }}
                                                         labelId="demo-simple-select-label"
                                                         id="category"
                                                         value={category}
@@ -306,7 +256,7 @@ const ProductEntry = () => {
                                                
                                                     <InputLabel id="demo-simple-select-label">Sub Category*</InputLabel>
                                                     <Select
-                                                     sx={{ backgroundColor:"#FFFF", height:"80%"   }}
+                                                     sx={{ backgroundColor:"#FFFF", height:"50%"   }}
                                                         labelId="demo-simple-select-label"
                                                         id="category"
                                                         value={subcategory}
@@ -332,7 +282,7 @@ const ProductEntry = () => {
                                             </div>
                                             <div className="row mt-3 w-100">
                                                 <label htmlFor="last`" className="form-label">
-                                                    Product UPC/Product Name/Manufacturer
+                                                    Product UPC/Product Name/Manufacturer*
                                                 </label>
                                                 <input
                                                     id="upccode"
@@ -352,7 +302,7 @@ const ProductEntry = () => {
                                             </div>
                                             <div className="row mt-3 w-100 ">
                                                     <label htmlFor="first" className="form-label">
-                                                        Product Name
+                                                        Product Name*
                                                     </label>
                                                     <input
                                                         id="name"
@@ -421,40 +371,45 @@ const ProductEntry = () => {
 
                                     <div class="col md-5 ">
                                         <br />
-                                        <br />
-                                        <br />
-                                        <br />
-                                        
-                                        
-                                        <div class="row w-100 ">
-
-                                            <img
-                                                src={addImage}
-                                                height={400}
-                                                alt=""
-                                                style={{ marginLeft: '10px' }}
-                                            />
-
-                                        </div>
-                                        <br />
+                                            <br />
+                                            <br />
+                                            <br />
 
 
-                                        <div className="row w-100">
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={handleFileChange}
-                                                style={{ display: 'none' }}
-                                                id="file-input"
-                                                ref={fileInputRef}
-                                            />
-                                            <Button
-                                                variant="primary"
-                                                size="lg"
-                                                onClick={() => fileInputRef.current.click()}
+                                            <Box
+                                                sx={{
+                                                    border: "1px solid black",
+                                                    borderRadius: "5px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    width: "100%",
+                                                    height: 500,
+                                                }}
                                             >
-                                                Add Product Image
-                                            </Button>
+                                                <img
+                                                    width="96"
+                                                    height="96"
+                                                    src="https://img.icons8.com/color/96/add-image.png"
+                                                    alt="add-image"
+                                                />
+                                            </Box>
+                                            <br />
+
+
+                                            <div class="row w-100">
+
+
+
+                                        <Button
+                                                        variant="primary"
+                                                        size="lg"
+                                                        //onClick={handleSubmit}
+                                                    >
+                                                       Add Product Image
+                                                    </Button>
+                                            
+
                                         </div>
 
 
@@ -510,7 +465,7 @@ const ProductEntry = () => {
                                                         size="lg"
                                                         onClick={handleSubmit}
                                                     >
-                                                        Register
+                                                        Add Product
                                                     </Button>
                                                 </div>
                                             </div>

@@ -1,6 +1,6 @@
 import { useEffect,useState, React, CSSProperties } from 'react'
 import { useFormik } from "formik";
-// import ClipLoader from "react-spinners/ClipLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import { Button } from "react-bootstrap";
 import { loginAuth } from "./LoginAuth.js";
@@ -10,8 +10,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
-//Loader
 import LoaderOverlay from '../Loader/LoaderOverlay.js';
 
 
@@ -19,11 +17,14 @@ import { useParams, Link,useNavigate } from "react-router-dom";
 const initialValues = {
     email: "",
 };
-// const override: CSSProperties = {
-//     display: "block",
-//     margin: "0 auto",
-//     borderColor: "red",
-// };
+const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+};
+
+
+
 
 
 const EnterOtp = () => {
@@ -93,7 +94,12 @@ const code = otp.toString();
           else{
            alert("Code MisMatch")
           }
-		
+
+            
+
+			
+            
+
              action.resetForm();
         },
     });
@@ -101,7 +107,7 @@ const code = otp.toString();
 
     return (
         <div>
-	    <LoaderOverlay loading={loading}/>
+              <LoaderOverlay loading={loading}/>
             <section
                 class="p-5 w-100"
                 style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
@@ -121,7 +127,7 @@ const code = otp.toString();
                                         />
                                         <p class="text-center h1 fw-bold mb-5 mt-4">Verify</p>
                                         <form onSubmit={handleSubmit}>
-                                            <div className="row">
+                                            
                                                 <div className="row mt-3">
                                                     <label htmlFor="first" className="form-label">
                                                         Verification Code*
@@ -141,17 +147,9 @@ const code = otp.toString();
                                                         </small>
                                                     ) : null}
                                                 </div>
-                                                {/* // <ClipLoader
-                                                //         color={color}
-                                                //         loading={loading}
-                                                //         cssOverride={override}
-                                                //         size={100}
-                                                //         aria-label="Loading Spinner"
-                                                //         data-testid="loader"
-                                                //     /> */}
-                                                
+                                              
                                         
-                                            </div>
+                                            
                                            
                                            
                                             

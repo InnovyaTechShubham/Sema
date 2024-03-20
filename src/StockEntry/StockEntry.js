@@ -11,16 +11,13 @@ import { Select, FormControl, InputLabel,FormHelperText } from "@mui/material";
 import {DatePicker} from '@mui/x-date-pickers'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import addImage from '../assets/add-image.png';
-
-//Loader
 import LoaderOverlay from '../Loader/LoaderOverlay.js';
+import "./StockEntry.css"
 
-// const override: CSSProperties = {
-//     display: "block",
-//     margin: "0 auto",
-//     borderColor: "red",
-// };
+
+
+
+
 
 const initialValues = {
     productid: "",
@@ -29,6 +26,10 @@ const initialValues = {
     totalquantity: "",
     doe: "",
     dom: "",
+    
+
+
+
 };
 
 
@@ -41,6 +42,7 @@ const StockEntry = () => {
      const [id,setId] = useState(null)
      const [doe,setDoe] = useState(null)
      const [dom,setDom] = useState(null)
+     
 
 
 
@@ -97,7 +99,7 @@ const StockEntry = () => {
     getprod();
     const [open, setOpen] = useState(false);
 
-    let [loading, setLoading] = useState(false);
+   
     let [color, setColor] = useState("#ffffff");
     
     let [name, setName] = useState("")
@@ -198,7 +200,6 @@ const StockEntry = () => {
 
     return (
         <div>
-            <LoaderOverlay loading={loading}/>
             <section
                 class="p-5 w-100"
                 style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
@@ -236,7 +237,7 @@ const StockEntry = () => {
                                             </div>
                                             <div className="row mt-3">
                                                 <label htmlFor="first" className="form-label">
-                                                    Product UPC/Product Name/Manufacturer*
+                                                    Product UPC/Product Name/Manufacturer
                                                 </label>
                                                 <input
                                                     id="firstname"
@@ -257,7 +258,7 @@ const StockEntry = () => {
                                             
                                             <div className="row mt-3">
                                                 <label htmlFor="last`" className="form-label">
-                                                    Manufacturer*
+                                                    Manufacturer
                                                 </label>
                                                 <input
                                                     id="phone"
@@ -279,7 +280,7 @@ const StockEntry = () => {
                                             <div className="row mt-3">
                                                
                                                     <label htmlFor="first" className="form-label">
-                                                        Product Type*
+                                                        Product Type
                                                     </label>
                                                     <input
                                                         id="email"
@@ -302,7 +303,7 @@ const StockEntry = () => {
                                             <div className="row mt-3">
                                                
                                                     <label htmlFor="first" className="form-label">
-                                                        Product Category/Sub Category*
+                                                        Product Category/Sub Category
                                                     </label>
                                                     <input
                                                         id="address"
@@ -324,36 +325,48 @@ const StockEntry = () => {
                                             </div>
                                         
                                     </div>
-
+                                    <br/>
                                     <div class="col md-5 ">
                                     <br />   
-                                    <br />
-                                        <br />
-                                        <br />
-                                        <br />
+                                    
+                                       
                                        
 
-                                        <div className="row">
-                                            <img
-                                                src={addImage}
-                                                height={350}
-                                                style={{ width: 'auto', marginLeft: '100px' }}
-                                                alt=""
-                                            />
+                                        <div class="row  ">
+                                            
+                                           
+                                        <Box
+                                                sx={{
+                                                    border: "1px solid black",
+                                                    borderRadius: "5px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    width: "100%",
+                                                    margin: "10px",
+                                                    height: 500,
+                                                }}
+                                            >
+                                                <img
+                                                    width="96"
+                                                    height="96"
+                                                    src="https://img.icons8.com/color/96/add-image.png"
+                                                    alt="add-image"
+                                                />
+                                            </Box>
                                         </div>
                                         <br />
-                                        <div className="row align-items-right">
-                                            <div className="col">
-                                                <Button
-                                                    variant="text"
-                                                    size="large"
-                                                    style={{ backgroundColor: '#0000FF', color: 'white', marginLeft: '155px' }}
-                                                >
-                                                    Add Product Image
-                                                </Button>
-                                            </div>
-                                        </div>
 
+
+                                        <div class="row align-items-right">
+                                        
+                                            <div class="row">
+                                            
+                                                
+
+                                            </div>
+
+                                        </div>
 
 
                                     </div>
@@ -362,7 +375,7 @@ const StockEntry = () => {
                                     <div class="row">
 
 
-                                        <p class="text-left h2 mb-3 mt-4">Stock Details:</p>
+                                        <p class="text-left h2 mb-3 mt-4">Stock Details</p>
                                     
                                             <div className="row mt-3">
                                                 <div className="col text-left">
@@ -422,10 +435,12 @@ const StockEntry = () => {
                                                     ) : null}
                                                 </div>
                                             </div>
-                                            <div className="row mt-3">
+                                            <br/>
+                                            <br/>
+                                            <div className="row mt-3 justify-items-center">
 
 
-                                                <div className="col ">
+                                                <div className="col text-center">
                                                        
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <DatePicker
@@ -435,12 +450,13 @@ const StockEntry = () => {
                                                     />
                                                     </LocalizationProvider>
                                                     </div>
-                                                <div className="col ">
+                                                <div className="col text-center">
                                                 
                                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <DatePicker
                                                         label="Date of Expiry*"
                                                         value={doe}
+                                                        backgroundColor="#ffffff"
                                                         onChange={(newValue) => setDoe(newValue)}
                                                     />
                                                     </LocalizationProvider>
@@ -448,20 +464,19 @@ const StockEntry = () => {
                                             </div>
                                             <br/>
                                             <br/>
-                                            <div style={{ marginTop: '20px' }}>
-                                                <div class="row justify-content-around">
-                                                    
-                                                    <div class="col-3
-                                                    ">
-                                                    <Button variant='outlined' onClick= {resetForm} size='large' >Clear</Button>
-                                                    </div>
-                                                    <br/>
-                                                    <br/>
-                                                    <div class="col-3">
-                                                    <Button variant='contained' onClick= {handleSubmit} size='large'>Submit</Button>
-                                                    </div>
+                                            <br/>
+                                            <br/>
+                                            <div class="row justify-content-around">
+                                                <br/>
+                                                <div class="col-3">
+                                                <Button variant='outlined' onClick= {resetForm} size='large' >Clear</Button>
                                                 </div>
-                                            </div>    
+                                                <br/>
+                                                <br/>
+                                                <div class="col-3">
+                                                <Button variant='contained' onClick= {handleSubmit} size='large'>Add Stock</Button>
+                                                </div>
+                                            </div>
                                             
 
                                         

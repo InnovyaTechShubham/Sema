@@ -7,6 +7,7 @@ const User = require("./model/user");
 const Product = require("./model/product"); 
 const Stock = require("./model/stock");  
 const Issued = require("./model/issue");  
+const Department = require("./model/department");  
 
 
 const NewUser = require("./model/userschema.js")
@@ -24,9 +25,8 @@ mongoose.set('strictQuery', true);
 
 
 // connect to mongo 
-// mongoose.connect("mongodb+srv://apoorvinfo:Apj171096@cluster0.af4k34f.mongodb.net/?retryWrites=true&w=majority"
-mongoose.connect("mongodb+srv://mumukshsrivastava:$Paavni14$@cluster.mongodb.net/databaseName?retryWrites=true&w=majority"    
-, {
+mongoose.connect("mongodb+srv://apoorvinfo:Apj171096@cluster0.af4k34f.mongodb.net/?retryWrites=true&w=majority"
+    , {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 })
@@ -70,6 +70,13 @@ app.get('/hospitals', async (req, res) => {
   app.get('/users', async (req, res) => {
     //const { walletAddress } = req.params;
     const document = await NewUser.findOne(req.body.email,req.body.password)
+    
+    res.json({ document });
+  });  
+
+  app.get('/departments', async (req, res) => {
+    //const { walletAddress } = req.params;
+    const document = await Department.find()
     
     res.json({ document });
   });  
@@ -227,6 +234,25 @@ app.post("/postissues", async (req, res) => {
 
   try {
     await issue.save();
+    res.send("inserted stock issued..");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/postdepartment", async (req, res) => {
+  const department = req.body.department 
+  
+  
+
+  const dep = new Department({
+   department,
+    
+   
+  });
+
+  try {
+    await dep.save();
     res.send("inserted stock issued..");
   } catch (err) {
     console.log(err);

@@ -1,6 +1,6 @@
 import React from 'react'
 import 
- {BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify}
+ {BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify, BsHospital}
  from 'react-icons/bs'
 import { Text } from 'recharts'
 
@@ -15,11 +15,11 @@ function Header({OpenSidebar}) {
             <BsSearch  className='icon'/>
         </div>
         <div className='header-right'>
-        <Text /> {hospitalname}
+        <Text /> VEDANTA
       </div>
         <div className='header-right'>
         
-            <BsPersonCircle className='icon'/>
+            <BsHospital className='icon'/>
         </div>
     </header>
   )

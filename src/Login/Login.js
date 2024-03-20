@@ -1,5 +1,5 @@
 import { useState, React, CSSProperties } from 'react'
-// import ClipLoader from "react-spinners/ClipLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 import { useFormik } from "formik";
 //import "./HospitalRegistration.css";
 import { Button } from "react-bootstrap";
@@ -12,17 +12,17 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-//Loader
-import LoaderOverlay from '../Loader/LoaderOverlay.js';
-
-// const override: CSSProperties = {
-//     display: "block",
-//     margin: "0 auto",
-//     borderColor: "red",
-// };
+const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+};
 const initialValues = {
     email: "",
     password: "",
+
+
+
 };
 
 
@@ -90,7 +90,6 @@ const Login = () => {
     return (
         <div className='sweet-loading'>
             <div>
-                <LoaderOverlay loading={loading}/>
                 <section
                     class="p-5 w-100"
                     style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
@@ -150,46 +149,47 @@ const Login = () => {
                                                             </small>
                                                         ) : null}
                                                     </div>
-                                                    {/* // <ClipLoader
-                                                    //     color={color}
-                                                    //     loading={loading}
-                                                    //     cssOverride={override}
-                                                    //     size={100}
-                                                    //     aria-label="Loading Spinner"
-                                                    //     data-testid="loader"
-                                                    // /> */}
-                                                </div>
+                                                    <ClipLoader
+                                                        color={color}
+                                                        loading={loading}
+                                                        cssOverride={override}
+                                                        size={100}
+                                                        aria-label="Loading Spinner"
+                                                        data-testid="loader"
+                                                    />
+                                                       <div className="row mt-3">
 
-
-
-
-                                                <div className="row mt-3">
-
-
-
-                                                    <Button
-                                                        variant="primary"
-                                                        size="lg"
-                                                        onClick={handleSubmit}
-                                                    >
-                                                        Login
-                                                    </Button>
-
-                                                </div>
-                                                <div className="row mt-3">
-                                                    <br />
-                                                    <div className="col text-center actionButtons">
 
 
                                                         <Button
-                                                            variant="outlined"
+                                                            variant="primary"
                                                             size="lg"
-                                                            onClick={navigateToRegister}
+                                                            onClick={handleSubmit}
                                                         >
-                                                            New User? SignUp
+                                                            Login
                                                         </Button>
+
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <br />
+                                                        <div className="col text-center actionButtons">
+
+
+                                                            <Button
+                                                                variant="outlined"
+                                                                size="lg"
+                                                                onClick={navigateToRegister}
+                                                            >
+                                                                New User? SignUp
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 </div>
+
+
+
+
+
                                             </form>
                                         </div>
                                         <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
