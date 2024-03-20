@@ -391,13 +391,40 @@ const StockIssue = () => {
 
 
 
+<<<<<<< Updated upstream
                                                        
+=======
+>>>>>>> Stashed changes
 
 
-                                                        <div class="row align-items-right">
 
+<<<<<<< Updated upstream
                                                             <div class="row">
 
+=======
+                                                        <div class="row align-items-center">
+
+                                                            <div class="row">
+                                                                <Box
+                                                                    sx={{
+                                                                        border: "1px solid black",
+                                                                        borderRadius: "5px",
+                                                                        display: "flex",
+                                                                        justifyContent: "center",
+                                                                        alignItems: "center",
+                                                                        width: "100%",
+                                                                        margin: "10px",
+                                                                        height: 200,
+                                                                    }}
+                                                                >
+                                                                    <img
+                                                                        width="96"
+                                                                        height="96"
+                                                                        src="https://img.icons8.com/color/96/add-image.png"
+                                                                        alt="add-image"
+                                                                    />
+                                                                </Box>
+>>>>>>> Stashed changes
 
                                                             </div>
 

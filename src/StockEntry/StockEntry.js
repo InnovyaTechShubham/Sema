@@ -21,6 +21,8 @@ import "./StockEntry.css"
 
 const initialValues = {
     productid: "",
+    name:"",
+    phone:"",
     batchno: "",
     unitcost: "",
     totalquantity: "",
@@ -136,6 +138,8 @@ const StockEntry = () => {
 
             const stock = {
                 "productid": id,
+                "name":values.name,
+                "phone":values.phone,
                 "batchno": values.batchno,
                 "unitcost": values.unitcost,
                 "totalquantity": values.totalquantity,
@@ -375,8 +379,54 @@ const StockEntry = () => {
                                     <div class="row">
 
 
+<<<<<<< Updated upstream
                                         <p class="text-left h2 mb-3 mt-4">Stock Details</p>
+=======
+                                        <p class="text-left h2 mb-3 mt-4">Vendor Details</p>
+>>>>>>> Stashed changes
                                     
+                                        <div className="row mt-3">
+                                                <div className="col text-left">
+                                                    <label htmlFor="first" className="form-label">
+                                                        Name*
+                                                    </label>
+                                                    <input
+                                                        id="name"
+                                                        name="name"
+                                                        className="form-control"
+                                                        value={values.name}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    />
+                                                    {errors.name && touched.name ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.name}
+                                                        </small>
+                                                    ) : null}
+                                                </div>
+                                                <div className="col text-left">
+                                                    <label htmlFor="first" className="form-label">
+                                                        Phone Number*
+                                                    </label>
+                                                    <input
+                                                        id="phone"
+                                                        name="phone"
+                                                        className="form-control"
+                                                        value={values.phone}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        type="text"
+                                                    />
+                                                    {errors.phone && touched.phone ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.phone}
+                                                        </small>
+                                                    ) : null}
+                                                </div>
+                                               
+                                            </div>
+                                            
+                                        <p class="text-left h2 mb-3 mt-4">Stock Details</p>
                                             <div className="row mt-3">
                                                 <div className="col text-left">
                                                     <label htmlFor="first" className="form-label">
@@ -435,6 +485,10 @@ const StockEntry = () => {
                                                     ) : null}
                                                 </div>
                                             </div>
+<<<<<<< Updated upstream
+=======
+                                           
+>>>>>>> Stashed changes
                                             <br/>
                                             <br/>
                                             <div className="row mt-3 justify-items-center">

@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
-import data from './DataSource.json';
+import data from './UserDataSource.json';
 import { doc, jsPDF } from 'jspdf';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
@@ -80,7 +80,7 @@ function EditToolbar(props) {
   );
 }
 
-export default function FullFeaturedCrudGrid() {
+export default function UserData() {
 
   const [rows, setRows] = React.useState(data); //Process data without $oid
   const [rowModesModel, setRowModesModel] = React.useState({});
@@ -176,43 +176,40 @@ export default function FullFeaturedCrudGrid() {
   //Defining The columns from the JSON Object and include the Last two Buttons in that.
   const columns = [
 
+    
     {
-      field: 'date', headerName: 'Date', width: 150, align: 'left',
-      headerAlign: 'left', editable: true
-    },
-    {
-      field: 'type',
-      headerName: 'Type',
+      field: 'assignee',
+      headerName: 'Assignee',
 
-      width: 100,
+      width: 200,
 
       editable: true,
     },
     {
-      field: 'productname',
-      headerName: 'Product Name',
+      field: 'name',
+      headerName: 'Name',
 
       width: 220,
       editable: true,
     },
     {
-      field: 'manufacturer',
-      headerName: 'Manufacturer',
+      field: 'phoneno',
+      headerName: 'Phone No',
 
       width: 150,
       editable: true,
     },
 
     {
-      field: 'category',
-      headerName: 'Category',
+      field: 'email',
+      headerName: 'Email Address',
       width: 200,
       editable: true,
 
     },
     {
-      field: 'emergencytype',
-      headerName: 'Emergency Type',
+      field: 'status',
+      headerName: 'Status',
       width: 150,
       editable: true,
 
@@ -256,12 +253,7 @@ export default function FullFeaturedCrudGrid() {
             onClick={handleEditClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />
+        
 
         ];
       },
@@ -297,48 +289,7 @@ export default function FullFeaturedCrudGrid() {
                   <br />
                   <div className='row mt-3'>
 
-                    <div className='col'>
-                      <Stack direction="row" spacing={5}>
-                        <h4>
-                          Report for: Select One
-                        </h4>
-                        <Button
-                          color="primary"
-                          variant="contained"
-
-                          onClick={handlePrint}
-                        >
-                          Total Product
-                        </Button>
-                        <Button
-                          color="primary"
-                          variant="contained"
-
-                          onClick={handlePrint}
-                        >
-                          Availaible Product
-                        </Button>
-
-                        <Button
-                          color="primary"
-                          variant="contained"
-
-                          onClick={handlePrint}
-                        >
-                          Critical Product
-                        </Button>
-
-
-                        <Button
-                          color="primary"
-                          variant="contained"
-
-                          onClick={handlePrint}
-                        >
-                          Stock Issued
-                        </Button>
-                      </Stack>
-                    </div>
+                    
                   </div>
                   <br />
                   <br />
@@ -350,18 +301,10 @@ export default function FullFeaturedCrudGrid() {
                      
                       onClick={handlePrint}
                     >
-                      Filter
+                      Add User
                     </Button>
                     
-                    <Button
-                      color="primary"
-                      startIcon={<SaveIcon />}
-                      variant="contained"
-                      
-                      onClick={handlePrint}
-                    >
-                      Export To PDF
-                    </Button>
+                    
                     
                   </div>
                   

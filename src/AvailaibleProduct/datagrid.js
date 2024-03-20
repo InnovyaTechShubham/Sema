@@ -300,43 +300,9 @@ export default function FullFeaturedCrudGrid() {
                     <div className='col'>
                       <Stack direction="row" spacing={5}>
                         <h4>
-                          Report for: Select One
-                        </h4>
-                        <Button
-                          color="primary"
-                          variant="contained"
-
-                          onClick={handlePrint}
-                        >
-                          Total Product
-                        </Button>
-                        <Button
-                          color="primary"
-                          variant="contained"
-
-                          onClick={handlePrint}
-                        >
                           Availaible Product
-                        </Button>
-
-                        <Button
-                          color="primary"
-                          variant="contained"
-
-                          onClick={handlePrint}
-                        >
-                          Critical Product
-                        </Button>
-
-
-                        <Button
-                          color="primary"
-                          variant="contained"
-
-                          onClick={handlePrint}
-                        >
-                          Stock Issued
-                        </Button>
+                        </h4>
+                        
                       </Stack>
                     </div>
                   </div>
