@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Sidebar from "../Components/sidebar";
-import HeadMorescreen from "./HeadMorescreen";
+import Header from "../Components/header";
 import DateBox from "./DateBox";
 import DynamicTable from "../../Table/DynamicTable";
 
@@ -70,21 +70,16 @@ function TotalProducts() {
 
   return (
     <div className="grid-container">
-      <HeadMorescreen OpenSidebar={OpenSidebar} />
+      <Header />
       <Sidebar
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div style={{ marginTop: "50px" }}>
-        <DateBox />
-        <div
-          className="total-products-container"
-          style={{ marginLeft: "120px" }}
-        >
-          <div className="table-container">
-            <h2>Total Products</h2>
-            <DynamicTable columns={columns} data={data} />
-          </div>
+      <div className="total-products-container" style={{ marginLeft: "120px" }}>
+        <div className="table-container">
+          <h2>Total Products</h2>
+          <DateBox />
+          <DynamicTable columns={columns} data={data} />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Sidebar from "../Components/sidebar";
-import HeadMorescreen from "./HeadMorescreen";
+import Header from "../Components/header";
 import DateBox from "./DateBox";
 import DynamicTable from "../../Table/DynamicTable";
 
@@ -70,7 +70,7 @@ function StockOut() {
 
   return (
     <div className="grid-container">
-      <HeadMorescreen OpenSidebar={OpenSidebar} />
+      <Header />
       <Sidebar
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
