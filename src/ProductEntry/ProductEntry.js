@@ -24,6 +24,7 @@ const initialValues = {
     upccode: "",
     name: "",
     manufacturer: "",
+    origin:"",
     emergencytype: "",
     description: "",
 
@@ -40,6 +41,10 @@ const ProductEntry = () => {
     let [category, setCategory] = useState("")
     let [subcategory, setSubCategory] = useState("")
     let [emergency, setEmergency] = useState("")
+<<<<<<< Updated upstream
+=======
+    let [origin, setOrigin] = useState("")
+>>>>>>> Stashed changes
 
 
     const selectionChangeHandler = (event) => {
@@ -54,6 +59,9 @@ const ProductEntry = () => {
     
     const selectionChangeHandler5 = (event) => {
         setSubCategory(event.target.value);
+    };
+    const selectionChangeHandler6 = (event) => {
+        setOrigin(event.target.value);
     };
     const prodMap = {
         "Pharmaceuticals": [
@@ -152,6 +160,7 @@ const ProductEntry = () => {
                 "upccode": values.upccode,
                 "name": values.name,
                 "manufacturer": values.manufacturer,
+                "origin":origin,
                 "emergencytype": emergency,
                 "description": values.description,
               
@@ -340,6 +349,26 @@ const ProductEntry = () => {
                                                     ) : null}
                                                 
                                             </div>
+                                            
+                                            <div className="row mt-3 w-100">
+                                            <InputLabel id="demo-simple-select-label">Product Origin*</InputLabel>
+                                                    <Select
+                                                     sx={{ backgroundColor:"#FFFF", height:"50%"   }}
+                                                        labelId="demo-simple-select-label"
+                                                        id="category"
+                                                        value={origin}
+                                                        label="origin"
+                                                        onChange={selectionChangeHandler6}
+                                                        className="form-control"
+                                                    >
+
+
+                                                <MenuItem value={"usa"}>USA</MenuItem>
+                                                <MenuItem value={"korea"}>Korea</MenuItem>
+                                                <MenuItem value={"india"}>India</MenuItem>
+                                                <MenuItem value={"australia"}>australia</MenuItem>
+                                            </Select>
+                                            </div>
                                             <div className="row mt-4 w-100" backgroundColor="#FFFF">
                                             
                                                 
@@ -347,7 +376,7 @@ const ProductEntry = () => {
                                                         <InputLabel id="demo-simple-select-label">Emergency Type*</InputLabel>
                                                        
                                                         <Select
-                                                            sx={{ backgroundColor:"#FFFF" , height:"80%"   }}
+                                                            sx={{ backgroundColor:"#FFFF" , height:"50%"   }}
                                                             labelId="demo-simple-select-label"
                                                             id="emergencytype"
                                                             value={emergency}
