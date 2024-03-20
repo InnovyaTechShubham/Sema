@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import "../home.css";
 
-<<<<<<< Updated upstream
 import {
   BsFillArchiveFill,
   BsFillGrid3X3GapFill,
@@ -31,25 +30,6 @@ import {
 } from "recharts";
 import axios from "axios";
 import { useState, CSSProperties } from "react";
-=======
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import "./home.css"
-
-import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill }
-  from 'react-icons/bs'
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
-  from 'recharts';
-import axios from 'axios'
-import { useState, CSSProperties } from 'react'
->>>>>>> Stashed changes
 
 function createData(date, action, type, product, quantity, emergencytype) {
   return { date, action, type, product, quantity, emergencytype };
@@ -119,16 +99,16 @@ function Home() {
 
   const [issuedlen, setIssuedlen] = useState(null);
   const handleTotal = () => {
-    window.location = "/totalproduct"
+    window.location = "/totalproduct";
   };
   const handleAvailaible = () => {
-    window.location = "/availaibleproduct"
+    window.location = "/availaibleproduct";
   };
   const handleBuffer = () => {
-    window.location = "/bufferstock"
+    window.location = "/bufferstock";
   };
   const handleStockOut = () => {
-    window.location = "/stockout"
+    window.location = "/stockout";
   };
 
   const getprod = async () => {
@@ -223,39 +203,47 @@ function Home() {
                     <h3>DASHBOARD</h3>
                   </div>
 
-<<<<<<< Updated upstream
                   <div className="main-cards">
                     <div className="card">
                       <div className="card-inner">
-                        <h3>TOTAL</h3>
+                        <h4>TOTAL </h4>
                         <BsFillArchiveFill className="card_icon" />
                       </div>
 
                       <h1>{prodlen}</h1>
-                      <h5>More</h5>
+                      <Button variant="text" onClick={handleTotal}>
+                        More
+                      </Button>
                     </div>
                     <div className="card">
                       <div className="card-inner">
-                        <h3>AVAILAIBLE</h3>
+                        <h4>AVAILAIBLE</h4>
                         <BsFillGrid3X3GapFill className="card_icon" />
                       </div>
                       <h1>{stocklen}</h1>
-                      <h5>More</h5>
+                      <Button variant="text" onClick={handleAvailaible}>
+                        More
+                      </Button>
                     </div>
                     <div className="card">
                       <div className="card-inner">
-                        <h3>CRITICAL</h3>
+                        <h4>BUFFER STOCK</h4>
                         <BsPeopleFill className="card_icon" />
                       </div>
-                      <h5>More</h5>
+                      <h1>6</h1>
+                      <Button variant="text" onClick={handleBuffer}>
+                        More
+                      </Button>
                     </div>
                     <div className="card">
                       <div className="card-inner">
-                        <h3>ISSUED</h3>
+                        <h4>STOCK OUT</h4>
                         <BsFillBellFill className="card_icon" />
                       </div>
                       <h1>{issuedlen}</h1>
-                      <h5>More</h5>
+                      <Button variant="text" onClick={handleStockOut}>
+                        More
+                      </Button>
                     </div>
                   </div>
                   <div className="row" align-items-start>
@@ -266,61 +254,6 @@ function Home() {
                     component={Paper}
                     className="table table-primary"
                   >
-=======
-                  <div className='main-cards'>
-                    <div className='card'>
-                      <div className='card-inner'>
-                        <h4>TOTAL </h4>
-                        <BsFillArchiveFill className='card_icon' />
-                      </div>
-
-                      <h1>{prodlen}</h1>
-                      <Button variant="text" onClick={handleTotal}>
-                         More
-                      </Button>
-
-
-                    </div>
-                    <div className='card'>
-                      <div className='card-inner'>
-                        <h4>AVAILAIBLE</h4>
-                        <BsFillGrid3X3GapFill className='card_icon' />
-                      </div>
-                      <h1>{stocklen}</h1>
-                      <Button variant="text" onClick={handleAvailaible}>
-                         More
-                      </Button>
-
-                    </div>
-                    <div className='card'>
-                      <div className='card-inner'>
-                        <h4>BUFFER STOCK</h4>
-                        <BsPeopleFill className='card_icon' />
-                      </div>
-                      <h1>6</h1>
-                      <Button variant="text" onClick={handleBuffer}>
-                         More
-                      </Button>
-
-                    </div>
-                    <div className='card'>
-                      <div className='card-inner'>
-                        <h4>STOCK OUT</h4>
-                        <BsFillBellFill className='card_icon' />
-                      </div>
-                      <h1>{issuedlen}</h1>
-                      <Button variant="text" onClick={handleStockOut}>
-                         More
-                      </Button>
-
-                    </div>
-                  </div>
-                  <div className='row' align-items-start>
-                    <p class="text-right h3 mb-3 mt-4">Recent Activity</p>
-                  </div>
-
-                  <TableContainer component={Paper} className="table table-primary">
->>>>>>> Stashed changes
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                       <TableHead>
                         <TableRow>
@@ -360,21 +293,11 @@ function Home() {
                 </div>
               </div>
             </div>
-<<<<<<< Updated upstream
           </div>
         </section>
       </div>
     </main>
   );
-=======
-
-          </div>
-
-        </section>
-      </div >
-    </main >
-  )
->>>>>>> Stashed changes
 }
 
 export default Home;
