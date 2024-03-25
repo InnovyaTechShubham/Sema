@@ -8,6 +8,7 @@ const Product = require("./model/product");
 const Stock = require("./model/stock");  
 const Issued = require("./model/issue");  
 const Department = require("./model/department");  
+const History = require("./model/history");  
 
 
 const NewUser = require("./model/userschema.js")
@@ -80,6 +81,15 @@ app.get('/hospitals', async (req, res) => {
     
     res.json({ document });
   });  
+
+  app.get('/history', async (req, res) => {
+    //const { walletAddress } = req.params;
+    const document = await History.find()
+    
+    res.json({ document });
+  }); 
+
+ 
 
 app.post("/posthospitals", async (req, res) => {
   const hospitalname = req.body.hospitalname;
@@ -253,6 +263,34 @@ app.post("/postdepartment", async (req, res) => {
 
   try {
     await dep.save();
+    res.send("inserted stock issued..");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/posthistory", async (req, res) => {
+  const date = req.body.date 
+  const productid = req.body.productid 
+  const quantity = req.body.quantity 
+  const type = req.body.type 
+  
+  
+
+  const history = new History({
+    date,
+    productid,
+    quantity,
+    type,
+   
+    
+   
+  });
+   
+ 
+
+  try {
+    await history.save();
     res.send("inserted stock issued..");
   } catch (err) {
     console.log(err);

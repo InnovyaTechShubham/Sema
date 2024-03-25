@@ -1,10 +1,6 @@
 import React from 'react'
 import 
-<<<<<<< Updated upstream
- {BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify, BsHospital}
-=======
  {BsJustify, BsHospital, BsArrowReturnLeft}
->>>>>>> Stashed changes
  from 'react-icons/bs'
 import { Text } from 'recharts'
 import { styled, alpha } from '@mui/material/styles';
@@ -79,17 +75,6 @@ function Header({OpenSidebar}) {
         <div className='menu-icon'>
             <BsJustify className='icon' onClick={OpenSidebar}/>
         </div>
-<<<<<<< Updated upstream
-        <div className='header-left'>
-            <BsSearch  className='icon'/>
-        </div>
-        <div className='header-right'>
-        <Text /> VEDANTA
-      </div>
-        <div className='header-right'>
-        
-            <BsHospital className='icon'/>
-=======
         
         <div className='header-left h3'>
         
@@ -104,7 +89,6 @@ function Header({OpenSidebar}) {
           BACK
         </Button>
          
->>>>>>> Stashed changes
         </div>
         
         <div className='header-right h2'>

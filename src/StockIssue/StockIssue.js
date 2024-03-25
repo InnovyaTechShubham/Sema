@@ -148,6 +148,11 @@ const StockIssue = () => {
         validationSchema: StockIssueSchema,
         onSubmit: (values, action) => {
             console.log("1")
+            let newDate = new Date()
+            let date = newDate.getDate();
+            let month = newDate.getMonth() + 1;
+            let year = newDate.getFullYear();
+            const fulldate = `${year}/${month<10?`0${month}`:`${month}`}/${date}`;
 
 
             const stock = {
@@ -159,16 +164,25 @@ const StockIssue = () => {
                 
 
             };
+            const history = {
+                "date" :fulldate,
+                "productid": id,
+                "quantity":values.quantityissued,
+                "type":"Product Issued",
+
+            }
 
             try {
                 console.log("2")
                 const loadUsers = async () => {
                     setLoading(true);
                     const response = await Axios.post("http://localhost:4000/postissues", stock);
+                    const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
                     let userData = (await response).data;
                   //  let id = (await response).data.id;
                     console.log(userData);
                     window.location = '/stockissue'
+                    console.log(historyresponse);
                    // localStorage.setItem("token", userData)
                    // localStorage.setItem("id", id)
                     //window.location = '/verify'
@@ -391,17 +405,9 @@ const StockIssue = () => {
 
 
 
-<<<<<<< Updated upstream
-                                                       
-=======
->>>>>>> Stashed changes
 
 
 
-<<<<<<< Updated upstream
-                                                            <div class="row">
-
-=======
                                                         <div class="row align-items-center">
 
                                                             <div class="row">
@@ -424,7 +430,6 @@ const StockIssue = () => {
                                                                         alt="add-image"
                                                                     />
                                                                 </Box>
->>>>>>> Stashed changes
 
                                                             </div>
 

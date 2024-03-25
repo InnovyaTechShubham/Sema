@@ -41,10 +41,7 @@ const ProductEntry = () => {
     let [category, setCategory] = useState("")
     let [subcategory, setSubCategory] = useState("")
     let [emergency, setEmergency] = useState("")
-<<<<<<< Updated upstream
-=======
     let [origin, setOrigin] = useState("")
->>>>>>> Stashed changes
 
 
     const selectionChangeHandler = (event) => {

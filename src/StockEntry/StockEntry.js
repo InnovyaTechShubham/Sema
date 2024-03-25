@@ -134,7 +134,11 @@ const StockEntry = () => {
         validationSchema: StockSchema,
         onSubmit: (values, action) => {
             console.log("1")
-
+            let newDate = new Date()
+            let date = newDate.getDate();
+            let month = newDate.getMonth() + 1;
+            let year = newDate.getFullYear();
+            const fulldate = `${year}/${month<10?`0${month}`:`${month}`}/${date}`;
 
             const stock = {
                 "productid": id,
@@ -149,13 +153,23 @@ const StockEntry = () => {
 
             };
 
+            const history = {
+                "date" :fulldate,
+                "productid": id,
+                "quantity":values.totalquantity,
+                "type":"Product Entry,"
+
+            }
+
             try {
                 console.log("2")
                 const loadUsers = async () => {
                     const response = await Axios.post("http://localhost:4000/poststocks", stock);
+                    const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
                     let userData = (await response).data;
                     //let id = (await response).data.id;
                     console.log(response);
+                    console.log(historyresponse);
                     console.log(userData);
                     //localStorage.setItem("token", userData)
                     //localStorage.setItem("id", id)
@@ -379,11 +393,7 @@ const StockEntry = () => {
                                     <div class="row">
 
 
-<<<<<<< Updated upstream
-                                        <p class="text-left h2 mb-3 mt-4">Stock Details</p>
-=======
                                         <p class="text-left h2 mb-3 mt-4">Vendor Details</p>
->>>>>>> Stashed changes
                                     
                                         <div className="row mt-3">
                                                 <div className="col text-left">
@@ -485,10 +495,7 @@ const StockEntry = () => {
                                                     ) : null}
                                                 </div>
                                             </div>
-<<<<<<< Updated upstream
-=======
                                            
->>>>>>> Stashed changes
                                             <br/>
                                             <br/>
                                             <div className="row mt-3 justify-items-center">
