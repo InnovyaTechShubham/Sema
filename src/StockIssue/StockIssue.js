@@ -126,28 +126,7 @@ const StockIssue = () => {
     } catch (error) {
       console.log(error);
     }
-<<<<<<< HEAD
-    const {
-        values,
-        errors,
-        touched,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        resetForm,
-    } = useFormik({
-        initialValues,
-        validationSchema: StockIssueSchema,
-        onSubmit: (values, action) => {
-            console.log("1")
-            let newDate = new Date()
-            let date = newDate.getDate();
-            let month = newDate.getMonth() + 1;
-            let year = newDate.getFullYear();
-            const fulldate = `${year}/${month<10?`0${month}`:`${month}`}/${date}`;
-=======
   };
->>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
 
   getprod();
 
@@ -166,38 +145,9 @@ const StockIssue = () => {
     }
   };
 
-<<<<<<< HEAD
-            };
-            const history = {
-                "date" :fulldate,
-                "productid": id,
-                "quantity":values.quantityissued,
-                "type":"Product Issued",
-
-            }
-
-            try {
-                console.log("2")
-                const loadUsers = async () => {
-                    setLoading(true);
-                    const response = await Axios.post("http://localhost:4000/postissues", stock);
-                    const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
-                    let userData = (await response).data;
-                  //  let id = (await response).data.id;
-                    console.log(userData);
-                    window.location = '/stockissue'
-                    console.log(historyresponse);
-                   // localStorage.setItem("token", userData)
-                   // localStorage.setItem("id", id)
-                    //window.location = '/verify'
-                    //setLoading(false);
-                   // handleClickOpen();
-                   alert("Stock Issued Successfully");
-=======
   getdep();
 
   const [open, setOpen] = useState(false);
->>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
 
   let [loading, setLoading] = useState(false);
   let [color, setColor] = useState("#ffffff");
@@ -289,239 +239,6 @@ const StockIssue = () => {
     },
   });
 
-<<<<<<< HEAD
-    return (
-        <div>
-            <section
-                class="p-5 w-100"
-                style={{ backgroundColor: "#eee", borderRadius: ".5rem .5rem 0 0" }}
-            >
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card text-black" style={{ borderRadius: "25px" }}>
-                            <div class="card-body p-md-3">
-                                <div class="col">
-                                    <div class="row mt-3">
-
-                                        <p class="text-left h3 mb-3 mt-4">Issued To:</p>
-                                        <form onSubmit={handleSubmit}>
-                                            <div className="row">
-                                                <div className="col">
-                                                    <label htmlFor="first" className="form-label">
-                                                        First Name*
-                                                    </label>
-                                                    <input
-                                                        id="firstname"
-                                                        name="firstname"
-                                                        className="form-control"
-                                                        value={values.firstname}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {errors.firstname && touched.firstname ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.firstname}
-                                                        </small>
-                                                    ) : null}
-                                                </div>
-                                                <div className="col">
-                                                    <label htmlFor="first" className="form-label">
-                                                        Last Name*
-                                                    </label>
-                                                    <input
-                                                        id="lastname"
-                                                        name="lastname"
-                                                        className="form-control"
-                                                        value={values.lastname}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        type="text"
-                                                    />
-                                                    {errors.lastname && touched.lastname ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.lastname}
-                                                        </small>
-                                                    ) : null}
-                                                </div>
-
-                                                <div className="col">
-                                                <div className="row">  
-                                                <InputLabel  id="demo-simple-select-label">Department*</InputLabel>
-                                                    <Select
-                                                         sx={{ backgroundColor:"#FFFF" , height:"50%"   }}
-                                                        labelId="demo-simple-select-label"
-                                                        id="department"
-                                                        value={dep}
-                                                        label="Department"
-                                                        onChange={e => setDep(e.target.value)}
-
-                                                >
-                                                    {department.map((value, key) => (
-                                                        <MenuItem
-                                                            key={key}
-                                                            value={value}>
-                                                            {value}
-                                                        </MenuItem>
-                                                    ))}
-
-                                                </Select>
-                                                    
-                                                </div>
-                                            </div>
-                                            </div>
-
-
-
-                                            <div className="row">
-                                                <br />
-                                                <br />
-                                                <br />
-
-                                                <p class="text-left h3  mb-3 mt-4">Stock Issued:</p>
-                                                <div className="col">
-                                                    <div className="row">
-                                                        <div className="row">
-                                                            <InputLabel id="demo-simple-select-label">Product Name*</InputLabel>
-                                                            <Select
-                                                                sx={{ backgroundColor: "#FFFF", height: "50%" }}
-                                                                labelId="demo-simple-select-label"
-                                                                id="product-name"
-                                                                value={name}
-                                                                label="Product Name"
-                                                                onChange={e => setName(e.target.value)}
-
-                                                            >
-                                                                {prodnames.map((value, key) => (
-                                                                    <MenuItem
-                                                                        key={key}
-                                                                        value={value}>
-                                                                        {value}
-                                                                    </MenuItem>
-                                                                ))}
-
-                                                            </Select>
-                                                        </div>
-                                                        <br />
-                                                        <div className="row">
-
-                                                            <div className="col text-left">
-                                                                <label htmlFor="first" className="form-label">
-                                                                Product UPC
-                                                                </label>
-                                                                <input
-                                                                    id="lastname"
-                                                                    name="lastname"
-                                                                    className="form-control"
-                                                                    placeholder={upc}
-                                                                    value={values.upccode}
-                                                                    onChange={handleChange}
-                                                                    onBlur={handleBlur}
-                                                                    type="text"
-                                                                    disabled={true}
-                                                                />
-                                                                
-                                                            </div>
-                                                            <div className="col text-left">
-                                                                <label htmlFor="last`" className="form-label">
-                                                                    Manufacturer
-                                                                </label>
-                                                                <input
-                                                                    id="phone"
-                                                                    name="phone"
-                                                                    className="form-control"
-                                                                    value={values.phone}
-                                                                    placeholder={manufacturer}
-                                                                    onChange={handleChange}
-                                                                    onBlur={handleBlur}
-                                                                    disabled={true}
-                                                                />
-                                                                
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <label htmlFor="last`" className="form-label">
-                                                                Quantity Issued*
-                                                            </label>
-                                                            <input
-                                                                id="quantityissued"
-                                                                name="quantityissued"
-                                                                className="form-control"
-                                                                value={values.quantityissued}
-                                                                onChange={handleChange}
-                                                                onBlur={handleBlur}
-                                                               
-                                                            />
-                                                            {errors.quantityissued && touched.quantityissued ? (
-                                                                <small className="text-danger mt-1">
-                                                                    {errors.quantityissued}
-                                                                </small>
-                                                            ) : null}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br/>
-                                                <div className="col">
-                                                    <br/>
-                                                    <div class="col md-5 ">
-
-
-
-
-
-
-                                                        <div class="row align-items-center">
-
-                                                            <div class="row">
-                                                                <Box
-                                                                    sx={{
-                                                                        border: "1px solid black",
-                                                                        borderRadius: "5px",
-                                                                        display: "flex",
-                                                                        justifyContent: "center",
-                                                                        alignItems: "center",
-                                                                        width: "100%",
-                                                                        margin: "10px",
-                                                                        height: 200,
-                                                                    }}
-                                                                >
-                                                                    <img
-                                                                        width="96"
-                                                                        height="96"
-                                                                        src="https://img.icons8.com/color/96/add-image.png"
-                                                                        alt="add-image"
-                                                                    />
-                                                                </Box>
-
-                                                            </div>
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br/>
-                                            <div class="row justify-content-around">
-                                                
-                                                <div class="col-3">
-                                                <Button variant='outlined' size='large' onClick= {resetForm}>Clear</Button>
-                                                </div>
-                                                <br/>
-                                                <br/>
-                                                <div class="col-3">
-                                                <Button variant='contained' size='large' onClick= {handleSubmit}>Issue Stock</Button>
-                                                </div>
-                                            </div>
-
-
-                                        </form>
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-=======
   return (
     <div>
       <section
@@ -573,7 +290,6 @@ const StockIssue = () => {
                               {errors.lastname}
                             </small>
                           ) : null}
->>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
                         </div>
 
                         <div className="col">
