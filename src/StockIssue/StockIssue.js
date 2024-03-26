@@ -9,6 +9,9 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import { Select, FormControl, InputLabel } from "@mui/material";
 import LoaderOverlay from "../Loader/LoaderOverlay.js";
+import fetchSearchResults from "../utils/fetchSearchResults.js";
+import SearchIcon from "@mui/icons-material/Search";
+import styled from "styled-components";
 
 const override: CSSProperties = {
   display: "block",
@@ -34,41 +37,92 @@ const StockIssue = () => {
   let [name, setName] = useState("");
   let [dep, setDep] = useState("");
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleSearchChange = async (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+
+    if (term.trim().length >= 3) {
+      try {
+        const results = await fetchSearchResults(term);
+        setSearchResults(results);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+        setSearchResults([]);
+      }
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleProductSelect = (product) => {
+    setSelectedProduct(product);
+    setUpc(product.upccode);
+    setManufacturer(product.manufacturer);
+    setId(product._id);
+    setName(product.name);
+    setSearchTerm("");
+    setSearchResults([]);
+  };
+
+  const highlightSearchTerm = (text) => {
+    const regex = new RegExp(`(${searchTerm})`, "gi");
+    const parts = text.split(regex);
+    return (
+      <span>
+        {parts.map((part, index) =>
+          regex.test(part) ? (
+            <b key={index} style={{ color: "black" }}>
+              {part}
+            </b>
+          ) : (
+            <span key={index}>{part}</span>
+          )
+        )}
+      </span>
+    );
+  };
+
+  const SearchIconWrapper = styled.div`
+    padding: 0 16px;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    alignitems: center;
+  `;
+
+  const SearchContainer = styled.div`
+    position: relative;
+    width: 100%;
+  `;
+
   const getprod = async () => {
     try {
       const url = `http://localhost:4000/products`;
       const { data } = await axios.get(url);
 
       const prodnamesarray = new Array(data.document.length);
-      //const cat = new Array(data.document.length)
-      //const type = new Array(data.document.length)
       const manu = new Array(data.document.length);
       const upc = new Array(data.document.length);
       const id = new Array(data.document.length);
 
       for (let i = 0; i < data.document.length; i++) {
         prodnamesarray[i] = data.document[i].name;
-        //cat[i] = data.document[i].category;
-        //type[i] = data.document[i].producttype;
         manu[i] = data.document[i].manufacturer;
         upc[i] = data.document[i].upccode;
         id[i] = data.document[i]._id;
       }
 
       setProdNames(prodnamesarray);
-      // window.location = "/"
-      const len = prodnames.length;
-      let flag = -1;
-      for (let a = 0; a < len; a++) {
-        if (prodnames[a] == name) {
-          flag = a;
-          break;
-        }
-      }
 
-      setUpc(upc[flag]);
-      setManufacturer(manu[flag]);
-      setId(id[flag]);
+      if (selectedProduct) {
+        setUpc(selectedProduct.upccode);
+        setManufacturer(selectedProduct.manufacturer);
+        setId(selectedProduct._id);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -273,20 +327,59 @@ const StockIssue = () => {
                               <InputLabel id="demo-simple-select-label">
                                 Product Name*
                               </InputLabel>
-                              <Select
-                                sx={{ backgroundColor: "#FFFF", height: "50%" }}
-                                labelId="demo-simple-select-label"
-                                id="product-name"
-                                value={name}
-                                label="Product Name"
-                                onChange={(e) => setName(e.target.value)}
-                              >
-                                {prodnames.map((value, key) => (
-                                  <MenuItem key={key} value={value}>
-                                    {value}
-                                  </MenuItem>
-                                ))}
-                              </Select>
+                              <div style={{ position: "relative" }}>
+                                <SearchIcon
+                                  style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "19px",
+                                    transform: "translateY(-50%)",
+                                  }}
+                                />
+                                <input
+                                  placeholder="Search Your Product"
+                                  aria-label="search"
+                                  value={searchTerm}
+                                  onChange={(e) => handleSearchChange(e)}
+                                  style={{
+                                    width: "100%",
+                                    paddingLeft: "40px",
+                                    paddingTop: "8px",
+                                    paddingBottom: "8px",
+                                    border: "1px solid #ccc",
+                                    borderRadius: "4px",
+                                  }}
+                                />
+                                {searchResults.length > 0 && (
+                                  <div
+                                    style={{
+                                      position: "absolute",
+                                      backgroundColor: "white",
+                                      width: "100%",
+                                      zIndex: 1,
+                                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                                      maxHeight: "200px",
+                                      overflowY: "auto",
+                                    }}
+                                  >
+                                    {searchResults.map((product) => (
+                                      <div
+                                        key={product._id}
+                                        style={{
+                                          padding: "8px",
+                                          cursor: "pointer",
+                                          fontSize: "16px",
+                                        }}
+                                        onClick={() =>
+                                          handleProductSelect(product)
+                                        }
+                                      >
+                                        {highlightSearchTerm(product.name)}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
                             </div>
                             <br />
                             <div className="row">
@@ -299,10 +392,7 @@ const StockIssue = () => {
                                   name="lastname"
                                   className="form-control"
                                   placeholder={upc}
-                                  value={values.upccode}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                  type="text"
+                                  value={upc}
                                   disabled={true}
                                 />
                               </div>
@@ -314,10 +404,8 @@ const StockIssue = () => {
                                   id="phone"
                                   name="phone"
                                   className="form-control"
-                                  value={values.phone}
                                   placeholder={manufacturer}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
+                                  value={manufacturer}
                                   disabled={true}
                                 />
                               </div>

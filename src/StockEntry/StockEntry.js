@@ -1,18 +1,20 @@
 import { StockSchema } from "./StockEntrySchema";
 import Axios from "axios";
-import { useState, React, CSSProperties } from "react";
+import { useState, useEffect, React, CSSProperties } from "react";
 import { useFormik } from "formik";
-//import "./HospitalRegistration.css";
 import { MenuItem, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import axios from "axios";
-import { Select, FormControl, InputLabel, FormHelperText } from "@mui/material";
+import { FormControl, InputLabel, FormHelperText } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import LoaderOverlay from "../Loader/LoaderOverlay.js";
 import "./StockEntry.css";
+import fetchSearchResults from "../utils/fetchSearchResults.js";
+import SearchIcon from "@mui/icons-material/Search";
+import styled from "styled-components";
 
 const initialValues = {
   productid: "",
@@ -26,6 +28,9 @@ const initialValues = {
 };
 
 const StockEntry = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [prodnames, setProdNames] = useState([]);
   const [category, setCategory] = useState(null);
   const [manufacturer, setManufacturer] = useState(null);
@@ -34,6 +39,66 @@ const StockEntry = () => {
   const [id, setId] = useState(null);
   const [doe, setDoe] = useState(null);
   const [dom, setDom] = useState(null);
+
+  const handleSearchChange = async (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+
+    if (term.trim().length >= 3) {
+      try {
+        const results = await fetchSearchResults(term);
+        setSearchResults(results);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+        setSearchResults([]);
+      }
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleProductSelect = (product) => {
+    setSelectedProduct(product);
+    setCategory(product.category);
+    setType(product.producttype);
+    setUpc(product.upccode);
+    setManufacturer(product.manufacturer);
+    setId(product._id);
+    setName(product.name);
+    setSearchTerm("");
+    setSearchResults([]);
+  };
+
+  const highlightSearchTerm = (text) => {
+    const regex = new RegExp(`(${searchTerm})`, "gi");
+    const parts = text.split(regex);
+    return (
+      <span>
+        {parts.map((part, index) =>
+          regex.test(part) ? (
+            <b key={index} style={{ color: "black" }}>
+              {part}
+            </b>
+          ) : (
+            <span key={index}>{part}</span>
+          )
+        )}
+      </span>
+    );
+  };
+
+  const SearchIconWrapper = styled.div`
+    padding: 0 16px;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    alignitems: center;
+  `;
+
+  const SearchContainer = styled.div`
+    position: relative;
+    width: 100%;
+  `;
 
   const getprod = async () => {
     try {
@@ -193,21 +258,59 @@ const StockEntry = () => {
                         <InputLabel id="demo-simple-select-label">
                           Product Name*
                         </InputLabel>
-                        <Select
-                          sx={{ backgroundColor: "#FFFF", height: "80%" }}
-                          labelId="demo-simple-select-label"
-                          id="product-name"
-                          value={name}
-                          label="Product Name"
-                          onChange={(e) => setName(e.target.value)}
-                        >
-                          {prodnames.map((value, key) => (
-                            <MenuItem key={key} value={value}>
-                              {value}
-                            </MenuItem>
-                          ))}
-                        </Select>
+                        <div style={{ position: "relative" }}>
+                          <SearchIcon
+                            style={{
+                              position: "absolute",
+                              top: "50%",
+                              left: "19px",
+                              transform: "translateY(-50%)",
+                            }}
+                          />
+                          <input
+                            placeholder="Search Your Product"
+                            aria-label="search"
+                            value={searchTerm}
+                            onChange={(e) => handleSearchChange(e)}
+                            style={{
+                              width: "100%",
+                              paddingLeft: "40px",
+                              paddingTop: "8px",
+                              paddingBottom: "8px",
+                              border: "1px solid #ccc",
+                              borderRadius: "4px",
+                            }}
+                          />
+                          {searchResults.length > 0 && (
+                            <div
+                              style={{
+                                position: "absolute",
+                                backgroundColor: "white",
+                                width: "100%",
+                                zIndex: 1,
+                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                                maxHeight: "200px",
+                                overflowY: "auto",
+                              }}
+                            >
+                              {searchResults.map((product) => (
+                                <div
+                                  key={product._id}
+                                  style={{
+                                    padding: "8px",
+                                    cursor: "pointer",
+                                    fontSize: "16px",
+                                  }}
+                                  onClick={() => handleProductSelect(product)}
+                                >
+                                  {highlightSearchTerm(product.name)}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
+
                       <div className="row mt-3">
                         <label htmlFor="first" className="form-label">
                           Product UPC/Product Name/Manufacturer

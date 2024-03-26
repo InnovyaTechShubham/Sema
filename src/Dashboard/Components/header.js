@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BsJustify, BsHospital, BsArrowReturnLeft } from "react-icons/bs";
 import { Text } from "recharts";
 import { styled, alpha } from "@mui/material/styles";
@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import fetchSearchResults from "../../utils/fetchSearchResults";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -67,6 +68,42 @@ function Header({ OpenSidebar }) {
   const handleBack = () => {
     window.location = "/";
   };
+
+  //Search Bar
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (searchTerm.length >= 3) {
+        const results = await fetchSearchResults(searchTerm);
+        setSearchResults(results);
+      } else {
+        setSearchResults([]);
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const highlightSearchTerm = (name) => {
+    const startIndex = name.toLowerCase().indexOf(searchTerm.toLowerCase());
+    if (startIndex === -1) return name;
+
+    const highlightedName =
+      name.slice(0, startIndex) +
+      "<span style='font-weight: bold;'>" +
+      name.slice(startIndex, startIndex + searchTerm.length) +
+      "</span>" +
+      name.slice(startIndex + searchTerm.length);
+
+    return <span dangerouslySetInnerHTML={{ __html: highlightedName }}></span>;
+  };
+
   return (
     <header className="header" style={{ backgroundColor: "#75b6fa" }}>
       <div className="menu-icon">
@@ -94,9 +131,38 @@ function Header({ OpenSidebar }) {
           <StyledInputBase
             placeholder="Search Your Product"
             inputProps={{ "aria-label": "search" }}
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
+          {searchResults.length > 0 && (
+            <div
+              style={{
+                position: "absolute",
+                backgroundColor: "white",
+                width: "100%",
+                zIndex: 1,
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                maxHeight: "200x",
+                overflowY: "auto",
+              }}
+            >
+              {searchResults.map((product) => (
+                <div
+                  key={product._id}
+                  style={{
+                    padding: "8px",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                  }}
+                >
+                  {highlightSearchTerm(product.name)}
+                </div>
+              ))}
+            </div>
+          )}
         </Search>
       </div>
+
       <div className="header-right h3">
         <BsHospital className="icon" />
         <Button
