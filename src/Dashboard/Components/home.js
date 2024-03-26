@@ -1,14 +1,25 @@
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import "../home.css";
 
+<<<<<<< HEAD
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import "./home.css"
+
+import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill }
+  from 'react-icons/bs'
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
+  from 'recharts';
+import axios from 'axios'
+import Axios from "axios"
+
+import { useState, CSSProperties } from 'react'
+=======
 import {
   BsFillArchiveFill,
   BsFillGrid3X3GapFill,
@@ -30,72 +41,35 @@ import {
 } from "recharts";
 import axios from "axios";
 import { useState, CSSProperties } from "react";
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
 
 function createData(date, action, type, product, quantity, emergencytype) {
   return { date, action, type, product, quantity, emergencytype };
 }
 
-const rows = [
-  createData(
-    "02/02/2024",
-    "Product entry",
-    "Pharma",
-    "INSTAZOLE-40 INJECTIONS",
-    20,
-    "Critical"
-  ),
-  createData(
-    "02/02/2024",
-    "Product issue",
-    "Equipment",
-    "INSTAZOLE-40 INJECTIONS",
-    20,
-    "Non Critical"
-  ),
-  createData(
-    "02/02/2024",
-    "Product entry",
-    "Pharma",
-    "Medical Gun Label",
-    20,
-    "Critical"
-  ),
-  createData(
-    "02/02/2024",
-    "Product issue",
-    "Pharma",
-    "INSTAZOLE-40 INJECTIONS",
-    20,
-    "Critical"
-  ),
-  createData(
-    "02/02/2024",
-    "Product entry",
-    "Equipment",
-    "Medical Gun Label",
-    20,
-    "Non Critical"
-  ),
-  createData(
-    "02/02/2024",
-    "Product issue",
-    "Equipment",
-    "INSTAZOLE-40 INJECTIONS",
-    20,
-    "Non Critical"
-  ),
-  createData(
-    "02/02/2024",
-    "Product entry",
-    "Pharma",
-    "Medical Gun Label",
-    20,
-    "Critical"
-  ),
-];
+
+
+
+
+
+
+
+
 function Home() {
+  const [history, setHistory] = useState([]);
+  const [date, setDate] = useState([]);
+  const [productid, setProductId] = useState([]);
+  const [quantity, setQuantity] = useState([]);
+  const [type, setType] = useState([]);
+  const [action, setAction] = useState([]);
+
+  const [name, setName] = useState([]);
+  const [emergency, setEmergency] = useState([]);
+
   const [prodlen, setProdlen] = useState(null);
   const [stocklen, setStocklen] = useState(null);
+  const [bufferstock,setBufferStock] = useState(null);
+  const [stockout, setStockOut] = useState(null);
 
   const [issuedlen, setIssuedlen] = useState(null);
   const handleTotal = () => {
@@ -111,85 +85,175 @@ function Home() {
     window.location = "/stockout";
   };
 
+  //+1 AFTER ENTERING THE NEW PRODUCT
   const getprod = async () => {
     try {
+
       const url = `http://localhost:4000/products`;
       const { data } = await axios.get(url);
       setProdlen(data.document.length);
+
     } catch (error) {
       console.log(error);
     }
+
   };
+  //+1 AFTER A STOCK OF PRODUCT IS ENTERED
   const getstock = async () => {
     try {
+
       const url = `http://localhost:4000/stocks`;
       const { data } = await axios.get(url);
       setStocklen(data.document.length);
+
     } catch (error) {
       console.log(error);
     }
+
   };
+
+  const getbufferstock = async () => {
+    try {
+
+      const url = `http://localhost:4000/stocks`;
+      const { data } = await axios.get(url);
+      let buffer = 0;
+      let out = 0;
+      for(let i = 0;i<data.document.length; i++){
+        if(+data.document[i].totalquantity <= 20){
+            buffer++;
+        }
+      }
+      for(let i = 0;i<data.document.length; i++){
+        if(+data.document[i].totalquantity == 0){
+            out++;
+        }
+      }
+      setBufferStock(buffer);
+      setStockOut(out);
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+
   const getissued = async () => {
     try {
+
       const url = `http://localhost:4000/issueds`;
       const { data } = await axios.get(url);
       setIssuedlen(data.document.length);
+
     } catch (error) {
       console.log(error);
     }
+
   };
 
   getprod();
   getissued();
   getstock();
+  getbufferstock();
 
-  const data = [
-    {
-      name: "Product A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Product B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Product C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Product D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Product E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Product F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Product G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
+
+
+  const gethistory = async () => {
+    try {
+
+      const url = `http://localhost:4000/history`;
+      const { data } = await axios.get(url);
+      console.log("History is: ", data);
+      const date = new Array(data.document.length)
+      const productid = new Array(data.document.length)
+      const quantity = new Array(data.document.length)
+      const type = new Array(data.document.length)
+
+      for (let i = 0; i < data.document.length; i++) {
+        date[i] = data.document[i].date;
+        productid[i] = data.document[i].productid;
+        quantity[i] = data.document[i].quantity;
+        type[i] = data.document[i].type;
+
+
+
+      }
+      setDate(date);
+      setType(type);
+      setQuantity(quantity);
+      setProductId(productid);
+
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+  gethistory();
+
+
+  const rows = [
+
+
   ];
 
+
+
+  const getprodnew = async () => {
+    try {
+
+      const url = `http://localhost:4000/products`;
+      const { data } = await axios.get(url);
+      const namearr = [];
+      const typoarr = [];
+      const emergencyarr = [];
+      for (let i = 0; i < date.length; i++) {
+        for (let j = 0; j < data.document.length; j++) {
+          if (productid[i] == data.document[j]._id) {
+            namearr[i] = data.document[j].name;
+            typoarr[i] = data.document[j].producttype;
+            emergencyarr[i] = data.document[j].emergencytype;
+
+          }
+
+
+        }
+      }
+      setName(namearr);
+      setEmergency(emergencyarr);
+      setAction(typoarr);
+      console.log("DAta is ours", data);
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+
+  getprodnew();
+
+
+//Pushing The data into the Tables
+  for (let i = date.length-1; i >= 0; i--) {
+    rows.push(
+      createData(
+        date[i],
+        type[i],
+        action[i],
+        name[i],
+        quantity[i],
+        emergency[i],
+      )
+    );
+  }
+
+
+
+
   return (
-    <main className="main-container">
+    <main className='main-container'>
       <div>
         <section
           class="p-5 w-100"
@@ -199,31 +263,81 @@ function Home() {
             <div class="col">
               <div class="card text-black" style={{ borderRadius: "25px" }}>
                 <div class="card-body p-md-3">
-                  <div className="main-title">
+                  <div className='main-title'>
                     <h3>DASHBOARD</h3>
                   </div>
 
+<<<<<<< HEAD
+                  <div className='main-cards'>
+                    <div className='card'>
+                      <div className='card-inner'>
+                        <h4>TOTAL </h4>
+                        <BsFillArchiveFill className='card_icon' />
+=======
                   <div className="main-cards">
                     <div className="card">
                       <div className="card-inner">
                         <h4>TOTAL </h4>
                         <BsFillArchiveFill className="card_icon" />
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
                       </div>
 
                       <h1>{prodlen}</h1>
                       <Button variant="text" onClick={handleTotal}>
                         More
                       </Button>
+<<<<<<< HEAD
+
+
+                    </div>
+                    <div className='card'>
+                      <div className='card-inner'>
+                        <h4>AVAILAIBLE</h4>
+                        <BsFillGrid3X3GapFill className='card_icon' />
+=======
                     </div>
                     <div className="card">
                       <div className="card-inner">
                         <h4>AVAILAIBLE</h4>
                         <BsFillGrid3X3GapFill className="card_icon" />
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
                       </div>
                       <h1>{stocklen}</h1>
                       <Button variant="text" onClick={handleAvailaible}>
                         More
                       </Button>
+<<<<<<< HEAD
+
+                    </div>
+                    <div className='card'>
+                      <div className='card-inner'>
+                        <h4>BUFFER STOCK</h4>
+                        <BsPeopleFill className='card_icon' />
+                      </div>
+                      <h1>{bufferstock}</h1>
+                      <Button variant="text" onClick={handleBuffer}>
+                        More
+                      </Button>
+
+                    </div>
+                    <div className='card'>
+                      <div className='card-inner'>
+                        <h4>STOCK OUT</h4>
+                        <BsFillBellFill className='card_icon' />
+                      </div>
+                      <h1>{stockout}</h1>
+                      <Button variant="text" onClick={handleStockOut}>
+                        More
+                      </Button>
+
+                    </div>
+                  </div>
+                  <div className='row' align-items-start>
+                    <p class="text-right h3 mb-3 mt-4">Recent Activity</p>
+                  </div>
+
+                  <TableContainer component={Paper} className="table table-primary">
+=======
                     </div>
                     <div className="card">
                       <div className="card-inner">
@@ -254,6 +368,7 @@ function Home() {
                     component={Paper}
                     className="table table-primary"
                   >
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                       <TableHead>
                         <TableRow>
@@ -269,9 +384,7 @@ function Home() {
                         {rows.map((row) => (
                           <TableRow
                             key={row.name}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                           >
                             <TableCell align="right" component="th" scope="row">
                               {row.date}
@@ -280,9 +393,7 @@ function Home() {
                             <TableCell align="right">{row.type}</TableCell>
                             <TableCell align="right">{row.product}</TableCell>
                             <TableCell align="right">{row.quantity}</TableCell>
-                            <TableCell align="right">
-                              {row.emergencytype}
-                            </TableCell>
+                            <TableCell align="right">{row.emergencytype}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -293,11 +404,21 @@ function Home() {
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
+
+          </div>
+
+        </section>
+      </div >
+    </main >
+  )
+=======
           </div>
         </section>
       </div>
     </main>
   );
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
 }
 
-export default Home;
+export default Home

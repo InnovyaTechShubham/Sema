@@ -140,18 +140,68 @@ const StockEntry = () => {
     } catch (error) {
       console.log(error);
     }
+<<<<<<< HEAD
+    const {
+        values,
+        errors,
+        touched,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        resetForm,
+    } = useFormik({
+        initialValues,
+        validationSchema: StockSchema,
+        onSubmit: (values, action) => {
+            console.log("1")
+            let newDate = new Date()
+            let date = newDate.getDate();
+            let month = newDate.getMonth() + 1;
+            let year = newDate.getFullYear();
+            const fulldate = `${year}/${month<10?`0${month}`:`${month}`}/${date}`;
+=======
   };
 
   getprod();
   const [open, setOpen] = useState(false);
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
 
   let [color, setColor] = useState("#ffffff");
 
   let [name, setName] = useState("");
 
+<<<<<<< HEAD
+            const history = {
+                "date" :fulldate,
+                "productid": id,
+                "quantity":values.totalquantity,
+                "type":"Product Entry,"
+
+            }
+
+            try {
+                console.log("2")
+                const loadUsers = async () => {
+                    const response = await Axios.post("http://localhost:4000/poststocks", stock);
+                    const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
+                    let userData = (await response).data;
+                    //let id = (await response).data.id;
+                    console.log(response);
+                    console.log(historyresponse);
+                    console.log(userData);
+                    //localStorage.setItem("token", userData)
+                    //localStorage.setItem("id", id)
+                    window.location = '/stockentry'
+                   // setLoading(false);
+                   // handleClickOpen();
+                   alert("Stock Registered Successfully");
+                };
+                loadUsers();
+=======
   const handleClickOpen = () => {
     setOpen(true);
   };
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
 
   const handleClose = () => {
     setOpen(false);
@@ -332,6 +382,314 @@ const StockEntry = () => {
                         ) : null}
                       </div>
 
+<<<<<<< HEAD
+                                                >
+                                                    {prodnames.map((value, key) => (
+                                                        <MenuItem
+                                                            key={key}
+                                                            value={value}>
+                                                            {value}
+                                                        </MenuItem>
+                                                    ))}
+
+                                                </Select>
+                                            </div>
+                                            <div className="row mt-3">
+                                                <label htmlFor="first" className="form-label">
+                                                    Product UPC/Product Name/Manufacturer
+                                                </label>
+                                                <input
+                                                    id="firstname"
+                                                    name="firstname"
+                                                    className="form-control"
+                                                    placeholder={upc}
+                                                    value={values.upccode}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    disabled={true}
+                                                />
+                                                {errors.firstname && touched.firstname ? (
+                                                    <small className="text-danger mt-1">
+                                                        {errors.firstname}
+                                                    </small>
+                                                ) : null}
+                                            </div>
+                                            
+                                            <div className="row mt-3">
+                                                <label htmlFor="last`" className="form-label">
+                                                    Manufacturer
+                                                </label>
+                                                <input
+                                                    id="phone"
+                                                    name="phone"
+                                                    className="form-control"
+                                                    value={values.phone}
+                                                    placeholder={manufacturer}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                   
+                                                    disabled={true}
+                                                />
+                                                {errors.phone && touched.phone ? (
+                                                    <small className="text-danger mt-1">
+                                                        {errors.phone}
+                                                    </small>
+                                                ) : null}
+                                            </div>
+                                            <div className="row mt-3">
+                                               
+                                                    <label htmlFor="first" className="form-label">
+                                                        Product Type
+                                                    </label>
+                                                    <input
+                                                        id="email"
+                                                        name="email"
+                                                        className="form-control"
+                                                        value={values.email}
+                                                        placeholder={type}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        disabled={true}
+                                                    />
+                                                    {errors.email && touched.email ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.email}
+                                                        </small>
+                                                    ) : null}
+                                                
+
+                                            </div>
+                                            <div className="row mt-3">
+                                               
+                                                    <label htmlFor="first" className="form-label">
+                                                        Product Category/Sub Category
+                                                    </label>
+                                                    <input
+                                                        id="address"
+                                                        name="address"
+                                                        className="form-control"
+                                                        placeholder = {category}
+                                                        value={values.address}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        type="text"
+                                                        disabled={true}
+                                                    />
+                                                    {errors.address && touched.address ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.address}
+                                                        </small>
+                                                    ) : null}
+                                                
+                                            </div>
+                                        
+                                    </div>
+                                    <br/>
+                                    <div class="col md-5 ">
+                                    <br />   
+                                    
+                                       
+                                       
+
+                                        <div class="row  ">
+                                            
+                                           
+                                        <Box
+                                                sx={{
+                                                    border: "1px solid black",
+                                                    borderRadius: "5px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    width: "100%",
+                                                    margin: "10px",
+                                                    height: 500,
+                                                }}
+                                            >
+                                                <img
+                                                    width="96"
+                                                    height="96"
+                                                    src="https://img.icons8.com/color/96/add-image.png"
+                                                    alt="add-image"
+                                                />
+                                            </Box>
+                                        </div>
+                                        <br />
+
+
+                                        <div class="row align-items-right">
+                                        
+                                            <div class="row">
+                                            
+                                                
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+
+
+                                        <p class="text-left h2 mb-3 mt-4">Vendor Details</p>
+                                    
+                                        <div className="row mt-3">
+                                                <div className="col text-left">
+                                                    <label htmlFor="first" className="form-label">
+                                                        Name*
+                                                    </label>
+                                                    <input
+                                                        id="name"
+                                                        name="name"
+                                                        className="form-control"
+                                                        value={values.name}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    />
+                                                    {errors.name && touched.name ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.name}
+                                                        </small>
+                                                    ) : null}
+                                                </div>
+                                                <div className="col text-left">
+                                                    <label htmlFor="first" className="form-label">
+                                                        Phone Number*
+                                                    </label>
+                                                    <input
+                                                        id="phone"
+                                                        name="phone"
+                                                        className="form-control"
+                                                        value={values.phone}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        type="text"
+                                                    />
+                                                    {errors.phone && touched.phone ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.phone}
+                                                        </small>
+                                                    ) : null}
+                                                </div>
+                                               
+                                            </div>
+                                            
+                                        <p class="text-left h2 mb-3 mt-4">Stock Details</p>
+                                            <div className="row mt-3">
+                                                <div className="col text-left">
+                                                    <label htmlFor="first" className="form-label">
+                                                        Batch Number*
+                                                    </label>
+                                                    <input
+                                                        id="batchno"
+                                                        name="batchno"
+                                                        className="form-control"
+                                                        value={values.batchno}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    />
+                                                    {errors.batchno && touched.batchno ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.batchno}
+                                                        </small>
+                                                    ) : null}
+                                                </div>
+                                                <div className="col text-left">
+                                                    <label htmlFor="first" className="form-label">
+                                                        Unit Cost*
+                                                    </label>
+                                                    <input
+                                                        id="unitcost"
+                                                        name="unitcost"
+                                                        className="form-control"
+                                                        value={values.unitcost}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        type="text"
+                                                    />
+                                                    {errors.unitcost && touched.unitcost ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.unitcost}
+                                                        </small>
+                                                    ) : null}
+                                                </div>
+                                                <div className="col text-left">
+                                                    <label htmlFor="last`" className="form-label">
+                                                        Total Quantity*
+                                                    </label>
+                                                    <input
+                                                        id="totalquantity"
+                                                        name="totalquantity"
+                                                        className="form-control"
+                                                        value={values.totalquantity}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        type="text"
+                                                    />
+                                                    {errors.totalquantity && touched.totalquantity ? (
+                                                        <small className="text-danger mt-1">
+                                                            {errors.totalquantity}
+                                                        </small>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                           
+                                            <br/>
+                                            <br/>
+                                            <div className="row mt-3 justify-items-center">
+
+
+                                                <div className="col text-center">
+                                                       
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <DatePicker
+                                                        label="Date of Manufacturing*"
+                                                        value={dom}
+                                                        onChange={(newValue) => setDom(newValue)}
+                                                    />
+                                                    </LocalizationProvider>
+                                                    </div>
+                                                <div className="col text-center">
+                                                
+                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <DatePicker
+                                                        label="Date of Expiry*"
+                                                        value={doe}
+                                                        backgroundColor="#ffffff"
+                                                        onChange={(newValue) => setDoe(newValue)}
+                                                    />
+                                                    </LocalizationProvider>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <div class="row justify-content-around">
+                                                <br/>
+                                                <div class="col-3">
+                                                <Button variant='outlined' onClick= {resetForm} size='large' >Clear</Button>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <div class="col-3">
+                                                <Button variant='contained' onClick= {handleSubmit} size='large'>Add Stock</Button>
+                                                </div>
+                                            </div>
+                                            
+
+                                        
+                                    </div>
+
+
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+=======
                       <div className="row mt-3">
                         <label htmlFor="last`" className="form-label">
                           Manufacturer
@@ -393,6 +751,7 @@ const StockEntry = () => {
                           </small>
                         ) : null}
                       </div>
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
                     </div>
                     <br />
                     <div class="col md-5 ">

@@ -30,6 +30,14 @@ const ProductEntry = () => {
   let [emergency, setEmergency] = useState("");
   let [origin, setOrigin] = useState("");
 
+<<<<<<< HEAD
+    let [loading, setLoading] = useState(false);
+    let [producttype, setProductType] = useState("")
+    let [category, setCategory] = useState("")
+    let [subcategory, setSubCategory] = useState("")
+    let [emergency, setEmergency] = useState("")
+    let [origin, setOrigin] = useState("")
+=======
   const selectionChangeHandler = (event) => {
     setProductType(event.target.value);
   };
@@ -39,6 +47,7 @@ const ProductEntry = () => {
   const selectionChangeHandler3 = (event) => {
     setEmergency(event.target.value);
   };
+>>>>>>> 701df64dc5492edfeaa26d29aabe6a236182f139
 
   const selectionChangeHandler5 = (event) => {
     setSubCategory(event.target.value);
