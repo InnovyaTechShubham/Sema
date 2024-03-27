@@ -34,6 +34,7 @@ const initialValues = {
 };
 
 
+<<<<<<< HEAD
 const ProductEntry = () => {
 
     let [loading, setLoading] = useState(false);
@@ -42,6 +43,17 @@ const ProductEntry = () => {
     let [subcategory, setSubCategory] = useState("")
     let [emergency, setEmergency] = useState("")
     let [origin, setOrigin] = useState("")
+=======
+  const selectionChangeHandler = (event) => {
+    setProductType(event.target.value);
+  };
+  const selectionChangeHandler2 = (event) => {
+    setCategory(event.target.value);
+  };
+  const selectionChangeHandler3 = (event) => {
+    setEmergency(event.target.value);
+  };
+>>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
 
 
     const selectionChangeHandler = (event) => {
