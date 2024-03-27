@@ -173,18 +173,24 @@ app.post("/postusers", async (req, res) => {
 app.post("/postproducts", async (req, res) => {
   const producttype = req.body.producttype 
   const category = req.body.category 
+  const subcategory = req.body.subcategory 
+
   const upccode = req.body.upccode;
   const name = req.body.name;
   const manufacturer = req.body.manufacturer;
+  const origin = req.body.origin;
+
   const emergencytype = req.body.emergencytype;
   const description = req.body.description;
 
   const product = new Product({
     producttype,
     category,
+    subcategory,
     upccode,
     name,
     manufacturer,
+    origin,
     emergencytype,
     description,
    
