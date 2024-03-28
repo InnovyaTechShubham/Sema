@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -103,18 +103,29 @@ const FilterDialog = ({
   setFilterVendor,
   filterEmergencyType,
   setFilterEmergencyType,
-  rows,
+  rows, // Add the 'rows' prop here
   setRows,
   handleCloseFilterDialog,
   openFilterDialog,
   getCategoryOptions,
+  selectedCategory,
+  setSelectedCategory,
+  selectedSubCategory,
+  setSelectedSubCategory,
+  subCategories,
+  filterOrigin,
+  setFilterOrigin,
 }) => {
   const handleTypeChange = (event) => {
     setFilterType(event.target.value);
+    setFilterCategory([]); // Reset the category filter when changing the type
   };
 
   const handleCategoryChange = (event) => {
-    setFilterCategory(event.target.value);
+    const selectedCategory = event.target.value;
+    setFilterCategory(selectedCategory);
+    setSelectedCategory(selectedCategory);
+    setSelectedSubCategory(""); // Reset sub-category when category changes
   };
 
   const handleVendorChange = (event) => {
@@ -125,36 +136,49 @@ const FilterDialog = ({
     setFilterEmergencyType(event.target.value);
   };
 
-  const handleApplyFilter = () => {
+  const handleApplyFilter = useCallback(() => {
     const filteredData = rows.filter((row) => {
       const typeMatch =
         filterType === "" ||
-        (filterType !== "" && row.producttype === filterType);
+        row.producttype.toLowerCase() === filterType.toLowerCase();
       const categoryMatch =
         filterCategory.length === 0 || filterCategory.includes(row.category);
       const vendorMatch =
         filterVendor === "" ||
         row.manufacturer.toLowerCase().includes(filterVendor.toLowerCase());
       const emergencyTypeMatch =
-        filterEmergencyType === "" || row.emergencytype === filterEmergencyType;
+        filterEmergencyType === "" ||
+        row.emergencytype.toLowerCase() === filterEmergencyType.toLowerCase();
+      const subCategoryMatch =
+        selectedSubCategory === "" ||
+        row.subcategory.toLowerCase() === selectedSubCategory.toLowerCase();
+      const originMatch =
+        filterOrigin === "" ||
+        row.origin.toLowerCase() === filterOrigin.toLowerCase();
 
-      return typeMatch && categoryMatch && vendorMatch && emergencyTypeMatch;
+      return (
+        typeMatch &&
+        categoryMatch &&
+        vendorMatch &&
+        emergencyTypeMatch &&
+        originMatch &&
+        subCategoryMatch
+      );
     });
 
-    if (
-      filteredData.length === 0 &&
-      (filterType !== "" ||
-        filterCategory.length !== 0 ||
-        filterVendor !== "" ||
-        filterEmergencyType !== "")
-    ) {
-      setRows([]);
-    } else {
-      setRows(filteredData);
-    }
-
+    setRows(filteredData);
     handleCloseFilterDialog();
-  };
+  }, [
+    rows,
+    filterType,
+    filterCategory,
+    filterVendor,
+    filterEmergencyType,
+    selectedSubCategory,
+    filterOrigin,
+    handleCloseFilterDialog,
+    setRows,
+  ]);
 
   return (
     <Dialog open={openFilterDialog} onClose={handleCloseFilterDialog}>
@@ -165,19 +189,19 @@ const FilterDialog = ({
           <RadioGroup row value={filterType} onChange={handleTypeChange}>
             <FormControlLabel value="" control={<Radio />} label="All" />
             <FormControlLabel
-              value="Pharmaceutical"
+              value="pharmaceuticals"
               control={<Radio />}
               label="Pharma"
             />
             <FormControlLabel
-              value="Equipment"
+              value="equipments"
               control={<Radio />}
               label="Equipment"
             />
           </RadioGroup>
         </div>
         <div>
-          <Typography>Category</Typography>
+          <Typography placeholder="Choose">Category</Typography>
           <Select
             multiple
             value={filterCategory}
@@ -192,13 +216,46 @@ const FilterDialog = ({
           </Select>
         </div>
         <div>
+          <Typography>Sub-Category</Typography>
+          <Select
+            value={selectedSubCategory}
+            onChange={(e) => setSelectedSubCategory(e.target.value)}
+            renderValue={(selected) => selected}
+          >
+            {subCategories[selectedCategory] && // Access 'subCategories' directly
+              subCategories[selectedCategory].map((subcategory) => (
+                <MenuItem key={subcategory.value} value={subcategory.value}>
+                  {subcategory.label}
+                </MenuItem>
+              ))}
+          </Select>
+        </div>
+        <div>
           <Typography>Vendor</Typography>
           <TextField
             value={filterVendor}
             onChange={handleVendorChange}
             placeholder="Search vendor"
+            fullWidth
           />
         </div>
+        <div>
+          <Typography>Origin</Typography>
+          <Select
+            value={filterOrigin}
+            onChange={(e) => setFilterOrigin(e.target.value)}
+            renderValue={(selected) => selected}
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value={"india"}>India</MenuItem>
+            <MenuItem value={"usa"}>USA</MenuItem>
+            <MenuItem value={"korea"}>Korea</MenuItem>
+            <MenuItem value={"germany"}>Germany</MenuItem>
+            <MenuItem value={"france"}>France</MenuItem>
+            <MenuItem value={"other"}>Other</MenuItem>
+          </Select>
+        </div>
+
         <div>
           <Typography>Emergency type</Typography>
           <RadioGroup
@@ -207,16 +264,8 @@ const FilterDialog = ({
             onChange={handleEmergencyTypeChange}
           >
             <FormControlLabel value="" control={<Radio />} label="All" />
-            <FormControlLabel
-              value="Critical"
-              control={<Radio />}
-              label="Critical"
-            />
-            <FormControlLabel
-              value="Issued"
-              control={<Radio />}
-              label="Issued"
-            />
+            <FormControlLabel value="cr" control={<Radio />} label="Critical" />
+            <FormControlLabel value="is" control={<Radio />} label="Issued" />
           </RadioGroup>
         </div>
       </DialogContent>
@@ -229,17 +278,109 @@ const FilterDialog = ({
 };
 
 export default function FullFeaturedCrudGrid() {
-  const [rows, setRows] = React.useState(data);
-  const getprod = async () => {
-    try {
-      const url = `http://localhost:4000/products`;
-      const { data } = await axios.get(url);
-      setRows(data.document);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  getprod();
+  const [subCategories, setSubCategories] = React.useState({
+    Pharmaceuticals: [
+      { value: "Cardiovascular", label: "Cardiovascular Medications" },
+
+      { value: "Hormones", label: "Hormones" },
+      { value: "Inhalable", label: "Inhalable Medications" },
+      { value: "Oral", label: "Oral Medications" },
+      { value: "Topical", label: "Topical Medications" },
+    ],
+    Dietary: [
+      { value: "Amino", label: "Amino Acid Supplements" },
+      { value: "Probiotics", label: "Prebiotics and Prebiotics" },
+      { value: "Skincare", label: "Skincare Neutraceuticals" },
+      { value: "Supplements", label: "Supplements" },
+      { value: "Vitamins", label: "Vitamins and Minerals" },
+    ],
+    Ayush: [
+      { value: "Ayurvedic", label: "Ayurvedic Medicines" },
+      { value: "Herbal", label: "Herbal Extracts" },
+      { value: "HerbalS", label: "Herbal Supplements" },
+    ],
+    Medical: [
+      { value: "Cathelers", label: "Cathelers and Tubes" },
+      { value: "Dental", label: "Dental Consumables" },
+      { value: "Infection", label: "Infection Control Consumables" },
+      { value: "Laboratory", label: "Laboratory Consumables" },
+      { value: "Radiology", label: "Radiology Consumables" },
+      { value: "Respiratory", label: "Respiratory Consumables" },
+      { value: "Surgical", label: "Surgical Consumables" },
+      { value: "Wound", label: "Wound Care Supplies" },
+    ],
+    Furniture: [
+      { value: "Bed", label: "Patient Bed Furniture" },
+      { value: "Seating", label: "Seating Furniture" },
+      { value: "Storage", label: "Storage Furniture" },
+      { value: "Diagnostic Furniture", label: "Diagnostic Furniture" },
+      { value: "Patient Room Furniture", label: "Patient Room Furniture" },
+      { value: "Rehabilitation Furniture", label: "Rehabilitation Furniture" },
+      { value: "Laboratory Furniture", label: "Laboratory Furniture" },
+      { value: "Waiting Area Furniture", label: "Waiting Area Furniture" },
+      { value: "Surgical Room Furniture", label: "Surgical Room Furniture" },
+      { value: "Privacy Furniture", label: "Privacy Furniture" },
+    ],
+    Instruments: [
+      { value: "Diagnostic Instruments", label: "Diagnostic Instruments" },
+      { value: "Surgical Instruments", label: "Surgical Instruments" },
+      { value: "Endoscopy Instruments", label: "Endoscopy Instruments" },
+      { value: "Orthopedic Instruments", label: "Orthopedic Instruments" },
+      { value: "Dental Instruments", label: "Dental Instruments" },
+      {
+        value: "Gynecological and Obstetric Instruments",
+        label: "Gynecological and Obstetric Instruments",
+      },
+      { value: "Cardiac Instruments", label: "Cardiac Instruments" },
+      {
+        value: "Microsurgical Instruments",
+        label: "Microsurgical Instruments",
+      },
+      {
+        value: "Neurosurgical Instruments",
+        label: "Neurosurgical Instruments ",
+      },
+      { value: "Urological Instruments", label: "Urological Instruments" },
+    ],
+
+    Equipments: [
+      { value: "Diagnostic Equipment", label: "Diagnostic Equipment" },
+      { value: "Monitoring Equipment", label: "Monitoring Equipment" },
+      { value: "Therapeutic Equipment", label: "Therapeutic Equipment" },
+      { value: "Surgical Equipment", label: "Surgical Equipment" },
+      { value: "Rehabilitation Equipment", label: "Rehabilitation Equipment" },
+      { value: "Patient Care Equipment", label: "Patient Care Equipment" },
+      { value: "Laboratory Equipment", label: "Laboratory Equipment" },
+      {
+        value: "Emergency Medical Equipment",
+        label: "Emergency Medical Equipment",
+      },
+      {
+        value: "Radiation Therapy Equipment",
+        label: "Radiation Therapy Equipment",
+      },
+    ],
+  });
+
+  const [selectedCategory, setSelectedCategory] = React.useState("");
+  const [selectedSubCategory, setSelectedSubCategory] = React.useState("");
+
+  const [filterOrigin, setFilterOrigin] = React.useState("");
+
+  const [rows, setRows] = React.useState([...data]);
+  useEffect(() => {
+    const getprod = async () => {
+      try {
+        const url = `http://localhost:4000/products`;
+        const { data } = await axios.get(url);
+        setRows(data.document);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getprod();
+  }, []); // Empty dependency array ensures this effect runs only once
   //const [rows, setRows] = React.useState(data); //Process data without $oid
   const [rowModesModel, setRowModesModel] = React.useState({});
   const [count, setCount] = React.useState(0);
@@ -263,21 +404,19 @@ export default function FullFeaturedCrudGrid() {
   const getCategoryOptions = (type) => {
     const pharmaceuticalCategories = [
       "Pharmaceuticals",
-      "Dietary Supplements",
-      "Ayush Medicines",
-      "Medical Consumables",
+      "Dietary",
+      "Ayush",
+      "Medical",
     ];
-    const equipmentCategories = [
-      "Medical Furniture",
-      "Medical Instruments",
-      "Medical Equipments",
-    ];
+    const equipmentCategories = ["Furniture", "Instruments", "Equipments"];
 
-    return type === "Pharmaceutical"
-      ? pharmaceuticalCategories
-      : type === "Equipment"
-      ? equipmentCategories
-      : [];
+    if (type === "pharmaceuticals") {
+      return pharmaceuticalCategories;
+    } else if (type === "equipments") {
+      return equipmentCategories;
+    } else {
+      return [];
+    }
   };
 
   const handleRowEditStop = (params, event) => {
@@ -511,11 +650,18 @@ export default function FullFeaturedCrudGrid() {
                       setFilterVendor={setFilterVendor}
                       filterEmergencyType={filterEmergencyType}
                       setFilterEmergencyType={setFilterEmergencyType}
-                      rows={rows}
+                      rows={rows} // Pass the 'rows' state as a prop
                       setRows={setRows}
                       handleCloseFilterDialog={handleCloseFilterDialog}
                       openFilterDialog={openFilterDialog}
                       getCategoryOptions={getCategoryOptions}
+                      selectedCategory={selectedCategory}
+                      setSelectedCategory={setSelectedCategory}
+                      selectedSubCategory={selectedSubCategory}
+                      setSelectedSubCategory={setSelectedSubCategory}
+                      subCategories={subCategories}
+                      filterOrigin={filterOrigin}
+                      setFilterOrigin={setFilterOrigin}
                     />
 
                     <Button

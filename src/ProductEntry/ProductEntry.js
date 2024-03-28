@@ -363,10 +363,12 @@ const ProductEntry = () => {
                           onChange={selectionChangeHandler6}
                           className="form-control"
                         >
+                          <MenuItem value={"india"}>India</MenuItem>
                           <MenuItem value={"usa"}>USA</MenuItem>
                           <MenuItem value={"korea"}>Korea</MenuItem>
-                          <MenuItem value={"india"}>India</MenuItem>
-                          <MenuItem value={"australia"}>australia</MenuItem>
+                          <MenuItem value={"germany"}>Germany</MenuItem>
+                          <MenuItem value={"france"}>France</MenuItem>
+                          <MenuItem value={"other"}>Other</MenuItem>
                         </Select>
                       </div>
                       <div className="row mt-4 w-100" backgroundColor="#FFFF">
