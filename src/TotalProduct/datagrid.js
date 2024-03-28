@@ -395,13 +395,6 @@ export default function FullFeaturedCrudGrid() {
       width: 150,
       editable: true,
     },
-    {
-      field: "origin",
-      headerName: "Origin",
-
-      width: 150,
-      editable: true,
-    },
 
     {
       field: "category",

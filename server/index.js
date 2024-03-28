@@ -171,15 +171,10 @@ app.post("/postusers", async (req, res) => {
   }
 });
 app.post("/postproducts", async (req, res) => {
-<<<<<<< HEAD
-  const producttype = req.body.producttype 
-  const category = req.body.category 
-  const subcategory = req.body.subcategory 
-
-=======
   const producttype = req.body.producttype;
   const category = req.body.category;
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
+  const subcategory = req.body.subcategory;
+
   const upccode = req.body.upccode;
   const name = req.body.name;
   const manufacturer = req.body.manufacturer;
