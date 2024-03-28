@@ -9,27 +9,6 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import "./home.css";
 
-<<<<<<< HEAD
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import "./home.css"
-
-import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill }
-  from 'react-icons/bs'
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
-  from 'recharts';
-import axios from 'axios'
-import Axios from "axios"
-
-import { useState, CSSProperties } from 'react'
-=======
 import {
   BsFillArchiveFill,
   BsFillGrid3X3GapFill,
@@ -53,7 +32,6 @@ import axios from "axios";
 import Axios from "axios";
 
 import { useState, CSSProperties } from "react";
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
 
 function createData(date, action, type, product, quantity, emergencytype) {
   return { date, action, type, product, quantity, emergencytype };
@@ -77,16 +55,16 @@ function Home() {
 
   const [issuedlen, setIssuedlen] = useState(null);
   const handleTotal = () => {
-    window.location = "/totalproduct"
+    window.location = "/totalproduct";
   };
   const handleAvailaible = () => {
-    window.location = "/availaibleproduct"
+    window.location = "/availaibleproduct";
   };
   const handleBuffer = () => {
-    window.location = "/bufferstock"
+    window.location = "/bufferstock";
   };
   const handleStockOut = () => {
-    window.location = "/stockout"
+    window.location = "/stockout";
   };
 
   //+1 AFTER ENTERING THE NEW PRODUCT
@@ -232,93 +210,47 @@ function Home() {
                     <h3>DASHBOARD</h3>
                   </div>
 
-<<<<<<< HEAD
-                  <div className='main-cards'>
-                    <div className='card'>
-                      <div className='card-inner'>
-                        <h4>TOTAL </h4>
-                        <BsFillArchiveFill className='card_icon' />
-=======
                   <div className="main-cards">
                     <div className="card">
                       <div className="card-inner">
                         <h4>TOTAL </h4>
                         <BsFillArchiveFill className="card_icon" />
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
                       </div>
 
                       <h1>{prodlen}</h1>
                       <Button variant="text" onClick={handleTotal}>
                         More
                       </Button>
-<<<<<<< HEAD
-
-
-                    </div>
-                    <div className='card'>
-                      <div className='card-inner'>
-                        <h4>AVAILAIBLE</h4>
-                        <BsFillGrid3X3GapFill className='card_icon' />
-=======
                     </div>
                     <div className="card">
                       <div className="card-inner">
                         <h4>AVAILAIBLE</h4>
                         <BsFillGrid3X3GapFill className="card_icon" />
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
                       </div>
                       <h1>{stocklen}</h1>
                       <Button variant="text" onClick={handleAvailaible}>
                         More
                       </Button>
-<<<<<<< HEAD
-
-                    </div>
-                    <div className='card'>
-                      <div className='card-inner'>
-                        <h4>BUFFER STOCK</h4>
-                        <BsPeopleFill className='card_icon' />
-=======
                     </div>
                     <div className="card">
                       <div className="card-inner">
                         <h4>BUFFER STOCK</h4>
                         <BsPeopleFill className="card_icon" />
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
                       </div>
                       <h1>{bufferstock}</h1>
                       <Button variant="text" onClick={handleBuffer}>
                         More
                       </Button>
-<<<<<<< HEAD
-
-                    </div>
-                    <div className='card'>
-                      <div className='card-inner'>
-                        <h4>STOCK OUT</h4>
-                        <BsFillBellFill className='card_icon' />
-=======
                     </div>
                     <div className="card">
                       <div className="card-inner">
                         <h4>STOCK OUT</h4>
                         <BsFillBellFill className="card_icon" />
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
                       </div>
                       <h1>{stockout}</h1>
                       <Button variant="text" onClick={handleStockOut}>
                         More
                       </Button>
-<<<<<<< HEAD
-
-                    </div>
-                  </div>
-                  <div className='row' align-items-start>
-                    <p class="text-right h3 mb-3 mt-4">Recent Activity</p>
-                  </div>
-
-                  <TableContainer component={Paper} className="table table-primary">
-=======
                     </div>
                   </div>
                   <div className="row" align-items-start>
@@ -329,7 +261,6 @@ function Home() {
                     component={Paper}
                     className="table table-primary"
                   >
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                       <TableHead>
                         <TableRow>
@@ -369,21 +300,11 @@ function Home() {
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
-
-          </div>
-
-        </section>
-      </div >
-    </main >
-  )
-=======
           </div>
         </section>
       </div>
     </main>
   );
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
 }
 
 export default Home;
