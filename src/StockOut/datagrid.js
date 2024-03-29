@@ -36,6 +36,7 @@ function BufferStock() {
   const [batchno, setBatchNo] = useState([]);
   const [productid, setProductId] = useState([]);
   const [totalquantity, setTotalQuantity] = useState([]);
+  const [buffervalue,setBufferValue] = useState([]);
   const [unitcost, setUnitCost] = useState([]);
   const [doe, setDoe] = useState([]);
   const [dom, setDom] = useState([]);
@@ -77,7 +78,7 @@ function BufferStock() {
       const batchno = new Array(data.document.length)
       const productid = new Array(data.document.length)
       const unitcost = new Array(data.document.length)
-
+      const buffervalue = new Array(data.document.length)
       const totalquantity = new Array(data.document.length)
       const entrydate = new Array(data.document.length)
       const manufacturingdate = new Array(data.document.length)
@@ -88,6 +89,7 @@ function BufferStock() {
         unitcost[i] = data.document[i].unitcost;
 
         totalquantity[i] = data.document[i].totalquantity;
+        buffervalue[i] = data.document[i].buffervalue;
         entrydate[i] = data.document[i].doe;
         manufacturingdate[i] = data.document[i].dom;
 
@@ -98,6 +100,7 @@ function BufferStock() {
       setBatchNo(batchno);
       setUnitCost(unitcost);
       setTotalQuantity(totalquantity);
+      setBufferValue(buffervalue);
       setDoe(entrydate);
 
       setDom(manufacturingdate);
@@ -154,7 +157,7 @@ function BufferStock() {
 
 //Pushing The data into the Tables
   for (let i = 0; i < batchno.length; i++) {
-    if(+totalquantity[i] == 20){
+    if(+totalquantity[i] < 1){
       rows.push(
         createData(
           name[i],

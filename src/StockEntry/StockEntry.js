@@ -1,7 +1,6 @@
 import { StockSchema } from "./StockEntrySchema";
-<<<<<<< HEAD
 import Axios from "axios"
-import { useState, React, CSSProperties } from 'react'
+import { useState, React, CSSProperties, useEffect } from 'react'
 import { useFormik } from "formik";
 //import "./HospitalRegistration.css";
 import { MenuItem,Button } from "@mui/material";
@@ -19,24 +18,6 @@ import "./StockEntry.css"
 
 
 
-=======
-import Axios from "axios";
-import { useState, useEffect, React, CSSProperties } from "react";
-import { useFormik } from "formik";
-import { MenuItem, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
-import axios from "axios";
-import { FormControl, InputLabel, FormHelperText } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import LoaderOverlay from "../Loader/LoaderOverlay.js";
-import "./StockEntry.css";
-import fetchSearchResults from "../utils/fetchSearchResults.js";
-import SearchIcon from "@mui/icons-material/Search";
-import styled from "styled-components";
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
 
 const initialValues = {
     productid: "",
@@ -55,7 +36,6 @@ const initialValues = {
 
 
 const StockEntry = () => {
-<<<<<<< HEAD
      const [prodnames,setProdNames] = useState([]);
      const [category,setCategory] = useState(null)
      const [manufacturer,setManufacturer] = useState(null)
@@ -64,88 +44,46 @@ const StockEntry = () => {
      const [id,setId] = useState(null)
      const [doe,setDoe] = useState(null)
      const [dom,setDom] = useState(null)
+     const [stockid,setStockId] = useState([]);
+     const [stockproductarray,setStockProductArray] = useState([]);
+     const [existquantity,setExistQuantity] = useState([]);
+     const [existflagval,setExistFlagVal] = useState(0)
+     const [currentstockidval,setCurrentStockIdVal] = useState(null)
+     const [existingquantityval,setExistingQuantityVal] = useState(null)
+
+
+
      
 
-=======
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [prodnames, setProdNames] = useState([]);
-  const [category, setCategory] = useState(null);
-  const [manufacturer, setManufacturer] = useState(null);
-  const [upc, setUpc] = useState(null);
-  const [type, setType] = useState(null);
-  const [id, setId] = useState(null);
-  const [doe, setDoe] = useState(null);
-  const [dom, setDom] = useState(null);
+    const getstock = async () =>{
+        try{
+             const url = `http://localhost:4000/stocks`;
+            const { data } = await axios.get(url);
+            const stockarray = new Array(data.document.length);
+            const stockproductarray = new Array(data.document.length);
+            const existquantity = new Array(data.document.length);
 
-  const handleSearchChange = async (event) => {
-    const term = event.target.value;
-    setSearchTerm(term);
+            for(let i = 0;i<data.document.length;i++){
+                stockarray[i] = data.document[i]._id;
+                stockproductarray[i] = data.document[i].productid;
+                existquantity[i] = data.document[i].totalquantity;
+            }
+            setStockId(stockarray);
+           // console.log("stockarray"+stockarray);
+            setStockProductArray(stockproductarray);
+           // console.log("stockproductarray"+stockproductarray);
 
-    if (term.trim().length >= 3) {
-      try {
-        const results = await fetchSearchResults(term);
-        setSearchResults(results);
-      } catch (error) {
-        console.error("Error fetching search results:", error);
-        setSearchResults([]);
-      }
-    } else {
-      setSearchResults([]);
-    }
-  };
+            setExistQuantity(existquantity);
+           // console.log("existquant"+existquantity);
 
-  const handleProductSelect = (product) => {
-    setSelectedProduct(product);
-    setCategory(product.category);
-    setType(product.producttype);
-    setUpc(product.upccode);
-    setManufacturer(product.manufacturer);
-    setId(product._id);
-    setName(product.name);
-    setSearchTerm("");
-    setSearchResults([]);
-  };
+            
 
-  const highlightSearchTerm = (text) => {
-    const regex = new RegExp(`(${searchTerm})`, "gi");
-    const parts = text.split(regex);
-    return (
-      <span>
-        {parts.map((part, index) =>
-          regex.test(part) ? (
-            <b key={index} style={{ color: "black" }}>
-              {part}
-            </b>
-          ) : (
-            <span key={index}>{part}</span>
-          )
-        )}
-      </span>
-    );
-  };
+       } catch (error) {
+            console.log(error);
+        }
+    };
 
-  const SearchIconWrapper = styled.div`
-    padding: 0 16px;
-    height: 100%;
-    position: absolute;
-    display: flex;
-    alignitems: center;
-  `;
-
-  const SearchContainer = styled.div`
-    position: relative;
-    width: 100%;
-  `;
-
-  const getprod = async () => {
-    try {
-      const url = `http://localhost:4000/products`;
-      const { data } = await axios.get(url);
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
-
-
+  getstock();
 
 
     const getprod = async () => {
@@ -197,6 +135,11 @@ const StockEntry = () => {
     };
 
     getprod();
+
+   
+    
+
+
     const [open, setOpen] = useState(false);
 
    
@@ -219,7 +162,6 @@ const StockEntry = () => {
     const navigateToVerify = () => {
         navigate('/verify');
     }
-<<<<<<< HEAD
     const {
         values,
         errors,
@@ -233,11 +175,30 @@ const StockEntry = () => {
         validationSchema: StockSchema,
         onSubmit: (values, action) => {
             console.log("1")
+            let exist = 0;
+            let currst = null;
+            let curquant = null;
             let newDate = new Date()
             let date = newDate.getDate();
             let month = newDate.getMonth() + 1;
             let year = newDate.getFullYear();
-            const fulldate = `${year}/${month<10?`0${month}`:`${month}`}/${date}`;
+            const fulldate = `${date}/${month<10?`0${month}`:`${month}`}/${year}`;
+
+            console.log(stockid);
+            console.log(existquantity);
+            for(let a = 0;a<stockproductarray.length;a++) {
+                if(stockproductarray[a].localeCompare(id) == 0){
+                    console.log("stockproduct"+stockproductarray[a])
+                    console.log("selectedprod"+id)
+                   exist = 1;
+                    currst = stockid[a];
+                    curquant = existquantity[a];
+                }
+            }
+            console.log("Current Stock"+currst);
+    console.log("Exist Quantity"+curquant);
+
+
 
             const stock = {
                 "productid": id,
@@ -246,81 +207,93 @@ const StockEntry = () => {
                 "batchno": values.batchno,
                 "unitcost": values.unitcost,
                 "totalquantity": values.totalquantity,
+                "buffervalue": +values.totalquantity * 0.15,
                 "doe": doe,
                 "dom": dom,
                 
-=======
-  };
-
-  getprod();
-  const [open, setOpen] = useState(false);
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
 
             };
 
-<<<<<<< HEAD
             const history = {
                 "date" :fulldate,
                 "productid": id,
                 "quantity":values.totalquantity,
-                "type":"Product Entry,"
+                "type":"Stock Entry,"
 
             }
 
             try {
                 console.log("2")
-                const loadUsers = async () => {
-                    const response = await Axios.post("http://localhost:4000/poststocks", stock);
-                    const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
-                    let userData = (await response).data;
-                    //let id = (await response).data.id;
-                    console.log(response);
-                    console.log(historyresponse);
-                    console.log(userData);
-                    //localStorage.setItem("token", userData)
-                    //localStorage.setItem("id", id)
-                    window.location = '/stockentry'
-                   // setLoading(false);
-                   // handleClickOpen();
-                   alert("Stock Registered Successfully");
-                };
-                loadUsers();
-=======
-  let [name, setName] = useState("");
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
-
-                /*try {
-                    return await Axios.get('http://localhost:4000/api/users').then(content => content.data);
-                  } catch (error) {
-                    throw {
-                      code: error.code,
-                      message: error.message,
-                      responseStatus: error.response?.status,
-                      url
+              
+                console.log("Exist flag "+exist);
+                if(exist == 0){
+                    const loadUsers = async () => {
+                        const response = await Axios.post("http://localhost:4000/poststocks", stock);
+                        const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
+                        let userData = (await response).data;
+                        //let id = (await response).data.id;
+                        console.log(response);
+                        console.log(historyresponse);
+                        console.log(userData);
+                        //localStorage.setItem("token", userData)
+                        //localStorage.setItem("id", id)
+                        window.location = '/stockentry'
+                       // setLoading(false);
+                       // handleClickOpen();
+                       alert("Stock Registered Successfully");
                     };
-                  }*/
-                /*Axios.post('http://localhost:4000/api/users',post).then(response => {
-                    localStorage.setItem("token", response.message);
-                    console.log(response.message)
-                  });*/
+                    loadUsers();
+                }
+                else {
+                    let updatedquantity = +curquant + parseInt(values.totalquantity);
+                    console.log("Updated quantity: " + updatedquantity);
+                    const update = {
+                        productid: id,
+                        
+                        batchno: values.batchno,
+                        unitcost: values.unitcost,
+                        totalquantity: updatedquantity,
+                        buffervalue: +updatedquantity * 0.15,
+                        doe: doe,
+                        dom: dom,
+                    }
 
 
+                 
+                    const loadUsers = async () => {
+                        try {
+                            const res = await axios.put('http://localhost:4000/updateexistingstocks/' + currst.toString(), {
+                                _id: currst.toString(),
+                                // productid: id,
+                                 batchno: values.batchno,
+                                 unitcost: values.unitcost,
+                                totalquantity: updatedquantity,
+                                 buffervalue: updatedquantity * 0.15,
+                                 doe: doe,
+                                 dom: dom,
 
-                // const { user: res } =  Axios.post(url, post);
-                // localStorage.setItem("token", response.message);
-                //console.show(response.message)
-                // window.location = "/login";
-                //return <HospitalRegistration/>
-                /* ReactDOM.render(
-                     <Router>
-                       <Login />
-                     </Router>,
-                     document.getElementById('root')
-                   );*/
+
+                            });
+                            const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
+                            window.location = '/stockentry'
+                        // setLoading(false);
+                        // handleClickOpen();
+                        console.log("apires "+res);
+                        alert("Stock Updated Successfully");
+                        
+
+
+                        } catch (error) {
+                            alert("Error Issuing Stock")
+                            console.error("Error issuing issuuee update:", error);
+                        }
+                        
+                    };
+                    loadUsers();
+                }
+
+              
             } catch (error) {
                 alert("Error Registering Stock")
                 console.error("Error creating post:", error);
@@ -343,7 +316,6 @@ const StockEntry = () => {
                                 <div class="row">
                                     <div class="col">
 
-<<<<<<< HEAD
                                         <p class="text-left h2 mb-3 mt-4">Stock Information:</p>
                                         
                                         <div className="row mt-3">
@@ -662,147 +634,6 @@ const StockEntry = () => {
                                 </form>
                             </div>
                         </div>
-=======
-                      <div className="row mt-3">
-                        <InputLabel id="demo-simple-select-label">
-                          Product Name*
-                        </InputLabel>
-                        <div style={{ position: "relative" }}>
-                          <SearchIcon
-                            style={{
-                              position: "absolute",
-                              top: "50%",
-                              left: "19px",
-                              transform: "translateY(-50%)",
-                            }}
-                          />
-                          <input
-                            placeholder="Search Your Product"
-                            aria-label="search"
-                            value={searchTerm}
-                            onChange={(e) => handleSearchChange(e)}
-                            style={{
-                              width: "100%",
-                              paddingLeft: "40px",
-                              paddingTop: "8px",
-                              paddingBottom: "8px",
-                              border: "1px solid #ccc",
-                              borderRadius: "4px",
-                            }}
-                          />
-                          {searchResults.length > 0 && (
-                            <div
-                              style={{
-                                position: "absolute",
-                                backgroundColor: "white",
-                                width: "100%",
-                                zIndex: 1,
-                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-                                maxHeight: "200px",
-                                overflowY: "auto",
-                              }}
-                            >
-                              {searchResults.map((product) => (
-                                <div
-                                  key={product._id}
-                                  style={{
-                                    padding: "8px",
-                                    cursor: "pointer",
-                                    fontSize: "16px",
-                                  }}
-                                  onClick={() => handleProductSelect(product)}
-                                >
-                                  {highlightSearchTerm(product.name)}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="row mt-3">
-                        <label htmlFor="first" className="form-label">
-                          Product UPC/Product Name/Manufacturer
-                        </label>
-                        <input
-                          id="firstname"
-                          name="firstname"
-                          className="form-control"
-                          placeholder={upc}
-                          value={values.upccode}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          disabled={true}
-                        />
-                        {errors.firstname && touched.firstname ? (
-                          <small className="text-danger mt-1">
-                            {errors.firstname}
-                          </small>
-                        ) : null}
-                      </div>
-
-                      <div className="row mt-3">
-                        <label htmlFor="last`" className="form-label">
-                          Manufacturer
-                        </label>
-                        <input
-                          id="phone"
-                          name="phone"
-                          className="form-control"
-                          value={values.phone}
-                          placeholder={manufacturer}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          disabled={true}
-                        />
-                        {errors.phone && touched.phone ? (
-                          <small className="text-danger mt-1">
-                            {errors.phone}
-                          </small>
-                        ) : null}
-                      </div>
-                      <div className="row mt-3">
-                        <label htmlFor="first" className="form-label">
-                          Product Type
-                        </label>
-                        <input
-                          id="email"
-                          name="email"
-                          className="form-control"
-                          value={values.email}
-                          placeholder={type}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          disabled={true}
-                        />
-                        {errors.email && touched.email ? (
-                          <small className="text-danger mt-1">
-                            {errors.email}
-                          </small>
-                        ) : null}
-                      </div>
-                      <div className="row mt-3">
-                        <label htmlFor="first" className="form-label">
-                          Product Category/Sub Category
-                        </label>
-                        <input
-                          id="address"
-                          name="address"
-                          className="form-control"
-                          placeholder={category}
-                          value={values.address}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          type="text"
-                          disabled={true}
-                        />
-                        {errors.address && touched.address ? (
-                          <small className="text-danger mt-1">
-                            {errors.address}
-                          </small>
-                        ) : null}
-                      </div>
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
                     </div>
                 </div>
 

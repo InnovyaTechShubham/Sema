@@ -34,7 +34,6 @@ const initialValues = {
 };
 
 
-<<<<<<< HEAD
 const ProductEntry = () => {
 
     let [loading, setLoading] = useState(false);
@@ -43,17 +42,6 @@ const ProductEntry = () => {
     let [subcategory, setSubCategory] = useState("")
     let [emergency, setEmergency] = useState("")
     let [origin, setOrigin] = useState("")
-=======
-  const selectionChangeHandler = (event) => {
-    setProductType(event.target.value);
-  };
-  const selectionChangeHandler2 = (event) => {
-    setCategory(event.target.value);
-  };
-  const selectionChangeHandler3 = (event) => {
-    setEmergency(event.target.value);
-  };
->>>>>>> 487ef9576d83fdffca60b1e7e2db59db763c4706
 
 
     const selectionChangeHandler = (event) => {
@@ -372,10 +360,10 @@ const ProductEntry = () => {
                                                     >
 
 
-                                                <MenuItem value={"usa"}>USA</MenuItem>
-                                                <MenuItem value={"korea"}>Korea</MenuItem>
-                                                <MenuItem value={"india"}>India</MenuItem>
-                                                <MenuItem value={"australia"}>australia</MenuItem>
+                                                <MenuItem value={"USA"}>USA</MenuItem>
+                                                <MenuItem value={"KOREA"}>Korea</MenuItem>
+                                                <MenuItem value={"INDIA"}>India</MenuItem>
+                                                <MenuItem value={"AUSTRALIA"}>Australia</MenuItem>
                                             </Select>
                                             </div>
                                             <div className="row mt-4 w-100" backgroundColor="#FFFF">
@@ -392,8 +380,8 @@ const ProductEntry = () => {
                                                             label="emergencytype"
                                                             onChange={selectionChangeHandler3}
                                                         >
-                                                            <MenuItem value={"Cr"}>Critical</MenuItem>
-                                                            <MenuItem value={"Is"}>Issued</MenuItem>
+                                                            <MenuItem value={"Critical"}>Critical</MenuItem>
+                                                            <MenuItem value={"Non Critical"}>Non-Critical</MenuItem>
                                                         </Select>
                                                         {errors.emergencytype && touched.emergencytype ? (
                                                     <small className="text-danger mt-1">
