@@ -220,9 +220,15 @@ app.post("/postusers", async (req, res) => {
   }
 });
 app.post("/postproducts", async (req, res) => {
+<<<<<<< HEAD
   const producttype = req.body.producttype 
   const category = req.body.category 
   const subcategory = req.body.subcategory 
+=======
+  const producttype = req.body.producttype;
+  const category = req.body.category;
+  const subcategory = req.body.subcategory;
+>>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 
   const upccode = req.body.upccode;
   const name = req.body.name;
