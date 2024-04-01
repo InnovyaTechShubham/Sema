@@ -22,10 +22,6 @@ const initialValues = {
   description: "",
 };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 const ProductEntry = () => {
   let [loading, setLoading] = useState(false);
   let [producttype, setProductType] = useState("");
@@ -34,14 +30,6 @@ const ProductEntry = () => {
   let [emergency, setEmergency] = useState("");
   let [origin, setOrigin] = useState("");
 
-<<<<<<< HEAD
-    let [loading, setLoading] = useState(false);
-    let [producttype, setProductType] = useState("")
-    let [category, setCategory] = useState("")
-    let [subcategory, setSubCategory] = useState("")
-    let [emergency, setEmergency] = useState("")
-    let [origin, setOrigin] = useState("")
-=======
   const selectionChangeHandler = (event) => {
     setProductType(event.target.value);
   };
@@ -51,7 +39,6 @@ const ProductEntry = () => {
   const selectionChangeHandler3 = (event) => {
     setEmergency(event.target.value);
   };
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 
   const selectionChangeHandler5 = (event) => {
     setSubCategory(event.target.value);
@@ -389,284 +376,6 @@ const ProductEntry = () => {
                           Emergency Type*
                         </InputLabel>
 
-<<<<<<< HEAD
-                                               
-                                            </div>
-                                            <div className="row mt-3 w-100">
-                                               
-                                                    <InputLabel id="demo-simple-select-label">Category*</InputLabel>
-                                                    <Select
-                                                     sx={{ backgroundColor:"#FFFF", height:"50%"   }}
-                                                        labelId="demo-simple-select-label"
-                                                        id="category"
-                                                        value={category}
-                                                        label="category"
-                                                        onChange={selectionChangeHandler2}
-                                                        className="form-control"
-                                                    >
-
-
-                                                        {prodMap[producttype]
-                                                            ? prodMap[producttype].map(function (item) {
-                                                                return <MenuItem value={item.value}>{item.label}</MenuItem>;
-                                                            })
-                                                            : ""}
-                                                    </Select>
-                                                    {errors.category && touched.category ? (
-                                                    <small className="text-danger mt-1">
-                                                        {errors.category}
-                                                    </small>
-                                                ) : null}
-
-                                               
-                                            </div>
-                                            <div className="row mt-3 w-100">
-                                               
-                                                    <InputLabel id="demo-simple-select-label">Sub Category*</InputLabel>
-                                                    <Select
-                                                     sx={{ backgroundColor:"#FFFF", height:"50%"   }}
-                                                        labelId="demo-simple-select-label"
-                                                        id="category"
-                                                        value={subcategory}
-                                                        label="category"
-                                                        onChange={selectionChangeHandler5}
-                                                        className="form-control"
-                                                    >
-
-
-                                                        {subcatMap[category]
-                                                            ? subcatMap[category].map(function (item) {
-                                                                return <MenuItem value={item.value}>{item.label}</MenuItem>;
-                                                            })
-                                                            : ""}
-                                                    </Select>
-                                                    {errors.category && touched.category ? (
-                                                    <small className="text-danger mt-1">
-                                                        {errors.category}
-                                                    </small>
-                                                ) : null}
-
-                                               
-                                            </div>
-                                            <div className="row mt-3 w-100">
-                                                <label htmlFor="last`" className="form-label">
-                                                    Product UPC/Product Name/Manufacturer*
-                                                </label>
-                                                <input
-                                                    id="upccode"
-                                                    name="upccode"
-                                                    className="form-control"
-                                                    value={values.upccode}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                
-                                                   
-                                                />
-                                                {errors.upccode && touched.upccode ? (
-                                                    <small className="text-danger mt-1">
-                                                        {errors.upccode}
-                                                    </small>
-                                                ) : null}
-                                            </div>
-                                            <div className="row mt-3 w-100 ">
-                                                    <label htmlFor="first" className="form-label">
-                                                        Product Name*
-                                                    </label>
-                                                    <input
-                                                        id="name"
-                                                        name="name"
-                                                        className="form-control"
-                                                        value={values.name}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {errors.name && touched.name ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.name}
-                                                        </small>
-                                                    ) : null}
-                                                
-
-                                            </div>
-                                            <div className="row mt-3 w-100">
-                                                
-                                            <label htmlFor="first" className="form-label">
-                                                        Manufacturer*
-                                                    </label>
-                                                    <input
-                                                        id="manufacturer"
-                                                        name="manufacturer"
-                                                        className="form-control"
-                                                        value={values.manufacturer}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {errors.manufacturer && touched.manufacturer ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.manufacturer}
-                                                        </small>
-                                                    ) : null}
-                                                
-                                            </div>
-                                            
-                                            <div className="row mt-3 w-100">
-                                            <InputLabel id="demo-simple-select-label">Product Origin*</InputLabel>
-                                                    <Select
-                                                     sx={{ backgroundColor:"#FFFF", height:"50%"   }}
-                                                        labelId="demo-simple-select-label"
-                                                        id="category"
-                                                        value={origin}
-                                                        label="origin"
-                                                        onChange={selectionChangeHandler6}
-                                                        className="form-control"
-                                                    >
-
-
-                                                <MenuItem value={"USA"}>USA</MenuItem>
-                                                <MenuItem value={"KOREA"}>Korea</MenuItem>
-                                                <MenuItem value={"INDIA"}>India</MenuItem>
-                                                <MenuItem value={"AUSTRALIA"}>Australia</MenuItem>
-                                            </Select>
-                                            </div>
-                                            <div className="row mt-4 w-100" backgroundColor="#FFFF">
-                                            
-                                                
-                                                   
-                                                        <InputLabel id="demo-simple-select-label">Emergency Type*</InputLabel>
-                                                       
-                                                        <Select
-                                                            sx={{ backgroundColor:"#FFFF" , height:"50%"   }}
-                                                            labelId="demo-simple-select-label"
-                                                            id="emergencytype"
-                                                            value={emergency}
-                                                            label="emergencytype"
-                                                            onChange={selectionChangeHandler3}
-                                                        >
-                                                            <MenuItem value={"Critical"}>Critical</MenuItem>
-                                                            <MenuItem value={"Non Critical"}>Non-Critical</MenuItem>
-                                                        </Select>
-                                                        {errors.emergencytype && touched.emergencytype ? (
-                                                    <small className="text-danger mt-1">
-                                                        {errors.emergencytype}
-                                                    </small>
-                                                ) : null}
-
-                                               
-                                                
-                                            </div>
-                                        
-                                    </div>
-
-                                    <div class="col md-5 ">
-                                        <br />
-                                            <br />
-                                            <br />
-                                            <br />
-
-
-                                            <Box
-                                                sx={{
-                                                    border: "1px solid black",
-                                                    borderRadius: "5px",
-                                                    display: "flex",
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    width: "100%",
-                                                    height: 500,
-                                                }}
-                                            >
-                                                <img
-                                                    width="96"
-                                                    height="96"
-                                                    src="https://img.icons8.com/color/96/add-image.png"
-                                                    alt="add-image"
-                                                />
-                                            </Box>
-                                            <br />
-
-
-                                            <div class="row w-100">
-
-
-
-                                        <Button
-                                                        variant="primary"
-                                                        size="lg"
-                                                        //onClick={handleSubmit}
-                                                    >
-                                                       Add Product Image
-                                                    </Button>
-                                            
-
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="row">
-
-
-                                       
-                                            <div className="row w-120" >
-                                                
-                                                    <label htmlFor="first" className="form-label">
-                                                        Product Description*
-                                                    </label>
-                                           
-                                                      <textarea 
-                                                      class="form-control" 
-                                                      id="description"
-                                                       rows="3"   
-                                                       value={values.description}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}>
-
-                                                        </textarea>
-
-                                                    {errors.description && touched.description ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.description}
-                                                        </small>
-                                                    ) : null}
-                                                
-
-
-                                            </div>
-
-                                            <br />
-
-
-                                            <div className="row mt-3">
-                                                <div className="col text-center actionButtons">
-                                                    <Button
-                                                        variant="secondary"
-                                                        size="lg"
-                                                        onClick={resetForm}
-                                                    >
-                                                        Clear
-                                                    </Button>
-
-                                                    <Button
-                                                        variant="primary"
-                                                        size="lg"
-                                                        onClick={handleSubmit}
-                                                    >
-                                                        Add Product
-                                                    </Button>
-                                                </div>
-                                            </div>
-
-                                        
-                                    </div>
-
-
-                                 </div>
-                         </form>
-                            </div>
-                        </div>
-=======
                         <Select
                           sx={{ backgroundColor: "#FFFF", height: "50%" }}
                           labelId="demo-simple-select-label"
@@ -684,7 +393,6 @@ const ProductEntry = () => {
                           </small>
                         ) : null}
                       </div>
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
                     </div>
 
                     <div class="col md-5 ">

@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import 
- {BsJustify, BsHospital, BsArrowReturnLeft}
- from 'react-icons/bs'
-import { Text } from 'recharts'
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-=======
 import React, { useState, useEffect } from "react";
 import { BsJustify, BsHospital, BsArrowReturnLeft } from "react-icons/bs";
 import { Text } from "recharts";
@@ -21,7 +8,6 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import fetchSearchResults from "../../utils/fetchSearchResults";
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -82,19 +68,6 @@ function Header({ OpenSidebar }) {
   const handleBack = () => {
     window.location = "/";
   };
-<<<<<<< HEAD
-  return (
-    <header className='header'style={{ backgroundColor: "#75b6fa" }}>    
-
-        <div className='menu-icon'>
-            <BsJustify className='icon' onClick={OpenSidebar}/>
-        </div>
-        
-        <div className='header-left h3'>
-        
-            <BsArrowReturnLeft className='icon'/>
-            <Button
-=======
 
   //Search Bar
   const [searchTerm, setSearchTerm] = useState("");
@@ -140,7 +113,6 @@ function Header({ OpenSidebar }) {
       <div className="header-left h3">
         <BsArrowReturnLeft className="icon" />
         <Button
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
           id="basic-button"
           aria-controls={open ? "basic-menu" : undefined}
           aria-haspopup="true"
@@ -149,29 +121,9 @@ function Header({ OpenSidebar }) {
         >
           BACK
         </Button>
-<<<<<<< HEAD
-         
-        </div>
-        
-        <div className='header-right h2'>
-        <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search Your Product"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-
-=======
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
       </div>
       {/* <div className='header-right h3'> */}
 
-<<<<<<< HEAD
-        <BsHospital className='icon' />
-=======
       <div className="header-right h2">
         <Search>
           <SearchIconWrapper>
@@ -214,7 +166,6 @@ function Header({ OpenSidebar }) {
 
       <div className="header-right h3">
         <BsHospital className="icon" />
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
         <Button
           id="basic-button"
           aria-controls={open ? "basic-menu" : undefined}

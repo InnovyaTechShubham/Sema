@@ -1,25 +1,4 @@
 import { StockSchema } from "./StockEntrySchema";
-<<<<<<< HEAD
-import Axios from "axios"
-import { useState, React, CSSProperties, useEffect } from 'react'
-import { useFormik } from "formik";
-//import "./HospitalRegistration.css";
-import { MenuItem,Button } from "@mui/material";
-import { useNavigate, } from "react-router-dom";
-import Box from '@mui/material/Box';
-import axios from 'axios'
-import { Select, FormControl, InputLabel,FormHelperText } from "@mui/material";
-import {DatePicker} from '@mui/x-date-pickers'
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import LoaderOverlay from '../Loader/LoaderOverlay.js';
-import "./StockEntry.css"
-
-
-
-
-
-=======
 import Axios from "axios";
 import { useState, useEffect, React, CSSProperties } from "react";
 import { useFormik } from "formik";
@@ -36,7 +15,6 @@ import "./StockEntry.css";
 import fetchSearchResults from "../utils/fetchSearchResults.js";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 
 const initialValues = {
   productid: "",
@@ -50,34 +28,6 @@ const initialValues = {
 };
 
 const StockEntry = () => {
-<<<<<<< HEAD
-     const [prodnames,setProdNames] = useState([]);
-     const [category,setCategory] = useState(null)
-     const [manufacturer,setManufacturer] = useState(null)
-     const [upc,setUpc] = useState(null)
-     const [type,setType] = useState(null)
-     const [id,setId] = useState(null)
-     const [doe,setDoe] = useState(null)
-     const [dom,setDom] = useState(null)
-     const [stockid,setStockId] = useState([]);
-     const [stockproductarray,setStockProductArray] = useState([]);
-     const [existquantity,setExistQuantity] = useState([]);
-     const [existflagval,setExistFlagVal] = useState(0)
-     const [currentstockidval,setCurrentStockIdVal] = useState(null)
-     const [existingquantityval,setExistingQuantityVal] = useState(null)
-
-
-
-     
-
-    const getstock = async () =>{
-        try{
-             const url = `http://localhost:4000/stocks`;
-            const { data } = await axios.get(url);
-            const stockarray = new Array(data.document.length);
-            const stockproductarray = new Array(data.document.length);
-            const existquantity = new Array(data.document.length);
-=======
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -89,31 +39,24 @@ const StockEntry = () => {
   const [id, setId] = useState(null);
   const [doe, setDoe] = useState(null);
   const [dom, setDom] = useState(null);
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 
-            for(let i = 0;i<data.document.length;i++){
-                stockarray[i] = data.document[i]._id;
-                stockproductarray[i] = data.document[i].productid;
-                existquantity[i] = data.document[i].totalquantity;
-            }
-            setStockId(stockarray);
-           // console.log("stockarray"+stockarray);
-            setStockProductArray(stockproductarray);
-           // console.log("stockproductarray"+stockproductarray);
+  const handleSearchChange = async (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
 
-            setExistQuantity(existquantity);
-           // console.log("existquant"+existquantity);
+    if (term.trim().length >= 3) {
+      try {
+        const results = await fetchSearchResults(term);
+        setSearchResults(results);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+        setSearchResults([]);
+      }
+    } else {
+      setSearchResults([]);
+    }
+  };
 
-<<<<<<< HEAD
-            
-
-       } catch (error) {
-            console.log(error);
-        }
-    };
-
-  getstock();
-=======
   const handleProductSelect = (product) => {
     setSelectedProduct(product);
     setCategory(product.category);
@@ -177,7 +120,6 @@ const StockEntry = () => {
         upc[i] = data.document[i].upccode;
         id[i] = data.document[i]._id;
       }
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 
       setProdNames(prodnamesarray);
       // window.location = "/"
@@ -190,85 +132,6 @@ const StockEntry = () => {
         }
       }
 
-<<<<<<< HEAD
-    getprod();
-
-   
-    
-
-
-    const [open, setOpen] = useState(false);
-
-   
-    let [color, setColor] = useState("#ffffff");
-    
-    let [name, setName] = useState("")
-
-    
-   
-    
-  
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const navigate = useNavigate();
-    const navigateToVerify = () => {
-        navigate('/verify');
-    }
-    const {
-        values,
-        errors,
-        touched,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        resetForm,
-    } = useFormik({
-        initialValues,
-        validationSchema: StockSchema,
-        onSubmit: (values, action) => {
-            console.log("1")
-            let exist = 0;
-            let currst = null;
-            let curquant = null;
-            let newDate = new Date()
-            let date = newDate.getDate();
-            let month = newDate.getMonth() + 1;
-            let year = newDate.getFullYear();
-            const fulldate = `${date}/${month<10?`0${month}`:`${month}`}/${year}`;
-
-            console.log(stockid);
-            console.log(existquantity);
-            for(let a = 0;a<stockproductarray.length;a++) {
-                if(stockproductarray[a].localeCompare(id) == 0){
-                    console.log("stockproduct"+stockproductarray[a])
-                    console.log("selectedprod"+id)
-                   exist = 1;
-                    currst = stockid[a];
-                    curquant = existquantity[a];
-                }
-            }
-            console.log("Current Stock"+currst);
-    console.log("Exist Quantity"+curquant);
-
-
-
-            const stock = {
-                "productid": id,
-                "name":values.name,
-                "phone":values.phone,
-                "batchno": values.batchno,
-                "unitcost": values.unitcost,
-                "totalquantity": values.totalquantity,
-                "buffervalue": +values.totalquantity * 0.15,
-                "doe": doe,
-                "dom": dom,
-                
-=======
       setCategory(cat[flag]);
       setType(type[flag]);
       setUpc(upc[flag]);
@@ -281,99 +144,9 @@ const StockEntry = () => {
 
   getprod();
   const [open, setOpen] = useState(false);
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 
   let [color, setColor] = useState("#ffffff");
 
-<<<<<<< HEAD
-            const history = {
-                "date" :fulldate,
-                "productid": id,
-                "quantity":values.totalquantity,
-                "type":"Stock Entry,"
-
-            }
-
-            try {
-                console.log("2")
-
-              
-                console.log("Exist flag "+exist);
-                if(exist == 0){
-                    const loadUsers = async () => {
-                        const response = await Axios.post("http://localhost:4000/poststocks", stock);
-                        const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
-                        let userData = (await response).data;
-                        //let id = (await response).data.id;
-                        console.log(response);
-                        console.log(historyresponse);
-                        console.log(userData);
-                        //localStorage.setItem("token", userData)
-                        //localStorage.setItem("id", id)
-                        window.location = '/stockentry'
-                       // setLoading(false);
-                       // handleClickOpen();
-                       alert("Stock Registered Successfully");
-                    };
-                    loadUsers();
-                }
-                else {
-                    let updatedquantity = +curquant + parseInt(values.totalquantity);
-                    console.log("Updated quantity: " + updatedquantity);
-                    const update = {
-                        productid: id,
-                        
-                        batchno: values.batchno,
-                        unitcost: values.unitcost,
-                        totalquantity: updatedquantity,
-                        buffervalue: +updatedquantity * 0.15,
-                        doe: doe,
-                        dom: dom,
-                    }
-
-
-                 
-                    const loadUsers = async () => {
-                        try {
-                            const res = await axios.put('http://localhost:4000/updateexistingstocks/' + currst.toString(), {
-                                _id: currst.toString(),
-                                // productid: id,
-                                 batchno: values.batchno,
-                                 unitcost: values.unitcost,
-                                totalquantity: updatedquantity,
-                                 buffervalue: updatedquantity * 0.15,
-                                 doe: doe,
-                                 dom: dom,
-
-
-                            });
-                            const historyresponse = await Axios.post("http://localhost:4000/posthistory", history);
-                            window.location = '/stockentry'
-                        // setLoading(false);
-                        // handleClickOpen();
-                        console.log("apires "+res);
-                        alert("Stock Updated Successfully");
-                        
-
-
-                        } catch (error) {
-                            alert("Error Issuing Stock")
-                            console.error("Error issuing issuuee update:", error);
-                        }
-                        
-                    };
-                    loadUsers();
-                }
-
-              
-            } catch (error) {
-                alert("Error Registering Stock")
-                console.error("Error creating post:", error);
-            }
-            action.resetForm();
-        },
-    });
-=======
   let [name, setName] = useState("");
 
   const handleClickOpen = () => {
@@ -465,7 +238,6 @@ const StockEntry = () => {
       action.resetForm();
     },
   });
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
 
   return (
     <div>
@@ -482,326 +254,6 @@ const StockEntry = () => {
                     <div class="col">
                       <p class="text-left h2 mb-3 mt-4">Stock Information:</p>
 
-<<<<<<< HEAD
-                                        <p class="text-left h2 mb-3 mt-4">Stock Information:</p>
-                                        
-                                        <div className="row mt-3">
-                                        <InputLabel  id="demo-simple-select-label">Product Name*</InputLabel>
-                                                    <Select
-                                                         sx={{ backgroundColor:"#FFFF" , height:"80%"   }}
-                                                        labelId="demo-simple-select-label"
-                                                        id="product-name"
-                                                        value={name}
-                                                        label="Product Name"
-                                                        onChange={e => setName(e.target.value)}
-
-                                                >
-                                                    {prodnames.map((value, key) => (
-                                                        <MenuItem
-                                                            key={key}
-                                                            value={value}>
-                                                            {value}
-                                                        </MenuItem>
-                                                    ))}
-
-                                                </Select>
-                                            </div>
-                                            <div className="row mt-3">
-                                                <label htmlFor="first" className="form-label">
-                                                    Product UPC/Product Name/Manufacturer
-                                                </label>
-                                                <input
-                                                    id="firstname"
-                                                    name="firstname"
-                                                    className="form-control"
-                                                    placeholder={upc}
-                                                    value={values.upccode}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    disabled={true}
-                                                />
-                                                {errors.firstname && touched.firstname ? (
-                                                    <small className="text-danger mt-1">
-                                                        {errors.firstname}
-                                                    </small>
-                                                ) : null}
-                                            </div>
-                                            
-                                            <div className="row mt-3">
-                                                <label htmlFor="last`" className="form-label">
-                                                    Manufacturer
-                                                </label>
-                                                <input
-                                                    id="phone"
-                                                    name="phone"
-                                                    className="form-control"
-                                                    value={values.phone}
-                                                    placeholder={manufacturer}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                   
-                                                    disabled={true}
-                                                />
-                                                {errors.phone && touched.phone ? (
-                                                    <small className="text-danger mt-1">
-                                                        {errors.phone}
-                                                    </small>
-                                                ) : null}
-                                            </div>
-                                            <div className="row mt-3">
-                                               
-                                                    <label htmlFor="first" className="form-label">
-                                                        Product Type
-                                                    </label>
-                                                    <input
-                                                        id="email"
-                                                        name="email"
-                                                        className="form-control"
-                                                        value={values.email}
-                                                        placeholder={type}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        disabled={true}
-                                                    />
-                                                    {errors.email && touched.email ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.email}
-                                                        </small>
-                                                    ) : null}
-                                                
-
-                                            </div>
-                                            <div className="row mt-3">
-                                               
-                                                    <label htmlFor="first" className="form-label">
-                                                        Product Category/Sub Category
-                                                    </label>
-                                                    <input
-                                                        id="address"
-                                                        name="address"
-                                                        className="form-control"
-                                                        placeholder = {category}
-                                                        value={values.address}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        type="text"
-                                                        disabled={true}
-                                                    />
-                                                    {errors.address && touched.address ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.address}
-                                                        </small>
-                                                    ) : null}
-                                                
-                                            </div>
-                                        
-                                    </div>
-                                    <br/>
-                                    <div class="col md-5 ">
-                                    <br />   
-                                    
-                                       
-                                       
-
-                                        <div class="row  ">
-                                            
-                                           
-                                        <Box
-                                                sx={{
-                                                    border: "1px solid black",
-                                                    borderRadius: "5px",
-                                                    display: "flex",
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    width: "100%",
-                                                    margin: "10px",
-                                                    height: 500,
-                                                }}
-                                            >
-                                                <img
-                                                    width="96"
-                                                    height="96"
-                                                    src="https://img.icons8.com/color/96/add-image.png"
-                                                    alt="add-image"
-                                                />
-                                            </Box>
-                                        </div>
-                                        <br />
-
-
-                                        <div class="row align-items-right">
-                                        
-                                            <div class="row">
-                                            
-                                                
-
-                                            </div>
-
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="row">
-
-
-                                        <p class="text-left h2 mb-3 mt-4">Vendor Details</p>
-                                    
-                                        <div className="row mt-3">
-                                                <div className="col text-left">
-                                                    <label htmlFor="first" className="form-label">
-                                                        Name*
-                                                    </label>
-                                                    <input
-                                                        id="name"
-                                                        name="name"
-                                                        className="form-control"
-                                                        value={values.name}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {errors.name && touched.name ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.name}
-                                                        </small>
-                                                    ) : null}
-                                                </div>
-                                                <div className="col text-left">
-                                                    <label htmlFor="first" className="form-label">
-                                                        Phone Number*
-                                                    </label>
-                                                    <input
-                                                        id="phone"
-                                                        name="phone"
-                                                        className="form-control"
-                                                        value={values.phone}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        type="text"
-                                                    />
-                                                    {errors.phone && touched.phone ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.phone}
-                                                        </small>
-                                                    ) : null}
-                                                </div>
-                                               
-                                            </div>
-                                            
-                                        <p class="text-left h2 mb-3 mt-4">Stock Details</p>
-                                            <div className="row mt-3">
-                                                <div className="col text-left">
-                                                    <label htmlFor="first" className="form-label">
-                                                        Batch Number*
-                                                    </label>
-                                                    <input
-                                                        id="batchno"
-                                                        name="batchno"
-                                                        className="form-control"
-                                                        value={values.batchno}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {errors.batchno && touched.batchno ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.batchno}
-                                                        </small>
-                                                    ) : null}
-                                                </div>
-                                                <div className="col text-left">
-                                                    <label htmlFor="first" className="form-label">
-                                                        Unit Cost*
-                                                    </label>
-                                                    <input
-                                                        id="unitcost"
-                                                        name="unitcost"
-                                                        className="form-control"
-                                                        value={values.unitcost}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        type="text"
-                                                    />
-                                                    {errors.unitcost && touched.unitcost ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.unitcost}
-                                                        </small>
-                                                    ) : null}
-                                                </div>
-                                                <div className="col text-left">
-                                                    <label htmlFor="last`" className="form-label">
-                                                        Total Quantity*
-                                                    </label>
-                                                    <input
-                                                        id="totalquantity"
-                                                        name="totalquantity"
-                                                        className="form-control"
-                                                        value={values.totalquantity}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        type="text"
-                                                    />
-                                                    {errors.totalquantity && touched.totalquantity ? (
-                                                        <small className="text-danger mt-1">
-                                                            {errors.totalquantity}
-                                                        </small>
-                                                    ) : null}
-                                                </div>
-                                            </div>
-                                           
-                                            <br/>
-                                            <br/>
-                                            <div className="row mt-3 justify-items-center">
-
-
-                                                <div className="col text-center">
-                                                       
-                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                    <DatePicker
-                                                        label="Date of Manufacturing*"
-                                                        value={dom}
-                                                        onChange={(newValue) => setDom(newValue)}
-                                                    />
-                                                    </LocalizationProvider>
-                                                    </div>
-                                                <div className="col text-center">
-                                                
-                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                    <DatePicker
-                                                        label="Date of Expiry*"
-                                                        value={doe}
-                                                        backgroundColor="#ffffff"
-                                                        onChange={(newValue) => setDoe(newValue)}
-                                                    />
-                                                    </LocalizationProvider>
-                                                </div>
-                                            </div>
-                                            <br/>
-                                            <br/>
-                                            <br/>
-                                            <br/>
-                                            <div class="row justify-content-around">
-                                                <br/>
-                                                <div class="col-3">
-                                                <Button variant='outlined' onClick= {resetForm} size='large' >Clear</Button>
-                                                </div>
-                                                <br/>
-                                                <br/>
-                                                <div class="col-3">
-                                                <Button variant='contained' onClick= {handleSubmit} size='large'>Add Stock</Button>
-                                                </div>
-                                            </div>
-                                            
-
-                                        
-                                    </div>
-
-
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-=======
                       <div className="row mt-3">
                         <InputLabel id="demo-simple-select-label">
                           Product Name*
@@ -941,7 +393,6 @@ const StockEntry = () => {
                           </small>
                         ) : null}
                       </div>
->>>>>>> 4b1d0610a57f980f2f47cd2e952b254b05f433ff
                     </div>
                     <br />
                     <div class="col md-5 ">
