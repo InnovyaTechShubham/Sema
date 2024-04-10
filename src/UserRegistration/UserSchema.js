@@ -2,7 +2,10 @@ import * as Yup from "yup";
 
 export const registrationSchema = Yup.object({
   email: Yup.string().email().required("Email id is required"),
-  hospitalname: Yup.string().min(6).max(20).required("Hospital Name is required"),
+  hospitalname: Yup.string()
+    .min(6)
+    .max(20)
+    .required("Hospital Name is required"),
   //registeras: Yup.string().min(6).max(20).required("Please Select Register Type"),
   address: Yup.string().min(6).required("Please enter Hospital address"),
   firstname: Yup.string().min(6).required("Please enter your First Name"),
@@ -13,9 +16,8 @@ export const registrationSchema = Yup.object({
   landmark: Yup.string().min(6).required("Your Nearest Landscape"),
   pincode: Yup.string().min(6).required("Please enter your PIN Code"),
   password: Yup.string().min(6).required("Please enter valid Password"),
-  
 
   //repassword: Yup.string()
-    //.required("Confirm password is required")
-//.oneOf([Yup.ref("password"), null], "Password must match"),
+  //.required("Confirm password is required")
+  //.oneOf([Yup.ref("password"), null], "Password must match"),
 });

@@ -61,7 +61,9 @@ function App() {
         <Route path="/bufferstock" exact element={<BufferStock />} />
       )}
       {user != null && <Route path="/stockout" exact element={<StockOut />} />}
-
+      {user != null && (
+        <Route path="/adduser" exact element={<AddUserScreen />} />
+      )}
       {user != null && (
         <Route path="/reports" exact element={<ReportScreen />} />
       )}

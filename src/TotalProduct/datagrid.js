@@ -44,6 +44,14 @@ import {
 import { Checkbox } from "@mui/material";
 import { BsFilter } from "react-icons/bs";
 
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+// import Paper from "@mui/material/Paper";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -675,7 +683,7 @@ export default function FullFeaturedCrudGrid() {
                   </div>
 
                   <br />
-                  <DataGrid
+                  {/* <DataGrid
                     rows={rows}
                     columns={columns}
                     getRowId={(row: any) => row._id}
@@ -694,7 +702,43 @@ export default function FullFeaturedCrudGrid() {
                     slotProps={{
                       toolbar: { setRows, setRowModesModel },
                     }}
-                  />
+                  /> */}
+                  <TableContainer
+                    component={Paper}
+                    className="table table-primary"
+                  >
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Product Type</TableCell>
+                          <TableCell>Product Name</TableCell>
+                          <TableCell>Category</TableCell>
+                          <TableCell>Manufacturer</TableCell>
+                          <TableCell>Origin</TableCell>
+                          <TableCell>Sub Category</TableCell>
+                          <TableCell>Emergency Type</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row) => (
+                          <TableRow
+                            key={row._id}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell>{row.producttype}</TableCell>
+                            <TableCell>{row.name}</TableCell>
+                            <TableCell>{row.category}</TableCell>
+                            <TableCell>{row.manufacturer}</TableCell>
+                            <TableCell>{row.origin}</TableCell>
+                            <TableCell>{row.subcategory}</TableCell>
+                            <TableCell>{row.emergencytype}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
                 </Box>
               </div>
             </div>

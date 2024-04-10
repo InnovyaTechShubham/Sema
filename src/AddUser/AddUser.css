@@ -1,0 +1,67 @@
+.user-table-parent-container {
+  display: flex; /* Establishes a flex container */
+  flex-direction: column; /* Stacks children vertically */
+  height: 100%; /* Takes full height of its container */
+}
+.user-table-container {
+  flex: 1; /* Allows this container to grow and fill the space */
+  padding: 20px; /* Add padding if desired */
+  display: flex; /* Also a flex container */
+  flex-direction: column; /* Stacks children vertically */
+}
+
+.table-controls {
+  margin-bottom: 20px; /* Adds space between the buttons and the table */
+}
+
+.table-title {
+  background: none;
+  border: none;
+  color: #333; /* Button text color */
+  font-size: 1em; /* Adjust font size to your preference */
+  cursor: pointer;
+  padding: 5px 10px; /* Adjust to your preference */
+}
+
+.table-title:not(:last-child)::after {
+  content: "|";
+  padding-left: 10px; /* Space after the button text */
+  color: #333; /* Pipe color */
+}
+
+.btn-add-user {
+  margin-left: auto;
+  padding: 10px 20px;
+  background-color: #2c5cc5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+  color: #666;
+  font-weight: 500;
+}
+
+.btn-edit {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.footer {
+  margin-top: auto;
+}
