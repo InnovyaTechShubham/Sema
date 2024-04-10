@@ -33,15 +33,30 @@ const initialValues = {
 
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a4fde8136f1fda2b7871168a7d8d6d7a2858fa30
 const ProductEntry = () => {
 
+<<<<<<< HEAD
     let [loading, setLoading] = useState(false);
     let [producttype, setProductType] = useState("")
     let [category, setCategory] = useState("")
     let [subcategory, setSubCategory] = useState("")
     let [emergency, setEmergency] = useState("")
     let [origin, setOrigin] = useState("")
+=======
+  const selectionChangeHandler = (event) => {
+    setProductType(event.target.value);
+  };
+  const selectionChangeHandler2 = (event) => {
+    setCategory(event.target.value);
+  };
+  const selectionChangeHandler3 = (event) => {
+    setEmergency(event.target.value);
+  };
+>>>>>>> a4fde8136f1fda2b7871168a7d8d6d7a2858fa30
 
 
     const selectionChangeHandler = (event) => {
@@ -229,6 +244,7 @@ const ProductEntry = () => {
                                                     </small>
                                                 ) : null}
 
+<<<<<<< HEAD
                                                
                                             </div>
                                             <div className="row mt-3 w-100">
@@ -505,6 +521,25 @@ const ProductEntry = () => {
                          </form>
                             </div>
                         </div>
+=======
+                        <Select
+                          sx={{ backgroundColor: "#FFFF", height: "50%" }}
+                          labelId="demo-simple-select-label"
+                          id="emergencytype"
+                          value={emergency}
+                          label="emergencytype"
+                          onChange={selectionChangeHandler3}
+                        >
+                          <MenuItem value={"Cr"}>Critical</MenuItem>
+                          <MenuItem value={"Is"}>Issued</MenuItem>
+                        </Select>
+                        {errors.emergencytype && touched.emergencytype ? (
+                          <small className="text-danger mt-1">
+                            {errors.emergencytype}
+                          </small>
+                        ) : null}
+                      </div>
+>>>>>>> a4fde8136f1fda2b7871168a7d8d6d7a2858fa30
                     </div>
                 </div>
 
