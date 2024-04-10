@@ -64,6 +64,7 @@ function BufferStock() {
   const handleStockOut = () => {
     window.location = "/stockout"
   }
+  const hospitalid = localStorage.getItem("hospitalid");
   
 
 
@@ -83,8 +84,9 @@ function BufferStock() {
       const buffervalue = new Array(data.document.buffervalue);
       const entrydate = new Array(data.document.length)
       const manufacturingdate = new Array(data.document.length)
-
+      let a = 0;
       for (let i = 0; i < data.document.length; i++) {
+        if(data.document[i].hospitalid == hospitalid){
         batchno[i] = data.document[i].batchno;
         productid[i] = data.document[i].productid;
         unitcost[i] = data.document[i].unitcost;
@@ -93,7 +95,8 @@ function BufferStock() {
         buffervalue[i] = data.document[i].buffervalue;
         entrydate[i] = data.document[i].doe;
         manufacturingdate[i] = data.document[i].dom;
-
+        a++;
+        }
 
 
 

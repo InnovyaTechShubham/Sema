@@ -38,43 +38,39 @@ function Home() {
   const [quantity, setQuantity] = useState([]);
   const [type, setType] = useState([]);
   const [action, setAction] = useState([]);
+  const [bufferhospital, setBufferHospital] = useState([]);
+  const [stockhospital, setStockHospital] = useState([]);
 
   const [name, setName] = useState([]);
   const [emergency, setEmergency] = useState([]);
 
-  const [prodlen, setProdlen] = useState(null);
+  const [hospital, setHospital] = useState(null);
   const [stocklen, setStocklen] = useState(null);
   const [bufferstock,setBufferStock] = useState(null);
   const [stockout, setStockOut] = useState(null);
 
   const [issuedlen, setIssuedlen] = useState(null);
-
-  const hospitalid = localStorage.getItem("hospitalid");
   const handleTotal = () => {
-    window.location = "/totalproduct"
+    window.location = "/totalhospital"
   };
-  const handleAvailaible = () => {
-    window.location = "/availaibleproduct"
+  const handleNewRegistration = () => {
+    window.location = "/newregistration"
   };
   const handleBuffer = () => {
-    window.location = "/bufferstock"
+    window.location = "/bufferstocksema"
   };
   const handleStockOut = () => {
-    window.location = "/stockout"
+    window.location = "/stockoutsema"
   };
+ 
 
   //+1 AFTER ENTERING THE NEW PRODUCT
-  const getprod = async () => {
+  const gethospital = async () => {
     try {
-      let productlength = 0;
-      const url = `http://localhost:4000/products`;
+
+      const url = `http://localhost:4000/hospitals`;
       const { data } = await axios.get(url);
-      for(let a = 0;a < data.document.length;a++){
-        if(data.document[a].hospitalid == hospitalid){
-          productlength++;
-        }
-      }
-      setProdlen(productlength);
+      setHospital(data.document.length);
 
     } catch (error) {
       console.log(error);
@@ -84,15 +80,10 @@ function Home() {
   //+1 AFTER A STOCK OF PRODUCT IS ENTERED
   const getstock = async () => {
     try {
-      let stocklen = 0;
+
       const url = `http://localhost:4000/stocks`;
       const { data } = await axios.get(url);
-      for(let a = 0;a < data.document.length;a++){
-        if(data.document[a].hospitalid == hospitalid){
-          stocklen++;
-        }
-      }
-      setStocklen(stocklen);
+      setStocklen(data.document.length);
 
     } catch (error) {
       console.log(error);
@@ -107,22 +98,35 @@ function Home() {
       const { data } = await axios.get(url);
       let buffer = 0;
       let out = 0;
+      const bufferhospitallist = [];
+      const stockouthospitallist = [];
       for(let i = 0;i<data.document.length; i++){
-        if(data.document[i].hospitalid == hospitalid){
+        //No of Buffer Products
         if((+data.document[i].totalquantity <= +data.document[i].buffervalue)&&(+data.document[i].totalquantity > 1)){
             buffer++;
+            bufferhospitallist.push(data.document[i].hospitalid);
         }
-       }
       }
+      const uniqueValues = new Set(bufferhospitallist);
+
+// Get the count of unique BUFFER HOSPITALS 
+    const buffercount = uniqueValues.size;
+      //No of Stock Out Products
       for(let i = 0;i<data.document.length; i++){
-        if(data.document[i].hospitalid == hospitalid){
         if(+data.document[i].totalquantity < 1){
             out++;
+            stockouthospitallist.push(data.document[i].hospitalid);
         }
-       }
       }
+      const uniqueValues1 = new Set(stockouthospitallist);
+
+// Get the count of unique values
+const stockcount = uniqueValues1.size;
+      console.log("buffer list is "+bufferhospitallist);
       setBufferStock(buffer);
       setStockOut(out);
+      setBufferHospital(buffercount);
+      setStockHospital(stockcount);
 
     } catch (error) {
       console.log(error);
@@ -133,15 +137,10 @@ function Home() {
 
   const getissued = async () => {
     try {
-      const issuelen = 0;
+
       const url = `http://localhost:4000/issueds`;
       const { data } = await axios.get(url);
-      for(let a = 0;a < data.document.length;a++){
-        if(data.document[a].hospitalid == hospitalid){
-          issuelen++;
-        }
-      }
-      setIssuedlen(issuelen);
+      setIssuedlen(data.document.length);
 
     } catch (error) {
       console.log(error);
@@ -149,7 +148,7 @@ function Home() {
 
   };
 
-  getprod();
+  gethospital();
   getissued();
   getstock();
   getbufferstock();
@@ -166,16 +165,15 @@ function Home() {
       const productid = new Array(data.document.length)
       const quantity = new Array(data.document.length)
       const type = new Array(data.document.length)
-      let a = 0;
-      for (let i = 0; i < data.document.length; i++) {
-        if(data.document[i].hospitalid == hospitalid){
 
-        date[a] = data.document[i].date;
-        productid[a] = data.document[i].productid;
-        quantity[a] = data.document[i].quantity;
-        type[a] = data.document[i].type;
-        a++;
-        }
+      for (let i = 0; i < data.document.length; i++) {
+        date[i] = data.document[i].date;
+        productid[i] = data.document[i].productid;
+        quantity[i] = data.document[i].quantity;
+        type[i] = data.document[i].type;
+
+
+
       }
       setDate(date);
       setType(type);
@@ -266,86 +264,56 @@ function Home() {
                   </div>
 
                   <div className='main-cards'>
-                    <div className='card' >
+                    <div className='card' style={{ backgroundColor: '#1ce240' }}>
                       <div className='card-inner'>
-                        <h4>TOTAL </h4>
+                        <h4>TOTAL HOSPITAL</h4>
+                        <BsFillArchiveFill className='card_icon' />
                       </div>
 
-                      <h1>{prodlen}</h1>
+                      <h1>{hospital}</h1>
                       <Button variant="text" onClick={handleTotal}>
                         More
                       </Button>
 
 
                     </div>
-                    <div className='card' >
+                    <div className='card' style={{ backgroundColor: '#1ce240' }}>
                       <div className='card-inner'>
-                        <h4>AVAILAIBLE</h4>
+                        <h4>NEW REGISTRATION</h4>
+                        <BsFillGrid3X3GapFill className='card_icon' />
                       </div>
-                      <h1>{stocklen}</h1>
-                      <Button variant="text" onClick={handleAvailaible}>
+                      <h1>{hospital}</h1>
+                      <Button variant="text" onClick={handleNewRegistration}>
                         More
                       </Button> 
 
                     </div>
-                    <div className='card' >
+                    <div className='card' style={{ backgroundColor: '#d1f025' }}>
                       <div className='card-inner'>
                         <h4>BUFFER STOCK</h4>
+                        <BsPeopleFill className='card_icon' />
                       </div>
-                      <h1>{bufferstock}</h1>
+                      <h1>{bufferhospital}</h1>
                       <Button variant="text" onClick={handleBuffer}>
                         More
                       </Button>
 
                     </div>
-                    <div className='card' >
+                    <div className='card' style={{ backgroundColor: 'lightcoral' }}>
                       <div className='card-inner'>
                         <h4>STOCK OUT</h4>
+                        <BsFillBellFill className='card_icon' />
                       </div>
-                      <h1>{stockout}</h1>
+                      <h1>{stockhospital}</h1>
                       <Button variant="text" onClick={handleStockOut}>
                         More
                       </Button>
 
                     </div>
                   </div>
-                  <div className='row' align-items-start>
-                    <p class="text-right h3 mb-3 mt-4">Recent Activity</p>
-                  </div>
+                 
 
-                  <TableContainer component={Paper} className="table table-primary">
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell align="right">Date</TableCell>
-                          <TableCell align="right">Action</TableCell>
-                          <TableCell align="right">Type</TableCell>
-                          <TableCell align="right">Product</TableCell>
-                          <TableCell align="right">Quantity</TableCell>
-                          <TableCell align="right">Emergency Type</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.map((row) => (
-                          <TableRow
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                          >
-                            <TableCell align="right" component="th" scope="row">
-                              {row.date}
-                            </TableCell>
-                            <TableCell align="right">{row.action}</TableCell>
-                            <TableCell align="right">{row.type}</TableCell>
-                            <TableCell align="right">{row.product}</TableCell>
-                            <TableCell align="right">{row.quantity}</TableCell>
-                            <TableCell align="right">{row.emergencytype}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-
-                  <Button variant="text">Load More</Button>
+                 
                 </div>
               </div>
             </div>

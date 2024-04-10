@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const iden = new mongoose.Schema({
+  hospitalid:{type:String, required:true},
+
   producttype: { type: String, required: true },
   category: { type: String, required: true },
   subcategory: { type: String, required: true },

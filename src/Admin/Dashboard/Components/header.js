@@ -97,7 +97,7 @@ function Header({OpenSidebar}) {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search Your Product"
+              placeholder="Hospital Search  "
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
@@ -113,7 +113,7 @@ function Header({OpenSidebar}) {
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
         >
-          {hospitalname}
+          Pratibha
         </Button>
         <Menu
           id="basic-menu"

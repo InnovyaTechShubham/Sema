@@ -83,6 +83,7 @@ const HospitalRegistration = () => {
              const User = require("./schema.js"); */
 
             const hospital = {
+                "userid":localStorage.getItem("id"),
                 "hospitalname": values.hospitalname,
                 "billingname": values.billingname,
                 "address": values.address,
@@ -96,12 +97,23 @@ const HospitalRegistration = () => {
             };
 
             try {
+                const loadUsers = async () => {
                 setLoading(true);
-                const response = Axios.post('http://localhost:4000/posthospitals', hospital);
+                const response = await Axios.post('http://localhost:4000/posthospitals', hospital);
                 //window.location="/adddepartmentnew"
                 console.log("Post created:", response.data);
+                let hospitalid = (await response).data._id;
+                let hospitalname = (await response).data.hospitalname;
+                
+                console.log(hospitalid);
+                //Storing ID of user on local system
+                localStorage.setItem("hospitalid", hospitalid);
+                localStorage.setItem("hospitalname", hospitalname);
+
                 handleClickOpen();
                 setLoading(false);
+                }
+                loadUsers();
             } catch (error) {
                 alert("Error Registering")
                 console.error("Error creating post:", error);

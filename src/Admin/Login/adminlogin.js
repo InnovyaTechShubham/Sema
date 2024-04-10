@@ -26,13 +26,10 @@ const initialValues = {
 };
 
 
-const Login = () => {
+const AdminLogin = () => {
     const [open, setOpen] = useState(false);
     let [loading, setLoading] = useState(false);
     let [color, setColor] = useState("#ffffff");
-
-
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -42,13 +39,7 @@ const Login = () => {
     };
     const navigate = useNavigate();
     const navigateToRegister = () => {
-        navigate('/signup');
-    }
-    const navigateToLogin = () => {
-        navigate('/login');
-    }
-    const navigateToAdminLogin = () => {
-        navigate('/adminlogin');
+        navigate('/adminsignup');
     }
     const {
         values,
@@ -64,72 +55,31 @@ const Login = () => {
         validationSchema: loginAuth,
         onSubmit: (values, action) => {
             const loadUsers = async () => {
-                let flag = 0;
-
                 setLoading(true);
-                const url = "http://localhost:4000/users";
-                const { data } = await Axios.get(url);
-
-                for (let a = 0; a < data.document.length; a++) {
-                    if (values.email == data.document[a].email && values.password == data.document[a].password) {
-                        localStorage.setItem("id", data.document[a]._id);
-                        localStorage.setItem("email", data.document[a].email);
-                        localStorage.setItem("hospitalname", data.document[a].hospitalname);
-                        console.log("User Exist and his id is " + data.document[a]._id);
-                        const userData = localStorage.getItem("id");
-
-                        flag = 1;
-                        console.log("flag is " + flag);
-
-                        //Needs to Implement Other Test Cases Too. 
-                        const loadhos = async () => {
-                            const url = "http://localhost:4000/hospitals";
-                            const { data } = await Axios.get(url);
-                            console.log("First Hospital is " + data.document[0].userid);
-                            for (let i = 0; i < data.document.length; i++) {
-                                if (userData == data.document[i].userid) {
-                                    console.log("Current hospital id is " + data.document[i]._id);
-                                    localStorage.setItem("hospitalid", data.document[i]._id);
-                                    localStorage.setItem("hospitalname", data.document[i].hospitalname);
-                                    localStorage.setItem("billingname", data.document[i].billingname);
-                                    flag = 2;
-                                    console.log("flag is " + flag);
-                                    window.location = '/';
-
-
-
-                                }
-                                else if (i == data.document.length - 1 && userData != data.document[i].userid) {
-                                     window.loaction = '/registerhospital';
-                                    console.log("No Hospital Associated")
-
-                                }
-
-
-
-                            }
-                        }
-                        loadhos();
-                        console.log("flag is " + flag);
-
-                        //window.location = '/verify'
-                    }
-                    else if (values.email != data.document[a].email && values.password != data.document[a].password && (a == data.document.length -1)) {
-                        console.log("No Such User");
-                        setLoading(true);
-                        //alert("No Such User Exist");
-                        setOpen(true);
-                         //window.location = "/signup";
-
-                    }
+                // const response = await Axios.get("http://localhost:4000/users", { params: { "email": values.email, "password": values.password } })
+                // let userData = (await response).data.document._id;
+                // let email = (await response).data.document.email;
+                // let hospitalname = (await response).data.document.hospitalname;
+                // let password = (await response).data.document.password;
+                // localStorage.setItem("id", userData)
+                // localStorage.setItem("email", email)
+                // localStorage.setItem("hospitalname", hospitalname)
+                // console.log(userData);
+                
+                if (values.email == "pratibha" && values.password == "pratibha") {
+                    window.location = '/admindashboard'
+                    setLoading(false);
                 }
-                console.log("flag is " + flag);
+                else {
+                    //alert("No Such User")
+                    handleClickOpen();
+                    setLoading(false);
+                }
+                // localStorage.setItem("token", userData)
 
-
-
+                // window.location = '/verify'
             };
             loadUsers();
-
 
 
             action.resetForm();
@@ -157,12 +107,12 @@ const Login = () => {
                                                 style={{ width: "200px" }}
 
                                             />
-                                            <p class="text-center h1 fw-bold mb-5 mt-4">Login</p>
+                                            <p class="text-center h1 fw-bold mb-5 mt-4">Welcome  Admin</p>
                                             <form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="row mt-3">
                                                         <label htmlFor="first" className="form-label">
-                                                            Hospital ID*
+                                                            Administrator ID*
                                                         </label>
                                                         <input
                                                             id="email"
@@ -207,7 +157,7 @@ const Login = () => {
                                                         aria-label="Loading Spinner"
                                                         data-testid="loader"
                                                     />
-                                                    <div className="row mt-3">
+                                                       <div className="row mt-3">
 
 
 
@@ -216,7 +166,7 @@ const Login = () => {
                                                             size="lg"
                                                             onClick={handleSubmit}
                                                         >
-                                                            Login
+                                                            Access Hospitals
                                                         </Button>
 
                                                     </div>
@@ -230,7 +180,7 @@ const Login = () => {
                                                                 size="lg"
                                                                 onClick={navigateToRegister}
                                                             >
-                                                                New User? SignUp
+                                                                Register New Administrator
                                                             </Button>
                                                         </div>
                                                     </div>
@@ -240,11 +190,11 @@ const Login = () => {
 
 
                                                             <Button
-                                                                variant="primary"
+                                                                variant="secondary"
                                                                 size="small"
-                                                                onClick={navigateToAdminLogin}
+                                                                onClick={navigateToRegister}
                                                             >
-                                                                SEMA Admin Login
+                                                                Back to Hospital Panel
                                                             </Button>
                                                         </div>
                                                     </div>
@@ -258,7 +208,7 @@ const Login = () => {
                                         </div>
                                         <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                                             <img
-                                                src="https://www.semamart.com/wp-content/uploads/2023/12/doctor-in-face-mask-working-on-laptop-2021-09-02-17-15-33-utc-1024x683.jpg"
+                                                src="https://www.semamart.com/wp-content/uploads/2023/12/MicrosoftTeams-image-39-1536x900.png"
                                                 class="img-fluid"
                                                 alt=""
                                             />
@@ -273,17 +223,17 @@ const Login = () => {
                                                 </DialogTitle>
                                                 <DialogContent>
                                                     <DialogContentText id="alert-dialog-description">
-                                                        No Such User Exists / Invalid Credentials
+                                                        No Such User Exists? Try Again
                                                     </DialogContentText>
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button onClick={navigateToLogin}>Login</Button>
+                                                    <Button onClick={handleClose}>Login</Button>
                                                     <Button onClick={navigateToRegister} autoFocus>
                                                         SignUp
                                                     </Button>
                                                 </DialogActions>
                                             </Dialog>
-
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -296,4 +246,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default AdminLogin;

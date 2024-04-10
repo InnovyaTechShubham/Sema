@@ -19,8 +19,8 @@ import Axios from "axios"
 
 import { useState, CSSProperties } from 'react'
 
-function createData(name, batchno, unitcost, totalquantity, entrydate, manufacturingdate) {
-  return { name, batchno, unitcost, totalquantity, entrydate, manufacturingdate };
+function createData(hospital, name, batchno, unitcost, totalquantity, entrydate, manufacturingdate) {
+  return { hospital, name, batchno, unitcost, totalquantity, entrydate, manufacturingdate };
 }
 
 
@@ -31,10 +31,12 @@ function createData(name, batchno, unitcost, totalquantity, entrydate, manufactu
 
 
 
-function BufferStock() {
+function StockOutSema() {
   const [history, setHistory] = useState([]);
   const [batchno, setBatchNo] = useState([]);
   const [productid, setProductId] = useState([]);
+  const [hospitalid, setHospitalId] = useState([]);
+
   const [totalquantity, setTotalQuantity] = useState([]);
   const [buffervalue,setBufferValue] = useState([]);
   const [unitcost, setUnitCost] = useState([]);
@@ -44,6 +46,8 @@ function BufferStock() {
   const [action, setAction] = useState([]);
 
   const [name, setName] = useState([]);
+  const [hospital, setHospital] = useState([]);
+
   const [emergency, setEmergency] = useState([]);
 
   const [prodlen, setProdlen] = useState(null);
@@ -64,7 +68,6 @@ function BufferStock() {
   const handleStockOut = () => {
     window.location = "/stockout"
   }
-  const hospitalid = localStorage.getItem("hospitalid");
   
 
 
@@ -77,25 +80,28 @@ function BufferStock() {
       const { data } = await axios.get(url);
       console.log("History is: ", data);
       const batchno = new Array(data.document.length)
+      const hospitalid = new Array(data.document.length)
+
       const productid = new Array(data.document.length)
       const unitcost = new Array(data.document.length)
-      const buffervalue = new Array(data.document.length)
+
       const totalquantity = new Array(data.document.length)
+      const buffervalue = new Array(data.document.buffervalue);
       const entrydate = new Array(data.document.length)
       const manufacturingdate = new Array(data.document.length)
-      let a = 0;
+
       for (let i = 0; i < data.document.length; i++) {
-        if(data.document[i].hospitalid == hospitalid){
         batchno[i] = data.document[i].batchno;
         productid[i] = data.document[i].productid;
+        hospitalid[i] = data.document[i].hospitalid;
+
         unitcost[i] = data.document[i].unitcost;
 
         totalquantity[i] = data.document[i].totalquantity;
         buffervalue[i] = data.document[i].buffervalue;
         entrydate[i] = data.document[i].doe;
         manufacturingdate[i] = data.document[i].dom;
-        a++;
-        }
+
 
 
 
@@ -109,6 +115,7 @@ function BufferStock() {
       setDom(manufacturingdate);
 
       setProductId(productid);
+      setHospitalId(hospitalid);
 
 
     } catch (error) {
@@ -157,24 +164,55 @@ function BufferStock() {
 
   getprodnew();
 
+  const gethospital = async () => {
+    try {
+
+      const url = `http://localhost:4000/hospitals`;
+      const { data } = await axios.get(url);
+      const hospital = [];
+     
+      for (let i = 0; i < batchno.length; i++) {
+        for (let j = 0; j < data.document.length; j++) {
+          if (hospitalid[i] == data.document[j]._id) {
+            hospital[i] = data.document[j].hospitalname;
+            
+
+          }
+
+
+        }
+      }
+      setHospital(hospital);
+      
+      console.log("DAta is ours", data);
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  gethospital();
+
 
 //Pushing The data into the Tables
-  for (let i = 0; i < batchno.length; i++) {
-    if(+totalquantity[i] < 1){
-      rows.push(
-        createData(
-          name[i],
-          batchno[i],
-          unitcost[i],
-          totalquantity[i],
-          doe[i],
-          dom[i],
-        )
-      );
+for (let i = 0; i < batchno.length; i++) {
+  if(+totalquantity[i] < 1){
+    rows.push(
+      createData(
+        hospital[i],
+        name[i],
+        batchno[i],
+        unitcost[i],
+        totalquantity[i],
+        doe[i],
+        dom[i],
+      )
+    );
 
-    }
-   
   }
+ 
+}
 
 
 
@@ -191,7 +229,7 @@ function BufferStock() {
               <div class="card text-black" style={{ borderRadius: "25px" }}>
                 <div class="card-body p-md-3">
                   <div className='main-title'>
-                    <h3>STOCK OUT PRODUCTS</h3>
+                    <h3>HOSPITALS BUFFER STOCK</h3>
                   </div>
 
                   
@@ -203,7 +241,9 @@ function BufferStock() {
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                       <TableHead>
                         <TableRow>
-                          <TableCell align="right">NAME</TableCell>
+                        <TableCell align="right">HOSPITAL</TableCell>
+
+                          <TableCell align="right">PRODUCT</TableCell>
                           <TableCell align="right">BATCH NO</TableCell>
                           <TableCell align="right">UNIT COST</TableCell>
                           <TableCell align="right">TOTAL QUANTITY</TableCell>
@@ -218,8 +258,10 @@ function BufferStock() {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                           >
                             <TableCell align="right" component="th" scope="row">
-                              {row.name}
+                              {row.hospital}
                             </TableCell>
+                            <TableCell align="right">{row.name}</TableCell>
+
                             <TableCell align="right">{row.batchno}</TableCell>
                             <TableCell align="right">{row.unitcost}</TableCell>
                             <TableCell align="right">{row.totalquantity}</TableCell>
@@ -244,4 +286,4 @@ function BufferStock() {
   )
 }
 
-export default BufferStock
+export default StockOutSema;
