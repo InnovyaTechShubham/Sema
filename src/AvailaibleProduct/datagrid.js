@@ -71,6 +71,8 @@ function AvailaibleProduct() {
   const [stockout, setStockOut] = useState(null);
 
   const [issuedlen, setIssuedlen] = useState(null);
+
+  const hospitalid = localStorage.getItem("hospitalid");
   const handleTotal = () => {
     window.location = "/totalproduct";
   };
@@ -84,7 +86,7 @@ function AvailaibleProduct() {
     window.location = "/stockout";
   };
 
-  const gethistory = async () => {
+  const getstocks = async () => {
     try {
       const url = `http://localhost:4000/stocks`;
       const { data } = await axios.get(url);
@@ -96,15 +98,18 @@ function AvailaibleProduct() {
       const totalquantity = new Array(data.document.length);
       const entrydate = new Array(data.document.length);
       const manufacturingdate = new Array(data.document.length);
-
+      let a = 0;
       for (let i = 0; i < data.document.length; i++) {
-        batchno[i] = data.document[i].batchno;
-        productid[i] = data.document[i].productid;
-        unitcost[i] = data.document[i].unitcost;
+        if (data.document[i].hospitalid == hospitalid) {
+          batchno[a] = data.document[i].batchno;
+          productid[a] = data.document[i].productid;
+          unitcost[a] = data.document[i].unitcost;
 
-        totalquantity[i] = data.document[i].totalquantity;
-        entrydate[i] = data.document[i].doe;
-        manufacturingdate[i] = data.document[i].dom;
+          totalquantity[a] = data.document[i].totalquantity;
+          entrydate[a] = data.document[i].doe;
+          manufacturingdate[a] = data.document[i].dom;
+          a++;
+        }
       }
       setBatchNo(batchno);
       setUnitCost(unitcost);
@@ -118,7 +123,7 @@ function AvailaibleProduct() {
       console.log(error);
     }
   };
-  gethistory();
+  getstocks();
 
   const rows = [];
 
